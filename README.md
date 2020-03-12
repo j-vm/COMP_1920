@@ -1,4 +1,4 @@
-# COMP - Project 1
+# COMP - Project 6
 
 For this project, you need to [install Gradle](https://gradle.org/install/)
 
