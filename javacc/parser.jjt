@@ -1,0 +1,100 @@
+options
+{
+       LOOKAHEAD=1;
+}
+
+PARSER_BEGIN(MicroblazeParser)
+public class MicroblazeParser
+{
+       public static void main(String args[]) throws ParseException {
+              System.out.println("Parser for Microblaze processor");
+              MicroblazeParser myCalc = new MicroblazeParser(System.in);
+              SimpleNode root = myCalc.Expression(); // returns reference to root node
+              root.dump(""); // prints the tree on the screen
+       }
+
+}
+
+PARSER_END(MicroblazeParser)
+
+SKIP :
+{
+       " " | "," | "\r"
+}
+TOKEN:
+{
+         < ADDRESS: "0x"(["0"-"9", "a"-"f"])+>
+       | < INSTRUCTION_A1: "br" | "brd" | "bra" | "brad">
+       | < INSTRUCTION_A2: "tneagetd" | "tnaputd" | "tnecagetd" | "tncaputd" | "flt" | "fint" | "fsqrt" | "dbl" | "dlong" | "dsqrt" | "sra" | "sext8" | "sext16" | "sextl32" | "clz" | "swapb" | "clz" | "swaph" | "wic" | "wdc" | "wdc.flush" | "wdc.clear" | "wdc.clear.ea" | "brld" | "brald" | "brk" | "beq " | "bne" | "blt" | "ble" | "bgt" | "bge" | "beqd" | "bned" | "bltd" | "bled" | "bgtd" | "bged">
+       | < INSTRUCTION_A3: "add" | "rsub" | "addc" | "rsubc" | "addk" | "rsubk" | "cmp" | "cmpu" | "addkc" | "rsubkc" | "mul" | "mulh" | "mulhu" | "mulhsu" | "bsrl" | "bsra" | "bsll" | "idiv" | "idivu" | "fadd" | "frsub" | "fmul" | "fdiv" | "fcmp.un" | "fcmp.lt" | "fcmp.eq" | "fcmp.le" | "fcmp.gt" | "fcmp.ne" | "fcmp.ge" | "dadd" | "drsub" | "dmul" | "ddiv" | "dcmp.un" | "dcmp.lt" | "dcmp.eq" | "dcmp.le" | "dcmp.gt" | "dcmp.ne" | "dcmp.ge" | "or" | "pcmpbf" | "and" | "xor" | "pcmpeq" | "andn" | "pcmpne" | "lbu" | "lbur" | "lbuea" | "lhu" | "lhur" | "lhuea" | "lw" | "lwr" | "lwx" | "lwea" | "ll" | "llr" | "sb" | "sbr" | "sbea" | "sh" | "shr" | "shea" | "sw" | "swr" | "swx" | "swea" | "sl" | "slr">
+       | < INSTRUCTION_B1: "imm" | "imml" | "bri" | "mbar" | "brid" | "brai" | "braid">
+       | < INSTRUCTION_B2: "msrclr" | "msrset" | "rtsd" | "rtid" | "rtbd" | "rted" | "brlid" | "bralid" | "brki" | "beqi" | "bnei" | "blti" | "blei" | "bgti" | "bgei" | "beqid" | "bneid" | "bltid" | "bleid" | "bgtid" | "bgeid">
+       | < INSTRUCTION_B3: "addi" | "rsubi" | "addic" | "rsubic" | "addik" | "rsubik" | "addikc" | "rsubikc" | "muli" | "bsrli" | "bsrai" | "bslli" | "ori" | "andi" | "xori" | "andni" | "lbui" | "lhui" | "lwi" | "lli" | "sbi" | "sji" | "swi" | "sli">
+       | < REGISTER: "r"(["0"-"9"]|["1","2"]["0"-"9"]|"3"["0", "1"]) >
+       | < LITERAL: ("-")?(["0"-"9"])+ >
+       | < LF: ("\r")?"\n" >
+}
+SimpleNode Expression(): {}
+{
+       FullTrace() <LF> <EOF> {return jjtThis;} // Java code inside brackets
+}
+
+void FullTrace() #void: {}
+{
+        (Line()<LF>)+
+}
+void Line() #void: {Token t;}
+{
+        t=<ADDRESS>
+        [
+            A1(t.image) |
+            A2(t.image) |
+            A3(t.image) |
+            B1(t.image) |
+            B2(t.image) |
+            B3(t.image) 
+        ]
+}
+
+
+void A1(String address) #A1: {jjtThis.address = address; Token instruction; Token register1;}
+{
+    instruction=<INSTRUCTION_A1>{jjtThis.instruction = instruction.image;}
+    register1=<REGISTER>{jjtThis.register1 = register1.image;}
+    
+}
+void A2(String address) #A2: {jjtThis.address = address; Token instruction; Token register1; Token register2;}
+{
+    instruction=<INSTRUCTION_A2>{jjtThis.instruction = instruction.image;}
+    register1=<REGISTER>{jjtThis.register1 = register1.image;}
+    register2=<REGISTER>{jjtThis.register2 = register2.image;}
+
+}
+void A3(String address) #A3: {jjtThis.address = address; Token instruction; Token register1; Token register2; Token register3;}
+{
+    instruction=<INSTRUCTION_A3>{jjtThis.instruction = instruction.image;}
+    register1=<REGISTER>{jjtThis.register1 = register1.image;}
+    register2=<REGISTER>{jjtThis.register2 = register2.image;}
+    register3=<REGISTER>{jjtThis.register3 = register3.image;}
+
+}
+void B1(String address) #B1: {jjtThis.address = address; Token instruction; Token literal;}
+{
+    instruction=<INSTRUCTION_B1>{jjtThis.instruction = instruction.image;}
+    literal=<LITERAL>{jjtThis.literal = literal.image;}
+
+}
+void B2(String address) #B2: {jjtThis.address = address; Token instruction; Token register1; Token literal;}
+{
+    instruction=<INSTRUCTION_B2>{jjtThis.instruction = instruction.image;}
+    register1=<REGISTER>{jjtThis.register1 = register1.image;}
+    literal=<LITERAL>{jjtThis.literal = literal.image;}
+
+}
+void B3(String address) #B3: {jjtThis.address = address; Token instruction; Token register1; Token register2; Token literal;}
+{
+    instruction=<INSTRUCTION_B3>{jjtThis.instruction = instruction.image;}
+    register1=<REGISTER>{jjtThis.register1 = register1.image;}
+    register2=<REGISTER>{jjtThis.register2 = register2.image;}
+    literal=<LITERAL>{jjtThis.literal = literal.image;}
+}
