@@ -2,14 +2,29 @@ package javacc.nodes;
 
 
 public class InstructionNode {
-       private long Address;
+       private String address;
+       private String instruction;
 
-       public long getAddress() {
-              return this.Address;
+       
+       public InstructionNode(String Address, String instruction) {
+              this.address = Address;
+              this.instruction = instruction;
        }
 
-       public void setAddress(long Address) {
-              this.Address = Address;
+       public String getInstruction() {
+              return this.instruction;
+       }
+
+       public void setInstruction(String instruction) {
+              this.instruction = instruction;
+       }
+
+       public String getAddress() {
+              return this.address;
+       }
+
+       public void setAddress(String Address) {
+              this.address = Address;
        }
 
 }

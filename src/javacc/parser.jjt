@@ -57,44 +57,44 @@ void Line() #void: {Token t;}
 }
 
 
-void A1(String address) #A1: {jjtThis.address = address; Token instruction; Token register1;}
+void A1(String address) #A1: {jjtThis.setAddress(address); Token instruction; Token register1;}
 {
-    instruction=<INSTRUCTION_A1>{jjtThis.instruction = instruction.image;}
-    register1=<REGISTER>{jjtThis.register1 = register1.image;}
+    instruction=<INSTRUCTION_A1>{jjtThis.setInstruction(instruction.image);}
+    register1=<REGISTER>{jjtThis.setRegister1(register1.image);}
     
 }
-void A2(String address) #A2: {jjtThis.address = address; Token instruction; Token register1; Token register2;}
+void A2(String address) #A2: {jjtThis.setAddress(address); Token instruction; Token register1; Token register2;}
 {
-    instruction=<INSTRUCTION_A2>{jjtThis.instruction = instruction.image;}
-    register1=<REGISTER>{jjtThis.register1 = register1.image;}
-    register2=<REGISTER>{jjtThis.register2 = register2.image;}
+    instruction=<INSTRUCTION_A2>{jjtThis.setInstruction(instruction.image);}
+    register1=<REGISTER>{jjtThis.setRegister1(register1.image);}
+    register2=<REGISTER>{jjtThis.setRegister2(register2.image);}
 
 }
-void A3(String address) #A3: {jjtThis.address = address; Token instruction; Token register1; Token register2; Token register3;}
+void A3(String address) #A3: {jjtThis.setAddress(address); Token instruction; Token register1; Token register2; Token register3;}
 {
-    instruction=<INSTRUCTION_A3>{jjtThis.instruction = instruction.image;}
-    register1=<REGISTER>{jjtThis.register1 = register1.image;}
-    register2=<REGISTER>{jjtThis.register2 = register2.image;}
-    register3=<REGISTER>{jjtThis.register3 = register3.image;}
+    instruction=<INSTRUCTION_A3>{jjtThis.setInstruction(instruction.image);}
+    register1=<REGISTER>{jjtThis.setRegister1(register1.image);}
+    register2=<REGISTER>{jjtThis.setRegister2(register2.image);}
+    register3=<REGISTER>{jjtThis.setRegister3(register3.image);}
 
 }
-void B1(String address) #B1: {jjtThis.address = address; Token instruction; Token literal;}
+void B1(String address) #B1: {jjtThis.setAddress(address); Token instruction; Token literal;}
 {
-    instruction=<INSTRUCTION_B1>{jjtThis.instruction = instruction.image;}
-    literal=<LITERAL>{jjtThis.literal = literal.image;}
+    instruction=<INSTRUCTION_B1>{jjtThis.setInstruction(instruction.image);}
+    literal=<LITERAL>{jjtThis.setLiteral(literal.image);}
 
 }
-void B2(String address) #B2: {jjtThis.address = address; Token instruction; Token register1; Token literal;}
+void B2(String address) #B2: {jjtThis.setAddress(address); Token instruction; Token register1; Token literal;}
 {
-    instruction=<INSTRUCTION_B2>{jjtThis.instruction = instruction.image;}
-    register1=<REGISTER>{jjtThis.register1 = register1.image;}
-    literal=<LITERAL>{jjtThis.literal = literal.image;}
+    instruction=<INSTRUCTION_B2>{jjtThis.setInstruction(instruction.image);}
+    register1=<REGISTER>{jjtThis.setRegister1(register1.image);}
+    literal=<LITERAL>{jjtThis.setLiteral(literal.image);}
 
 }
-void B3(String address) #B3: {jjtThis.address = address; Token instruction; Token register1; Token register2; Token literal;}
+void B3(String address) #B3: {jjtThis.setAddress(address); Token instruction; Token register1; Token register2; Token literal;}
 {
-    instruction=<INSTRUCTION_B3>{jjtThis.instruction = instruction.image;}
-    register1=<REGISTER>{jjtThis.register1 = register1.image;}
-    register2=<REGISTER>{jjtThis.register2 = register2.image;}
-    literal=<LITERAL>{jjtThis.literal = literal.image;}
+    instruction=<INSTRUCTION_B3>{jjtThis.setInstruction(instruction.image);}
+    register1=<REGISTER>{jjtThis.setRegister1(register1.image);}
+    register2=<REGISTER>{jjtThis.setRegister2(register2.image);}
+    literal=<LITERAL>{jjtThis.setLiteral(literal.image);}
 }

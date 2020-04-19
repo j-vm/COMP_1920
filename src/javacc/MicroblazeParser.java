@@ -108,14 +108,14 @@ if (jjtc000) {
   static final public void A1(String address) throws ParseException {/*@bgen(jjtree) A1 */
                               SimpleNode jjtn000 = new SimpleNode(JJTA1);
                               boolean jjtc000 = true;
-                              jjtree.openNodeScope(jjtn000);jjtn000.address = address; Token instruction; Token register1;
+                              jjtree.openNodeScope(jjtn000);jjtn000.setAddress(address); Token instruction; Token register1;
     try {
       instruction = jj_consume_token(INSTRUCTION_A1);
-jjtn000.instruction = instruction.image;
+jjtn000.setInstruction(instruction.image);
       register1 = jj_consume_token(REGISTER);
 jjtree.closeNodeScope(jjtn000, true);
                           jjtc000 = false;
-jjtn000.register1 = register1.image;
+jjtn000.setRegister1(register1.image);
     } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -126,16 +126,16 @@ if (jjtc000) {
   static final public void A2(String address) throws ParseException {/*@bgen(jjtree) A2 */
                               SimpleNode jjtn000 = new SimpleNode(JJTA2);
                               boolean jjtc000 = true;
-                              jjtree.openNodeScope(jjtn000);jjtn000.address = address; Token instruction; Token register1; Token register2;
+                              jjtree.openNodeScope(jjtn000);jjtn000.setAddress(address); Token instruction; Token register1; Token register2;
     try {
       instruction = jj_consume_token(INSTRUCTION_A2);
-jjtn000.instruction = instruction.image;
+jjtn000.setInstruction(instruction.image);
       register1 = jj_consume_token(REGISTER);
-jjtn000.register1 = register1.image;
+jjtn000.setRegister1(register1.image);
       register2 = jj_consume_token(REGISTER);
 jjtree.closeNodeScope(jjtn000, true);
                           jjtc000 = false;
-jjtn000.register2 = register2.image;
+jjtn000.setRegister2(register2.image);
     } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -146,18 +146,18 @@ if (jjtc000) {
   static final public void A3(String address) throws ParseException {/*@bgen(jjtree) A3 */
                               SimpleNode jjtn000 = new SimpleNode(JJTA3);
                               boolean jjtc000 = true;
-                              jjtree.openNodeScope(jjtn000);jjtn000.address = address; Token instruction; Token register1; Token register2; Token register3;
+                              jjtree.openNodeScope(jjtn000);jjtn000.setAddress(address); Token instruction; Token register1; Token register2; Token register3;
     try {
       instruction = jj_consume_token(INSTRUCTION_A3);
-jjtn000.instruction = instruction.image;
+jjtn000.setInstruction(instruction.image);
       register1 = jj_consume_token(REGISTER);
-jjtn000.register1 = register1.image;
+jjtn000.setRegister1(register1.image);
       register2 = jj_consume_token(REGISTER);
-jjtn000.register2 = register2.image;
+jjtn000.setRegister2(register2.image);
       register3 = jj_consume_token(REGISTER);
 jjtree.closeNodeScope(jjtn000, true);
                           jjtc000 = false;
-jjtn000.register3 = register3.image;
+jjtn000.setRegister3(register3.image);
     } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -168,14 +168,14 @@ if (jjtc000) {
   static final public void B1(String address) throws ParseException {/*@bgen(jjtree) B1 */
                               SimpleNode jjtn000 = new SimpleNode(JJTB1);
                               boolean jjtc000 = true;
-                              jjtree.openNodeScope(jjtn000);jjtn000.address = address; Token instruction; Token literal;
+                              jjtree.openNodeScope(jjtn000);jjtn000.setAddress(address); Token instruction; Token literal;
     try {
       instruction = jj_consume_token(INSTRUCTION_B1);
-jjtn000.instruction = instruction.image;
+jjtn000.setInstruction(instruction.image);
       literal = jj_consume_token(LITERAL);
 jjtree.closeNodeScope(jjtn000, true);
                        jjtc000 = false;
-jjtn000.literal = literal.image;
+jjtn000.setLiteral(literal.image);
     } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -186,16 +186,16 @@ if (jjtc000) {
   static final public void B2(String address) throws ParseException {/*@bgen(jjtree) B2 */
                               SimpleNode jjtn000 = new SimpleNode(JJTB2);
                               boolean jjtc000 = true;
-                              jjtree.openNodeScope(jjtn000);jjtn000.address = address; Token instruction; Token register1; Token literal;
+                              jjtree.openNodeScope(jjtn000);jjtn000.setAddress(address); Token instruction; Token register1; Token literal;
     try {
       instruction = jj_consume_token(INSTRUCTION_B2);
-jjtn000.instruction = instruction.image;
+jjtn000.setInstruction(instruction.image);
       register1 = jj_consume_token(REGISTER);
-jjtn000.register1 = register1.image;
+jjtn000.setRegister1(register1.image);
       literal = jj_consume_token(LITERAL);
 jjtree.closeNodeScope(jjtn000, true);
                        jjtc000 = false;
-jjtn000.literal = literal.image;
+jjtn000.setLiteral(literal.image);
     } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -206,18 +206,18 @@ if (jjtc000) {
   static final public void B3(String address) throws ParseException {/*@bgen(jjtree) B3 */
                               SimpleNode jjtn000 = new SimpleNode(JJTB3);
                               boolean jjtc000 = true;
-                              jjtree.openNodeScope(jjtn000);jjtn000.address = address; Token instruction; Token register1; Token register2; Token literal;
+                              jjtree.openNodeScope(jjtn000);jjtn000.setAddress(address); Token instruction; Token register1; Token register2; Token literal;
     try {
       instruction = jj_consume_token(INSTRUCTION_B3);
-jjtn000.instruction = instruction.image;
+jjtn000.setInstruction(instruction.image);
       register1 = jj_consume_token(REGISTER);
-jjtn000.register1 = register1.image;
+jjtn000.setRegister1(register1.image);
       register2 = jj_consume_token(REGISTER);
-jjtn000.register2 = register2.image;
+jjtn000.setRegister2(register2.image);
       literal = jj_consume_token(LITERAL);
 jjtree.closeNodeScope(jjtn000, true);
                        jjtc000 = false;
-jjtn000.literal = literal.image;
+jjtn000.setLiteral(literal.image);
     } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);

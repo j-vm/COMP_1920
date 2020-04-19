@@ -1,5 +1,5 @@
-package javacc.nodes;
+// package javacc.nodes;
 
-public class A1node extends InstructionNode{
-       InstructionNode parent;
-}
+// public class A1node extends InstructionNode{
+//        InstructionNode parent;
+// }

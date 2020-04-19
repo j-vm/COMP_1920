@@ -96,17 +96,17 @@ void A1(String address)    : {/*@bgen(jjtree) A1 */
                               SimpleNode jjtn000 = new SimpleNode(JJTA1);
                               boolean jjtc000 = true;
                               jjtree.openNodeScope(jjtn000);
-/*@egen*/jjtn000.address = address; Token instruction; Token register1;}
+/*@egen*/jjtn000.setAddress(address); Token instruction; Token register1;}
 {/*@bgen(jjtree) A1 */
     try {
 /*@egen*/
-    instruction=<INSTRUCTION_A1>{jjtn000.instruction = instruction.image;}
+    instruction=<INSTRUCTION_A1>{jjtn000.setInstruction(instruction.image);}
     register1=<REGISTER>/*@bgen(jjtree)*/
                         {
                           jjtree.closeNodeScope(jjtn000, true);
                           jjtc000 = false;
                         }
-/*@egen*/{jjtn000.register1 = register1.image;}/*@bgen(jjtree)*/
+/*@egen*/{jjtn000.setRegister1(register1.image);}/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -119,18 +119,18 @@ void A2(String address)    : {/*@bgen(jjtree) A2 */
                               SimpleNode jjtn000 = new SimpleNode(JJTA2);
                               boolean jjtc000 = true;
                               jjtree.openNodeScope(jjtn000);
-/*@egen*/jjtn000.address = address; Token instruction; Token register1; Token register2;}
+/*@egen*/jjtn000.setAddress(address); Token instruction; Token register1; Token register2;}
 {/*@bgen(jjtree) A2 */
     try {
 /*@egen*/
-    instruction=<INSTRUCTION_A2>{jjtn000.instruction = instruction.image;}
-    register1=<REGISTER>{jjtn000.register1 = register1.image;}
+    instruction=<INSTRUCTION_A2>{jjtn000.setInstruction(instruction.image);}
+    register1=<REGISTER>{jjtn000.setRegister1(register1.image);}
     register2=<REGISTER>/*@bgen(jjtree)*/
                         {
                           jjtree.closeNodeScope(jjtn000, true);
                           jjtc000 = false;
                         }
-/*@egen*/{jjtn000.register2 = register2.image;}/*@bgen(jjtree)*/
+/*@egen*/{jjtn000.setRegister2(register2.image);}/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -143,19 +143,19 @@ void A3(String address)    : {/*@bgen(jjtree) A3 */
                               SimpleNode jjtn000 = new SimpleNode(JJTA3);
                               boolean jjtc000 = true;
                               jjtree.openNodeScope(jjtn000);
-/*@egen*/jjtn000.address = address; Token instruction; Token register1; Token register2; Token register3;}
+/*@egen*/jjtn000.setAddress(address); Token instruction; Token register1; Token register2; Token register3;}
 {/*@bgen(jjtree) A3 */
     try {
 /*@egen*/
-    instruction=<INSTRUCTION_A3>{jjtn000.instruction = instruction.image;}
-    register1=<REGISTER>{jjtn000.register1 = register1.image;}
-    register2=<REGISTER>{jjtn000.register2 = register2.image;}
+    instruction=<INSTRUCTION_A3>{jjtn000.setInstruction(instruction.image);}
+    register1=<REGISTER>{jjtn000.setRegister1(register1.image);}
+    register2=<REGISTER>{jjtn000.setRegister2(register2.image);}
     register3=<REGISTER>/*@bgen(jjtree)*/
                         {
                           jjtree.closeNodeScope(jjtn000, true);
                           jjtc000 = false;
                         }
-/*@egen*/{jjtn000.register3 = register3.image;}/*@bgen(jjtree)*/
+/*@egen*/{jjtn000.setRegister3(register3.image);}/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -168,17 +168,17 @@ void B1(String address)    : {/*@bgen(jjtree) B1 */
                               SimpleNode jjtn000 = new SimpleNode(JJTB1);
                               boolean jjtc000 = true;
                               jjtree.openNodeScope(jjtn000);
-/*@egen*/jjtn000.address = address; Token instruction; Token literal;}
+/*@egen*/jjtn000.setAddress(address); Token instruction; Token literal;}
 {/*@bgen(jjtree) B1 */
     try {
 /*@egen*/
-    instruction=<INSTRUCTION_B1>{jjtn000.instruction = instruction.image;}
+    instruction=<INSTRUCTION_B1>{jjtn000.setInstruction(instruction.image);}
     literal=<LITERAL>/*@bgen(jjtree)*/
                      {
                        jjtree.closeNodeScope(jjtn000, true);
                        jjtc000 = false;
                      }
-/*@egen*/{jjtn000.literal = literal.image;}/*@bgen(jjtree)*/
+/*@egen*/{jjtn000.setLiteral(literal.image);}/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -191,18 +191,18 @@ void B2(String address)    : {/*@bgen(jjtree) B2 */
                               SimpleNode jjtn000 = new SimpleNode(JJTB2);
                               boolean jjtc000 = true;
                               jjtree.openNodeScope(jjtn000);
-/*@egen*/jjtn000.address = address; Token instruction; Token register1; Token literal;}
+/*@egen*/jjtn000.setAddress(address); Token instruction; Token register1; Token literal;}
 {/*@bgen(jjtree) B2 */
     try {
 /*@egen*/
-    instruction=<INSTRUCTION_B2>{jjtn000.instruction = instruction.image;}
-    register1=<REGISTER>{jjtn000.register1 = register1.image;}
+    instruction=<INSTRUCTION_B2>{jjtn000.setInstruction(instruction.image);}
+    register1=<REGISTER>{jjtn000.setRegister1(register1.image);}
     literal=<LITERAL>/*@bgen(jjtree)*/
                      {
                        jjtree.closeNodeScope(jjtn000, true);
                        jjtc000 = false;
                      }
-/*@egen*/{jjtn000.literal = literal.image;}/*@bgen(jjtree)*/
+/*@egen*/{jjtn000.setLiteral(literal.image);}/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -215,19 +215,19 @@ void B3(String address)    : {/*@bgen(jjtree) B3 */
                               SimpleNode jjtn000 = new SimpleNode(JJTB3);
                               boolean jjtc000 = true;
                               jjtree.openNodeScope(jjtn000);
-/*@egen*/jjtn000.address = address; Token instruction; Token register1; Token register2; Token literal;}
+/*@egen*/jjtn000.setAddress(address); Token instruction; Token register1; Token register2; Token literal;}
 {/*@bgen(jjtree) B3 */
     try {
 /*@egen*/
-    instruction=<INSTRUCTION_B3>{jjtn000.instruction = instruction.image;}
-    register1=<REGISTER>{jjtn000.register1 = register1.image;}
-    register2=<REGISTER>{jjtn000.register2 = register2.image;}
+    instruction=<INSTRUCTION_B3>{jjtn000.setInstruction(instruction.image);}
+    register1=<REGISTER>{jjtn000.setRegister1(register1.image);}
+    register2=<REGISTER>{jjtn000.setRegister2(register2.image);}
     literal=<LITERAL>/*@bgen(jjtree)*/
                      {
                        jjtree.closeNodeScope(jjtn000, true);
                        jjtc000 = false;
                      }
-/*@egen*/{jjtn000.literal = literal.image;}/*@bgen(jjtree)*/
+/*@egen*/{jjtn000.setLiteral(literal.image);}/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
