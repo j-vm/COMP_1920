@@ -1,3 +1,4 @@
+
 // Import JavaCC
 plugins {
   id "ca.coglinc.javacc" version "2.4.0"
@@ -11,25 +12,28 @@ apply plugin: 'java'
 // Repositories providers
 repositories {
     mavenCentral()
+    //maven { url 'https://mvnrepository.com/artifact/org.jgrapht/jgrapht' }
 }
 
 dependencies {
-    testImplementation "junit:junit:4.11" 
+    testImplementation "junit:junit:4.11"
+    // https://mvnrepository.com/artifact/org.jgrapht/jgrapht
+    compile 'org.jgrapht:jgrapht-core:1.4.0'
 }
 
 
 // Execute JJTree
 compileJjtree {
     inputDirectory = file('javacc')
-    outputDirectory = file('generated/jjtree')
+    outputDirectory = file('javacc/jjtree')
 	include '**/*.java'
 }
 
 
 // Execute JavaCC
 compileJavacc {
-    inputDirectory = file('generated/jjtree')
-    outputDirectory = file('generated/javacc')
+    inputDirectory = file('javacc/jjtree')
+    outputDirectory = file('javacc/javacc')
 	arguments = [grammar_encoding: 'UTF-8', static: 'false']	
 }
 
