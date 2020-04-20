@@ -2,6 +2,7 @@
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.io.*;
 
 
 import javacc.nodes.InstructionNode;
@@ -146,6 +147,6 @@ public class Main {
 
 	
 	private static void visualizeGraph() {
-		//DOTExporter<InstructionNode, DefaultEdge> exporter = new DOTExporter<InstructionNode, DefaultEdge>;
+		DOTExporter<String, DefaultEdge> exporter = new DOTExporter<InstructionNode, DefaultEdge>;
 	}
 }
