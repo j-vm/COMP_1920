@@ -1,7 +1,7 @@
 package javacc.nodes;
 
 
-public class InstructionNode {
+public class InstructionNode implements java.io.Serializable{
        private String address;
        private String instruction;
 

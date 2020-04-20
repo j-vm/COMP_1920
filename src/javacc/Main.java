@@ -2,10 +2,9 @@
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.io.*;
-
 
 import javacc.nodes.InstructionNode;
+import org.jgrapht.nio.dot.DOTExporter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,7 +18,7 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		//[TO TEST]
-		loadGraph("fir-O2.txt");
+		loadGraph("./input/fir-O2.txt");
 		// [PROPER USE]
 		//checkArgs(args);
 		//loadGraph(args[0]);
@@ -61,7 +60,6 @@ public class Main {
 	 */
 	private static void loadGraph(String fileName) {
 		File f = new File(fileName);
-
 		if (f.isFile() && f.canRead()) {
 			try {
 				FileInputStream fis = new FileInputStream(f);
@@ -70,7 +68,7 @@ public class Main {
 					try {
 						SimpleNode root = trace.Expression(); // returns reference to root node
 						System.out.println("HI!");
-						 root.dump(""); // prints the tree on the screen
+						 //root.dump(""); // prints the tree on the screen
 
 						traceToGraph(root);
 
@@ -98,7 +96,6 @@ public class Main {
 		int numChildren = root.jjtGetNumChildren();
 		HashMap<String, InstructionNode> lastToAlter = new HashMap<String, InstructionNode>();
 		for (int i = 0; i < numChildren; i++) {
-
 			String address;
 			String instruction;
 
@@ -147,6 +144,6 @@ public class Main {
 
 	
 	private static void visualizeGraph() {
-		DOTExporter<String, DefaultEdge> exporter = new DOTExporter<InstructionNode, DefaultEdge>;
+
 	}
 }
