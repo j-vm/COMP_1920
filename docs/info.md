@@ -37,8 +37,8 @@ In our implementation of the parser we divided each type of instructions into su
  ### **Type A Instructions**
   Type A instructions have up to two source register operands and one destination register operand. A1 instructions use 1 register, A2 instructions use 2 registers and A3 instructions use 3 registers.
 
- #### **Type A2 Instructions:**
-
+ #### **Type A1 Instructions:**
+```
  * BR
  * BRD
  * BRA

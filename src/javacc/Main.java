@@ -3,21 +3,26 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
+
 import javacc.nodes.InstructionNode;
-import jdk.jshell.execution.LoaderDelegate;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Main {
 	
 	static Graph<InstructionNode, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
 	public static void main(String[] args) throws FileNotFoundException {
-		checkArgs(args);
-		loadGraph(args[0]);
+		//[TO TEST]
+		loadGraph("fir-O2.txt");
+		// [PROPER USE]
+		//checkArgs(args);
+		//loadGraph(args[0]);
+		visualizeGraph();
 	}
 
 	/**
@@ -34,10 +39,17 @@ public class Main {
 
 	/**
 	 * Opens file, parses its content with jjtree and javacc, and builds a graph
-	 * (Graph<InstructionNode, DefaultEdge> graph) based on the work: "Limits of
-	 * Parallelism Using Dynamic Dependency Graphs" by: Jonathan Mak University of
+	 * (Graph<InstructionNode, DefaultEdge> graph) based on the work: 
+	 * 
+	 * "Limits of Parallelism Using Dynamic Dependency Graphs" by: 
+	 * 
+	 * Jonathan Mak University of
 	 * Cambridge Computer Laboratory William Gates Building, 15 JJ Thomson Avenue
-	 * Cambridge CB3 0FD, United Kingdom Jonathan.Mak@cl.cam.ac.uk & Alan Mycroft
+	 * Cambridge CB3 0FD, United Kingdom Jonathan.Mak@cl.cam.ac.uk 
+	 * 
+	 * & 
+	 * 
+	 * Alan Mycroft
 	 * University of Cambridge Computer Laboratory William Gates Building, 15 JJ
 	 * Thomson Avenue Cambridge CB3 0FD, United Kingdom~ Alan.Mycroft@cl.cam.ac.uk
 	 * 
@@ -56,8 +68,8 @@ public class Main {
 					MicroblazeParser trace = new MicroblazeParser(fis);
 					try {
 						SimpleNode root = trace.Expression(); // returns reference to root node
-
-						// root.dump(""); // prints the tree on the screen
+						System.out.println("HI!");
+						 root.dump(""); // prints the tree on the screen
 
 						traceToGraph(root);
 
@@ -83,6 +95,7 @@ public class Main {
 	 */
 	private static void traceToGraph(SimpleNode root) {
 		int numChildren = root.jjtGetNumChildren();
+		HashMap<String, InstructionNode> lastToAlter = new HashMap<String, InstructionNode>();
 		for (int i = 0; i < numChildren; i++) {
 
 			String address;
@@ -97,8 +110,42 @@ public class Main {
 
 				InstructionNode vertex = new InstructionNode(address, instruction);
 				graph.addVertex(vertex);
+				
+				//adding destination operand to HashMap
+				if(javaccSimpleNode.getRegister1()!=null){
+					lastToAlter.put(javaccSimpleNode.getRegister1(), vertex);
+				}
+
+				//Ingoing Edge (source operand a)
+				if(javaccSimpleNode.getRegister2()!=null){
+					if(lastToAlter.containsKey(javaccSimpleNode.getRegister2())){
+						graph.addEdge(
+							lastToAlter.get(javaccSimpleNode.getRegister2()), 
+							vertex);
+					}
+				}
+
+				//Ingoing Edge (source operand b)
+				if(javaccSimpleNode.getRegister3()!=null){
+					if(lastToAlter.containsKey(javaccSimpleNode.getRegister3())){
+						graph.addEdge(
+							lastToAlter.get(javaccSimpleNode.getRegister3()), 
+							vertex);
+					}
+				}
 			}
 
 		}
+	}
+
+	/**
+	 * Exports Graph<InstructionNode, DefaultEdge> graph as a DOT file
+	 * for vizualization 
+	 * https://stackoverflow.com/questions/16998608/jgrapht-export-to-dot-file
+	 */
+
+	
+	private static void visualizeGraph() {
+		//DOTExporter<InstructionNode, DefaultEdge> exporter = new DOTExporter<InstructionNode, DefaultEdge>;
 	}
 }

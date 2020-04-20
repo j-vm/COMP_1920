@@ -19,6 +19,7 @@ dependencies {
     testImplementation "junit:junit:4.11"
     // https://mvnrepository.com/artifact/org.jgrapht/jgrapht
     compile 'org.jgrapht:jgrapht-core:1.4.0'
+    compile 'org.jgrapht:jgrapht-io:1.4.0'
 }
 
 
