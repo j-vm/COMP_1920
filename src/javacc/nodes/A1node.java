@@ -1,6 +1,6 @@
 package javacc.nodes;
 
-public class A1node extends InstructionNode{
+public class A1node extends InstructionNode {
     private String r1;
 
 
@@ -16,3 +16,4 @@ public class A1node extends InstructionNode{
     public void setR1(String r1) {
         this.r1 = r1;
     }
+}
