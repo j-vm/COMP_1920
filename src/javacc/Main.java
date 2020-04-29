@@ -71,7 +71,6 @@ public class Main {
 					MicroblazeParser trace = new MicroblazeParser(fis);
 					try {
 						SimpleNode root = trace.Expression(); // returns reference to root node
-						System.out.println("HI!");
 						 //root.dump(""); // prints the tree on the screen
 
 						traceToGraph2(root);
@@ -180,17 +179,13 @@ public class Main {
 
 
 	private static void traceToGraph2(SimpleNode root) {
-		HashMap<Integer, CfgNode> nodes = new HashMap<Integer, CfgNode>();
 		int numChildren = root.jjtGetNumChildren();
-		int lastAddress = 0;
 
 		System.out.println(numChildren);
-
+		CfgNode lastVertex = new CfgNode();
 		for (int i = 0; i < numChildren; i++) {
 			String address;
 			String instruction;
-			System.out.println(i);
-			System.out.println(numChildren);
 			Node javaccNode = root.jjtGetChild(i);
 
 			if (javaccNode instanceof SimpleNode) {
@@ -202,16 +197,23 @@ public class Main {
 
 				CfgNode vertex = new CfgNode(parsedAddress, instruction);
 
-				if(nodes.containsKey(parsedAddress)){ cfGraph.addEdge(nodes.get(lastAddress), vertex); System.out.println("LOOP!");}
+				//if(nodes.containsValue(vertex)){ cfGraph.addEdge(nodes.get(lastAddress), vertex); System.out.println("LOOP!");}
 
-				if(javaccSimpleNode.getAddress()!=null && !nodes.containsKey(parsedAddress)){
-					System.out.println("New Vertex " + Integer.toString(i));
-					nodes.put(parsedAddress, vertex);
-					cfGraph.addVertex(vertex);
-					if (i > 0) cfGraph.addEdge(nodes.get(lastAddress), vertex);
+				if(cfGraph.addVertex(vertex)){
+					if (i>0){ cfGraph.addEdge(lastVertex, vertex); 	System.out.println("New vertex");}
+				}else{
+					CfgNode loopVertex = new CfgNode(parsedAddress, "LOOP");
+					if(cfGraph.addVertex(loopVertex)){
+						cfGraph.addEdge(lastVertex, loopVertex);
+						cfGraph.addEdge(loopVertex, vertex);
+						System.out.println("New loop");
+					}else{
+						System.out.println("Loop +1");
+					}
 				}
 
-				lastAddress = parsedAddress;
+				lastVertex = vertex;
+
 			}
 		}
 

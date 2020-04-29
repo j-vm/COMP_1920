@@ -63,4 +63,5 @@ public class CfgNode implements java.io.Serializable{
               this.instruction = instruction;
        }
 
+       public CfgNode() {}
 }
