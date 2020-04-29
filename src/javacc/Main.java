@@ -1,16 +1,18 @@
-
+import guru.nidi.graphviz.engine.Format;
+import guru.nidi.graphviz.engine.Graphviz;
+import guru.nidi.graphviz.engine.Renderer;
+import javacc.nodes.InstructionNode;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-
-import javacc.nodes.InstructionNode;
+import org.jgrapht.nio.Attribute;
+import org.jgrapht.nio.DefaultAttribute;
 import org.jgrapht.nio.dot.DOTExporter;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Main {
 	
@@ -70,7 +72,7 @@ public class Main {
 						System.out.println("HI!");
 						 //root.dump(""); // prints the tree on the screen
 
-						traceToGraph(root);
+						traceToGraph2(root);
 
 					} catch (Exception e) {
 						System.err.print(e);
@@ -144,6 +146,65 @@ public class Main {
 
 	
 	private static void visualizeGraph() {
+		DOTExporter<InstructionNode,DefaultEdge>exporter = new DOTExporter<>(v->"A"+v.getAddress());
+		exporter.setVertexAttributeProvider((v)->{
+			Map<String, Attribute> map=new LinkedHashMap<>();
+			map.put("label", DefaultAttribute.createAttribute(v.getAddress() + " " + v.getInstruction()));return map;});
+		Writer writer=new StringWriter();
+		exporter.exportGraph(graph,writer);
+		//System.out.println(writer.toString());
+		try {
+			FileWriter myWriter = new FileWriter("output.dot");
+			myWriter.write(writer.toString());
+			myWriter.close();
+			System.out.println("Successfully wrote to the file.");
+		} catch (IOException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
+		File f = new File("output.dot");
+		try {
 
+			Renderer g = Graphviz.fromFile(f).render(Format.PNG);
+			File f2 = new File("output.png");
+			g.toFile(f2);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+
+
+
+	private static void traceToGraph2(SimpleNode root) {
+		int numChildren = root.jjtGetNumChildren();
+
+		HashMap<String, InstructionNode> lastToAlter = new HashMap<String, InstructionNode>();
+		System.out.println(numChildren);
+		for (int i = 0; i < numChildren; i++) {
+			String address;
+			String instruction;
+
+			Node javaccNode = root.jjtGetChild(i);
+
+			if (javaccNode instanceof SimpleNode) {
+				SimpleNode javaccSimpleNode = ((SimpleNode) javaccNode);
+				SimpleNode previous = ((SimpleNode) previousNode);
+
+				address = javaccSimpleNode.getAddress();
+				instruction = javaccSimpleNode.getInstruction();
+
+				InstructionNode vertex = new InstructionNode(address, instruction);
+				graph.addVertex(vertex);
+
+				if(javaccSimpleNode.getAddress()!=null){
+					lastToAlter.put(javaccSimpleNode.getAddress(), vertex);
+				}
+				
+
+			}
+		}
+		System.out.println(lastToAlter.size());
 	}
 }
