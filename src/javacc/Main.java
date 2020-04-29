@@ -2,6 +2,7 @@ import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.Renderer;
 import javacc.nodes.InstructionNode;
+import javacc.nodes.CfgNode;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -15,7 +16,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Main {
-	
+
+	static Graph<CfgNode, DefaultEdge> cfGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
 	static Graph<InstructionNode, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
 	public static void main(String[] args) throws FileNotFoundException {
@@ -146,12 +148,12 @@ public class Main {
 
 	
 	private static void visualizeGraph() {
-		DOTExporter<InstructionNode,DefaultEdge>exporter = new DOTExporter<>(v->"A"+v.getAddress());
+		DOTExporter<CfgNode,DefaultEdge>exporter = new DOTExporter<>(v->"A"+v.getAddress());
 		exporter.setVertexAttributeProvider((v)->{
 			Map<String, Attribute> map=new LinkedHashMap<>();
 			map.put("label", DefaultAttribute.createAttribute(v.getAddress() + " " + v.getInstruction()));return map;});
 		Writer writer=new StringWriter();
-		exporter.exportGraph(graph,writer);
+		exporter.exportGraph(cfGraph,writer);
 		//System.out.println(writer.toString());
 		try {
 			FileWriter myWriter = new FileWriter("output.dot");
@@ -178,33 +180,57 @@ public class Main {
 
 
 	private static void traceToGraph2(SimpleNode root) {
+		HashMap<Integer, CfgNode> nodes = new HashMap<Integer, CfgNode>();
 		int numChildren = root.jjtGetNumChildren();
+		int lastAddress = 0;
 
-		HashMap<String, InstructionNode> lastToAlter = new HashMap<String, InstructionNode>();
 		System.out.println(numChildren);
+
 		for (int i = 0; i < numChildren; i++) {
 			String address;
 			String instruction;
-
+			System.out.println(i);
+			System.out.println(numChildren);
 			Node javaccNode = root.jjtGetChild(i);
 
 			if (javaccNode instanceof SimpleNode) {
 				SimpleNode javaccSimpleNode = ((SimpleNode) javaccNode);
-				SimpleNode previous = ((SimpleNode) previousNode);
 
 				address = javaccSimpleNode.getAddress();
+				int parsedAddress = parseAddress(address);
 				instruction = javaccSimpleNode.getInstruction();
 
-				InstructionNode vertex = new InstructionNode(address, instruction);
-				graph.addVertex(vertex);
+				CfgNode vertex = new CfgNode(parsedAddress, instruction);
 
-				if(javaccSimpleNode.getAddress()!=null){
-					lastToAlter.put(javaccSimpleNode.getAddress(), vertex);
+				if(nodes.containsKey(parsedAddress)){ cfGraph.addEdge(nodes.get(lastAddress), vertex); System.out.println("LOOP!");}
+
+				if(javaccSimpleNode.getAddress()!=null && !nodes.containsKey(parsedAddress)){
+					System.out.println("New Vertex " + Integer.toString(i));
+					nodes.put(parsedAddress, vertex);
+					cfGraph.addVertex(vertex);
+					if (i > 0) cfGraph.addEdge(nodes.get(lastAddress), vertex);
 				}
-				
 
+				lastAddress = parsedAddress;
 			}
 		}
-		System.out.println(lastToAlter.size());
+
+	}
+
+
+	private static int parseAddress(String address){
+		String[] tokens = address.split("x");
+		String hex = tokens[1];
+
+		String digits = "0123456789ABCDEF";
+		hex = hex.toUpperCase();
+		int val = 0;
+		for (int i = 0; i < hex.length(); i++)
+		{
+			char c = hex.charAt(i);
+			int d = digits.indexOf(c);
+			val = 16*val + d;
+		}
+		return val;
 	}
 }
