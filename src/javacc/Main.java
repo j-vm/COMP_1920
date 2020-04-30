@@ -1,8 +1,6 @@
-import guru.nidi.graphviz.engine.Format;
-import guru.nidi.graphviz.engine.Graphviz;
-import guru.nidi.graphviz.engine.Renderer;
-import javacc.nodes.InstructionNode;
 import javacc.nodes.CfgNode;
+import javacc.nodes.InstructionNode;
+import javacc.nodes.PathEdge;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -17,12 +15,12 @@ import java.util.Map;
 
 public class Main {
 
-	static Graph<CfgNode, DefaultEdge> cfGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
+	static Graph<CfgNode, PathEdge> cfGraph = new DefaultDirectedGraph<>(PathEdge.class);
 	static Graph<InstructionNode, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
 	public static void main(String[] args) throws FileNotFoundException {
 		//[TO TEST]
-		loadGraph("./input/fir-O2.txt");
+		loadGraph("./input/autcor-O2.txt");
 		// [PROPER USE]
 		//checkArgs(args);
 		//loadGraph(args[0]);
@@ -147,10 +145,13 @@ public class Main {
 
 	
 	private static void visualizeGraph() {
-		DOTExporter<CfgNode,DefaultEdge>exporter = new DOTExporter<>(v->"A"+v.getAddress());
+		DOTExporter<CfgNode,PathEdge>exporter = new DOTExporter<>((v->"A"+v.getAddress()));
 		exporter.setVertexAttributeProvider((v)->{
 			Map<String, Attribute> map=new LinkedHashMap<>();
 			map.put("label", DefaultAttribute.createAttribute(v.getAddress() + " " + v.getInstruction()));return map;});
+		exporter.setEdgeAttributeProvider((e)->{
+			Map<String, Attribute> map=new LinkedHashMap<>();
+			map.put("label", DefaultAttribute.createAttribute(e.toString()));return map;});
 		Writer writer=new StringWriter();
 		exporter.exportGraph(cfGraph,writer);
 		//System.out.println(writer.toString());
@@ -163,57 +164,82 @@ public class Main {
 			System.out.println("An error occurred.");
 			e.printStackTrace();
 		}
-		File f = new File("output.dot");
-		try {
-
-			Renderer g = Graphviz.fromFile(f).render(Format.PNG);
-			File f2 = new File("output.png");
-			g.toFile(f2);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 
+/*	private static void traceToCFG(SimpleNode root){
+		int numChildren = root.jjtGetNumChildren();
+		Map<String, TraceLine> nodes = new HashMap<String, TraceLine>();
+		Vector<TraceLine> orderedNodes = new Vector<TraceLine>();
+
+		boolean inLoop = false;
+		int currLoopHeadId = 0;
+		int currLoopOffset = 0;
+		int currLoopSize = 0;
+		int currLoopRepetitions = 0;
+
+		for (int i = 0; i < numChildren; i++) {
+			Node javaCCNode = root.jjtGetChild(i);
+			if (javaCCNode instanceof SimpleNode){
+				SimpleNode simpleNode = ((SimpleNode) javaCCNode);
+
+				String address = simpleNode.getAddress();
+				String instruction = simpleNode.getInstruction();
+
+				if(nodes.containsKey(address)){
+					if(!inLoop){
+						currLoopHeadId = nodes.get(address).getId();
+						currLoopRepetitions = 0;
+					}else{
+
+					}
+
+					orderedNodes.get(nodes.get(address).getId()).setLoopHeaderId(currLoopHead);
+				}else{
+					TraceLine newNode =  new TraceLine(i, address, instruction);
+					nodes.put(address, newNode);
+					orderedNodes.add(newNode);
+				}
+			}
+		}
+	}*/
 
 
 
 	private static void traceToGraph2(SimpleNode root) {
 		int numChildren = root.jjtGetNumChildren();
 
+		HashMap<String, CfgNode> nodes = new HashMap<String, CfgNode>();
+		String lastAddress = null;
 		System.out.println(numChildren);
-		CfgNode lastVertex = new CfgNode();
+
+		int decisionPath = 0;
+
 		for (int i = 0; i < numChildren; i++) {
 			String address;
-			String instruction;
 			Node javaccNode = root.jjtGetChild(i);
-
 			if (javaccNode instanceof SimpleNode) {
 				SimpleNode javaccSimpleNode = ((SimpleNode) javaccNode);
-
 				address = javaccSimpleNode.getAddress();
-				int parsedAddress = parseAddress(address);
-				instruction = javaccSimpleNode.getInstruction();
 
-				CfgNode vertex = new CfgNode(parsedAddress, instruction);
-
-				//if(nodes.containsValue(vertex)){ cfGraph.addEdge(nodes.get(lastAddress), vertex); System.out.println("LOOP!");}
-
-				if(cfGraph.addVertex(vertex)){
-					if (i>0){ cfGraph.addEdge(lastVertex, vertex); 	System.out.println("New vertex");}
+				if(!nodes.containsKey(address)){
+					CfgNode vertex = new CfgNode(i, address, javaccSimpleNode.getInstruction());
+					cfGraph.addVertex(vertex);
+					nodes.put(address, vertex);
+					if (lastAddress != null){
+						cfGraph.addEdge(nodes.get(lastAddress), vertex);
+					}
 				}else{
-					CfgNode loopVertex = new CfgNode(parsedAddress, "LOOP");
-					if(cfGraph.addVertex(loopVertex)){
-						cfGraph.addEdge(lastVertex, loopVertex);
-						cfGraph.addEdge(loopVertex, vertex);
-						System.out.println("New loop");
+					if(!cfGraph.containsEdge(nodes.get(lastAddress), nodes.get(address))) {
+						cfGraph.addEdge(nodes.get(lastAddress), nodes.get(address)).addPath(decisionPath);
+						decisionPath++;
 					}else{
-						System.out.println("Loop +1");
+						if(!cfGraph.getEdge(nodes.get(lastAddress), nodes.get(address)).isPathEmpty()){
+							cfGraph.getEdge(nodes.get(lastAddress), nodes.get(address)).addPath(decisionPath);
+							decisionPath++;
+						}
 					}
 				}
-
-				lastVertex = vertex;
-
+				lastAddress = address;
 			}
 		}
 

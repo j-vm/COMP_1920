@@ -1,19 +1,32 @@
 package javacc.nodes;
 
 
+import java.util.List;
+
 public class CfgNode implements java.io.Serializable{
-       private int address;
+
+       private int id;
+       private String address;
        private String instruction;
        private String register1;
        private String register2;
        private String register3;
        private String literal;
+       public List<Integer> path;
 
-       public int getAddress() {
+       public int getId() {
+              return id;
+       }
+
+       public void setId(int id) {
+              this.id = id;
+       }
+
+       public String getAddress() {
               return this.address;
        }
 
-       public void setAddress(int address) {
+       public void setAddress(String address) {
               this.address = address;
        }
 
@@ -58,7 +71,7 @@ public class CfgNode implements java.io.Serializable{
        }
 
 
-       public CfgNode(int Address, String instruction) {
+       public CfgNode(int id, String Address, String instruction) {
               this.address = Address;
               this.instruction = instruction;
        }
