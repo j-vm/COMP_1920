@@ -1,4 +1,4 @@
-package javacc.nodes;
+package nodes;
 
 public class B3node extends InstructionNode {
     private int literal;

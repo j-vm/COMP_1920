@@ -1,4 +1,4 @@
-package javacc.nodes;
+package nodes;
 
 
 public class InstructionNode implements java.io.Serializable{

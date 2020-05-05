@@ -4,6 +4,9 @@ options
 }
 
 PARSER_BEGIN(MicroblazeParser)
+
+package javacc;
+
 public class MicroblazeParser
 {
        public static void main(String args[]) throws ParseException {

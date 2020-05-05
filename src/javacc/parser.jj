@@ -5,6 +5,9 @@
 }
 
 PARSER_BEGIN(MicroblazeParser)
+
+package javacc;
+
 public class MicroblazeParser/*@bgen(jjtree)*/implements MicroblazeParserTreeConstants/*@egen*/
 {/*@bgen(jjtree)*/
   protected static JJTMicroblazeParserState jjtree = new JJTMicroblazeParserState();

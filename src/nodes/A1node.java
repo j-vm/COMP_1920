@@ -1,4 +1,4 @@
-package javacc.nodes;
+package nodes;
 
 public class A1node extends InstructionNode {
     private String r1;

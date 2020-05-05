@@ -1,4 +1,4 @@
-package javacc.nodes;
+package nodes;
 
 import org.jgrapht.graph.DefaultEdge;
 

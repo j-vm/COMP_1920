@@ -1,4 +1,4 @@
-package javacc.nodes;
+package nodes;
 
 
 import java.util.List;
