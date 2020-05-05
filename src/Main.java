@@ -74,7 +74,7 @@ public class Main {
 						SimpleNode root = trace.Expression(); // returns reference to root node
 						 //root.dump(""); // prints the tree on the screen
 
-						traceToCFG(root);
+						cfgToGraph(traceToCFG(root));
 
 					} catch (Exception e) {
 						System.err.print(e);
@@ -96,14 +96,15 @@ public class Main {
 	 * @param root node of javacc graph created by the parser
 	 * 
 	 */
-	private static void traceToGraph(SimpleNode root) {
-		int numChildren = root.jjtGetNumChildren();
+	private static void cfgToGraph(CfgNode cfgRoot) {
+		CfgNode curNode = cfgRoot;
 		HashMap<String, InstructionNode> lastToAlter = new HashMap<String, InstructionNode>();
-		for (int i = 0; i < numChildren; i++) {
+		int decisionPath = 0;
+		while (true) {
+
 			String address;
 			String instruction;
-
-			Node javaccNode = root.jjtGetChild(i);
+			/*
 			if (javaccNode instanceof SimpleNode) {
 				SimpleNode javaccSimpleNode = ((SimpleNode) javaccNode);
 
@@ -136,7 +137,9 @@ public class Main {
 					}
 				}
 			}
-
+*/
+			if(cfGraph.outgoingEdgesOf(curNode).isEmpty()) break;
+			//else (cfGraph.outgoingEdgesOf(curNode).size() == 1) curNode = cfGraph.getEdgeTarget();
 		}
 	}
 
@@ -170,10 +173,11 @@ public class Main {
 	}
 
 
-	private static void traceToCFG(SimpleNode root) {
+	private static CfgNode traceToCFG(SimpleNode root) {
 		int numChildren = root.jjtGetNumChildren();
 
 		HashMap<String, CfgNode> nodes = new HashMap<String, CfgNode>();
+		CfgNode cfgRoot = new CfgNode(-1, "-1", "START");
 		String lastAddress = null;
 		System.out.println(numChildren);
 
@@ -186,35 +190,39 @@ public class Main {
 				SimpleNode javaccSimpleNode = ((SimpleNode) javaccNode);
 				address = javaccSimpleNode.getAddress();
 
-				if(!nodes.containsKey(address)){
+				if (!nodes.containsKey(address)) {
 					CfgNode vertex = new CfgNode(i, address, javaccSimpleNode.getInstruction());
 
 					setRegisters(javaccSimpleNode, vertex);
 
 					cfGraph.addVertex(vertex);
 					nodes.put(address, vertex);
-					if (lastAddress != null){
+					if (lastAddress != null) {
 						cfGraph.addEdge(nodes.get(lastAddress), vertex);
-						if(cfGraph.outgoingEdgesOf(nodes.get(lastAddress)).size() > 1) {
+						if (cfGraph.outgoingEdgesOf(nodes.get(lastAddress)).size() > 1) {
 							cfGraph.getEdge(nodes.get(lastAddress), vertex).addPath(decisionPath);
 							decisionPath++;
 						}
+					} else {
+						cfGraph.addEdge(cfgRoot, vertex);
 					}
-				}else{
-					if(!cfGraph.containsEdge(nodes.get(lastAddress), nodes.get(address))) {
+				} else {
+					if (!cfGraph.containsEdge(nodes.get(lastAddress), nodes.get(address))) {
 						cfGraph.addEdge(nodes.get(lastAddress), nodes.get(address)).addPath(decisionPath);
 						decisionPath++;
-					}else{
-						if(!cfGraph.getEdge(nodes.get(lastAddress), nodes.get(address)).isPathEmpty()){
+					} else {
+						if (!cfGraph.getEdge(nodes.get(lastAddress), nodes.get(address)).isPathEmpty()) {
 							cfGraph.getEdge(nodes.get(lastAddress), nodes.get(address)).addPath(decisionPath);
 							decisionPath++;
 						}
-						}
 					}
-				lastAddress = address;
 				}
+				lastAddress = address;
 			}
-		}
+				}
+		return cfgRoot;
+	}
+
 
 
 	private static int parseAddress(String address){
