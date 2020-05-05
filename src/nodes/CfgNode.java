@@ -1,8 +1,6 @@
 package nodes;
 
 
-import java.util.List;
-
 public class CfgNode implements java.io.Serializable{
 
        private int id;
@@ -12,7 +10,6 @@ public class CfgNode implements java.io.Serializable{
        private String register2;
        private String register3;
        private String literal;
-       public List<Integer> path;
 
        public int getId() {
               return id;

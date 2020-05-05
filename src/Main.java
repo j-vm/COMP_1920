@@ -169,44 +169,6 @@ public class Main {
 		}
 	}
 
-/*	private static void traceToCFG(SimpleNode root){
-		int numChildren = root.jjtGetNumChildren();
-		Map<String, TraceLine> nodes = new HashMap<String, TraceLine>();
-		Vector<TraceLine> orderedNodes = new Vector<TraceLine>();
-
-		boolean inLoop = false;
-		int currLoopHeadId = 0;
-		int currLoopOffset = 0;
-		int currLoopSize = 0;
-		int currLoopRepetitions = 0;
-
-		for (int i = 0; i < numChildren; i++) {
-			Node javaCCNode = root.jjtGetChild(i);
-			if (javaCCNode instanceof SimpleNode){
-				SimpleNode simpleNode = ((SimpleNode) javaCCNode);
-
-				String address = simpleNode.getAddress();
-				String instruction = simpleNode.getInstruction();
-
-				if(nodes.containsKey(address)){
-					if(!inLoop){
-						currLoopHeadId = nodes.get(address).getId();
-						currLoopRepetitions = 0;
-					}else{
-
-					}
-
-					orderedNodes.get(nodes.get(address).getId()).setLoopHeaderId(currLoopHead);
-				}else{
-					TraceLine newNode =  new TraceLine(i, address, instruction);
-					nodes.put(address, newNode);
-					orderedNodes.add(newNode);
-				}
-			}
-		}
-	}*/
-
-
 
 	private static void traceToCFG(SimpleNode root) {
 		int numChildren = root.jjtGetNumChildren();
@@ -226,10 +188,17 @@ public class Main {
 
 				if(!nodes.containsKey(address)){
 					CfgNode vertex = new CfgNode(i, address, javaccSimpleNode.getInstruction());
+
+					setRegisters(javaccSimpleNode, vertex);
+
 					cfGraph.addVertex(vertex);
 					nodes.put(address, vertex);
 					if (lastAddress != null){
 						cfGraph.addEdge(nodes.get(lastAddress), vertex);
+						if(cfGraph.outgoingEdgesOf(nodes.get(lastAddress)).size() > 1) {
+							cfGraph.getEdge(nodes.get(lastAddress), vertex).addPath(decisionPath);
+							decisionPath++;
+						}
 					}
 				}else{
 					if(!cfGraph.containsEdge(nodes.get(lastAddress), nodes.get(address))) {
@@ -240,13 +209,12 @@ public class Main {
 							cfGraph.getEdge(nodes.get(lastAddress), nodes.get(address)).addPath(decisionPath);
 							decisionPath++;
 						}
+						}
 					}
-				}
 				lastAddress = address;
+				}
 			}
 		}
-
-	}
 
 
 	private static int parseAddress(String address){
@@ -264,4 +232,13 @@ public class Main {
 		}
 		return val;
 	}
+
+	private static void setRegisters(SimpleNode node, CfgNode vertex){
+		if(node.getRegister1() != null) vertex.setRegister1(node.getRegister1());
+		if(node.getRegister2() != null) vertex.setRegister2(node.getRegister2());
+		if(node.getRegister3() != null) vertex.setRegister3(node.getRegister3());
+		if(node.getLiteral() != null) vertex.setLiteral(node.getLiteral());
+	}
+
 }
+
