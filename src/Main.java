@@ -4,6 +4,7 @@ import javacc.SimpleNode;
 import nodes.CfgNode;
 import nodes.InstructionNode;
 import nodes.PathEdge;
+import Ccode.*;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -21,9 +22,11 @@ public class Main {
 	static Graph<CfgNode, PathEdge> cfGraph = new DefaultDirectedGraph<>(PathEdge.class);
 	static Graph<InstructionNode, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		//[TO TEST]
-		loadGraph("./input/fir-O2.txt");
+		CfgNode rootnode =  loadGraph("./input/fir-O2.txt");
+		GenerateCode code = new GenerateCode(cfGraph,rootnode,"output.c");
+		code.exportCode();
 		// [PROPER USE]
 		//checkArgs(args);
 		//loadGraph(args[0]);
