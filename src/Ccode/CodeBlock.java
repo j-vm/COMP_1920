@@ -15,6 +15,9 @@ public class CodeBlock {
         return "memory[" + reg1 + reg2 + "]";
     }
 
+    public String output(){
+        return "//[ERROR]: Couldn't understand instruction";
+    }
 
 
 }
