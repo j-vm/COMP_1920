@@ -4,7 +4,7 @@ import Ccode.CodeBlock;
 
 public class CodeSwi extends CodeBlock {
     @Override
-    public String output(int reg1,int reg2,int literal){
+    public String output(){
         return memToC(reg2,literal) + " = " + regToC(reg1) + ";";
     }
 }
