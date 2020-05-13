@@ -1,11 +1,13 @@
 package Ccode;
 
 
-public class GenerateCode {
+public class CodeBlock {
     int reg1;
     int reg2;
     int reg3;
     int literal;
+
+
 
     public String regToC(int reg1){
         return "registers[" + reg1 + "]";
