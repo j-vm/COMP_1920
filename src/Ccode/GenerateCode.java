@@ -43,21 +43,70 @@ public class GenerateCode {
     }
 
     private CodeBlock generateCodeBlock(CfgNode node) {
+        CodeBlock codeBlock;
         switch (node.getInstruction()){
             case "START":
-                CodeRoot codeBlock = new CodeRoot();
+                 codeBlock = new CodeRoot();
                 break;
             case "addi":
+                  codeBlock = new CodeAddi(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getLiteral()));
                 break;
             case "addik":
+                 codeBlock = new CodeAddik(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
                 break;
-            case "..":
+            case "addk":
+                 codeBlock = new CodeAddk(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
                 break;
-            case "...":
+            case "beqid":
+                 codeBlock = new CodeBeqid(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getLiteral()));
+                break;
+            case "bgeid":
+                 codeBlock = new CodeBgeid(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getLiteral()));
+                break;
+            case "bleid":
+                 codeBlock = new CodeBleid(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getLiteral()));
+                break;
+            case "bneid":
+                 codeBlock = new CodeBneid(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getLiteral()));
+                break;
+            case "brai":
+                 codeBlock = new CodeBrai(Integer.parseInt(node.getLiteral()));
+                break;
+            case "brlid":
+                 codeBlock = new CodeBrlid(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getLiteral()));
+                break;
+            case "bslli":
+                 codeBlock = new CodeBslli(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getLiteral()));
+                break;
+            case "lw":
+                 codeBlock = new CodeLw(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                break;
+            case "lwi":
+                 codeBlock = new CodeLwi(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getLiteral()));
+                break;
+            case "mul":
+                 codeBlock = new CodeMul(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                break;
+            case "or":
+                 codeBlock = new CodeOr(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                break;
+            case "rsubk":
+                 codeBlock = new CodeRsubk(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                break;
+            case "sw":
+                 codeBlock = new CodeSw(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                break;
+            case "swi":
+                 codeBlock = new CodeSwi(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getLiteral()));
+                break;
+            case "xori":
+                 codeBlock = new CodeXori(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getLiteral()));
                 break;
             case "END":
+                 codeBlock = new CodeEnd();
                 break;
             default:
+                codeBlock = new CodeBlock(0,0,0,0);
                 break;
         }
         return codeBlock;
