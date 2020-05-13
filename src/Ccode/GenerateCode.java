@@ -17,14 +17,17 @@ public class GenerateCode {
     static Graph<CfgNode, PathEdge> cfGraph = new DefaultDirectedGraph<>(PathEdge.class);
     static CfgNode rootNode;
     static String outputFileName;
+    private int decision; //temporary way to manage loops
 
     public GenerateCode(Graph<CfgNode, PathEdge> cfGraph, CfgNode rootNode, String outputFileName) {
-        this.cfGraph = cfGraph;
-        this.rootNode = rootNode;
-        this.outputFileName = outputFileName;
+        GenerateCode.cfGraph = cfGraph;
+        GenerateCode.rootNode = rootNode;
+        GenerateCode.outputFileName = outputFileName;
+        this.decision = 0;
     }
 
     public void exportCode() throws IOException {
+
         FileWriter fileWriter = new FileWriter(outputFileName);
         PrintWriter printWriter = new PrintWriter(fileWriter);
 
@@ -33,7 +36,7 @@ public class GenerateCode {
             var codeBlock = generateCodeBlock(node);
             printWriter.print(codeBlock.output() + "\n");
             if (node.getInstruction() == "END") break;
-            else node = nextNode(node);
+            else node = nextNode(node, printWriter);
         }
 
         //printWriter.print("Some String");
@@ -112,17 +115,29 @@ public class GenerateCode {
         return codeBlock;
     }
 
-    private CfgNode nextNode(CfgNode node) {
+    private CfgNode nextNode(CfgNode node, PrintWriter printWriter) {
         //TODO: return correct unique, connected, and priority node
         List<PathEdge> outgoingEdges = new ArrayList<PathEdge>(cfGraph.outgoingEdgesOf(node));
+        if(cfGraph.incomingEdgesOf(node).size()<1) printWriter.println("[[wile(CONDITION){]]");
         if(outgoingEdges.size() == 1)
             return cfGraph.getEdgeTarget(outgoingEdges.get(0));
         else{
-
-
-
+            for (PathEdge outgoingEdge: outgoingEdges) {
+                if(!outgoingEdge.isPathEmpty()){
+                    if(outgoingEdge.pathContains(decision)){
+                        decision++;
+                        return cfGraph.getEdgeTarget(outgoingEdge);
+                    }
+                }
+            }
+            for (PathEdge outgoingEdge: outgoingEdges) {
+                if(outgoingEdge.isPathEmpty()){
+                    return cfGraph.getEdgeTarget(outgoingEdges.get(0));
+                }
+            }
         }
-        return node;
+        System.err.println("ERROR - Couldn't traverse cfg while generating code");
+        return cfGraph.getEdgeTarget(outgoingEdges.get(0));
     }
 
 

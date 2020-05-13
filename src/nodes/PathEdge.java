@@ -28,6 +28,11 @@ public class PathEdge
         return path.isEmpty();
     }
 
+    public boolean pathContains(int element){
+
+        return path.contains(element);
+    }
+
     @Override
     public String toString()
     {
