@@ -1,5 +1,6 @@
 package Ccode;
 
+import Ccode.CodeBlocks.*;
 import nodes.CfgNode;
 import nodes.PathEdge;
 import org.jgrapht.Graph;
@@ -40,6 +41,24 @@ public class GenerateCode {
     }
 
     private CodeBlock generateCodeBlock(CfgNode node) {
+        switch (node.getInstruction()){
+            case "START":
+                CodeRoot codeBlock = new CodeRoot();
+                break;
+            case "addi":
+                break;
+            case "addik":
+                break;
+            case "..":
+                break;
+            case "...":
+                break;
+            case "END":
+                break;
+            default:
+                break;
+        }
+
     }
 
     private CfgNode nextNode(CfgNode node) {
