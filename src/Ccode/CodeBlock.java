@@ -7,8 +7,6 @@ public class CodeBlock {
     int reg3;
     int literal;
 
-
-
     public String regToC(int reg1){
         return "registers[" + reg1 + "]";
     }

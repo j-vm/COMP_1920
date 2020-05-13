@@ -219,7 +219,12 @@ public class Main {
 				}
 				lastAddress = address;
 			}
-				}
+		}
+
+		CfgNode cfgEnd = new CfgNode(-2, "-2", "END");
+		cfGraph.addVertex(cfgEnd);
+		cfGraph.addEdge(nodes.get(lastAddress), cfgEnd);
+
 		return cfgRoot;
 	}
 

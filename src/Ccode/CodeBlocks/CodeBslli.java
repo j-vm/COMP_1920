@@ -4,7 +4,7 @@ import Ccode.CodeBlock;
 
 public class CodeBslli extends CodeBlock {
     @Override
-    public String output(int reg1, int reg2, int literal){
+    public String output(){
         return regToC(reg1) + "= ( " + regToC(reg2) + " << " + literal + ";";
     }
 }

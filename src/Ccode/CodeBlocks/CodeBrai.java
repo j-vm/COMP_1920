@@ -4,7 +4,7 @@ import Ccode.CodeBlock;
 
 public class CodeBrai extends CodeBlock {
     @Override
-    public String output(int literal){
+    public String output(){
         return "PC = PC + " + literal + ";";
     }
 }
