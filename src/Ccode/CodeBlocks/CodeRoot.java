@@ -9,10 +9,10 @@ public class CodeRoot extends CodeBlock {
 
     @Override
     public String output(){
-    return "int[] registers; \n" +
-            "int[] memory; \n" +
+    return "int[32] registers; \n" +
+            "memset(memory,0,1024);\n" +
             "int[] flags; \n " +
             "int PC = 0; \n " +
-            "int main(){";
+            "int main(){\n";
     }
 }
