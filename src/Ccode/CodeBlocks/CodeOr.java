@@ -1,6 +1,8 @@
 package Ccode.CodeBlocks;
 
-public class CodeOr extends GenerateCode {
+import Ccode.CodeBlock;
+
+public class CodeOr extends CodeBlock {
     public String output(int reg1,int reg2,int reg3){
         return regToC(reg1) + "=" + regToC(reg2) + "||" + regToC(reg3) + ";";
     }
