@@ -1,6 +1,6 @@
 package Ccode;
 
-import Ccode.CodeBlocks.CodeRoot;
+import Ccode.CodeBlocks.*;
 import nodes.CfgNode;
 import nodes.PathEdge;
 import org.jgrapht.Graph;

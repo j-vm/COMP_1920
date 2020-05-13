@@ -63,8 +63,9 @@ public class Main {
 	 * @param fileName File to be parsed
 	 * 
 	 */
-	private static void loadGraph(String fileName) {
+	private static CfgNode loadGraph(String fileName) {
 		File f = new File(fileName);
+		CfgNode rootNode = null;
 		if (f.isFile() && f.canRead()) {
 			try {
 				FileInputStream fis = new FileInputStream(f);
@@ -74,7 +75,7 @@ public class Main {
 						SimpleNode root = trace.Expression(); // returns reference to root node
 						 //root.dump(""); // prints the tree on the screen
 
-						cfgToGraph(traceToCFG(root));
+						rootNode = traceToCFG(root);
 
 					} catch (Exception e) {
 						System.err.print(e);
@@ -87,6 +88,7 @@ public class Main {
 				System.exit(-1);
 			}
 		}
+		return rootNode;
 	}
 
 	/**
@@ -160,7 +162,8 @@ public class Main {
 			map.put("label", DefaultAttribute.createAttribute(e.toString()));return map;});
 		Writer writer=new StringWriter();
 		exporter.exportGraph(cfGraph,writer);
-		//System.out.println(writer.toString());
+
+		System.out.println(writer.toString());
 		try {
 			FileWriter myWriter = new FileWriter("output.dot");
 			myWriter.write(writer.toString());
@@ -177,7 +180,8 @@ public class Main {
 		int numChildren = root.jjtGetNumChildren();
 
 		HashMap<String, CfgNode> nodes = new HashMap<String, CfgNode>();
-		CfgNode cfgRoot = new CfgNode(-1, "-1", "START");
+		CfgNode cfgRoot = new CfgNode(-1, "start", "START");
+		cfGraph.addVertex(cfgRoot);
 		String lastAddress = null;
 		System.out.println(numChildren);
 
@@ -221,12 +225,14 @@ public class Main {
 			}
 		}
 
-		CfgNode cfgEnd = new CfgNode(-2, "-2", "END");
+		CfgNode cfgEnd = new CfgNode(-2, "end", "END");
 		cfGraph.addVertex(cfgEnd);
 		cfGraph.addEdge(nodes.get(lastAddress), cfgEnd);
 
 		return cfgRoot;
+
 	}
+
 
 
 
