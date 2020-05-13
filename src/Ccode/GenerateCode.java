@@ -1,6 +1,6 @@
 package Ccode;
 
-import Ccode.CodeBlocks.*;
+import Ccode.CodeBlocks.CodeRoot;
 import nodes.CfgNode;
 import nodes.PathEdge;
 import org.jgrapht.Graph;
@@ -9,6 +9,8 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenerateCode {
 
@@ -58,12 +60,19 @@ public class GenerateCode {
             default:
                 break;
         }
-
+        return codeBlock;
     }
 
     private CfgNode nextNode(CfgNode node) {
         //TODO: return correct unique, connected, and priority node
+        List<PathEdge> outgoingEdges = new ArrayList<PathEdge>(cfGraph.outgoingEdgesOf(node));
+        if(outgoingEdges.size() == 1)
+            return cfGraph.getEdgeTarget(outgoingEdges.get(0));
+        else{
 
+
+
+        }
         return node;
     }
 
