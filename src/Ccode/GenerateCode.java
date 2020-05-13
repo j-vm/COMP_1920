@@ -52,58 +52,58 @@ public class GenerateCode {
                  codeBlock = new CodeRoot();
                 break;
             case "addi":
-                  codeBlock = new CodeAddi(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getLiteral()));
+                  codeBlock = new CodeAddi(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
                 break;
             case "addik":
-                 codeBlock = new CodeAddik(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                 codeBlock = new CodeAddik(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
                 break;
             case "addk":
-                 codeBlock = new CodeAddk(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                 codeBlock = new CodeAddk(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getRegister3()));
                 break;
             case "beqid":
-                 codeBlock = new CodeBeqid(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getLiteral()));
+                 codeBlock = new CodeBeqid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
                 break;
             case "bgeid":
-                 codeBlock = new CodeBgeid(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getLiteral()));
+                 codeBlock = new CodeBgeid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
                 break;
             case "bleid":
-                 codeBlock = new CodeBleid(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getLiteral()));
+                 codeBlock = new CodeBleid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
                 break;
             case "bneid":
-                 codeBlock = new CodeBneid(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getLiteral()));
+                 codeBlock = new CodeBneid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
                 break;
             case "brai":
-                 codeBlock = new CodeBrai(Integer.parseInt(node.getLiteral()));
+                 codeBlock = new CodeBrai(registerToInt(node.getLiteral()));
                 break;
             case "brlid":
-                 codeBlock = new CodeBrlid(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getLiteral()));
+                 codeBlock = new CodeBrlid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
                 break;
             case "bslli":
-                 codeBlock = new CodeBslli(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getLiteral()));
+                 codeBlock = new CodeBslli(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
                 break;
             case "lw":
-                 codeBlock = new CodeLw(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                 codeBlock = new CodeLw(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getRegister3()));
                 break;
             case "lwi":
-                 codeBlock = new CodeLwi(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getLiteral()));
+                 codeBlock = new CodeLwi(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
                 break;
             case "mul":
-                 codeBlock = new CodeMul(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                 codeBlock = new CodeMul(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getRegister3()));
                 break;
             case "or":
-                 codeBlock = new CodeOr(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                 codeBlock = new CodeOr(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getRegister3()));
                 break;
             case "rsubk":
-                 codeBlock = new CodeRsubk(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                 codeBlock = new CodeRsubk(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getRegister3()));
                 break;
             case "sw":
-                 codeBlock = new CodeSw(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getRegister3()));
+                 codeBlock = new CodeSw(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getRegister3()));
                 break;
             case "swi":
-                 codeBlock = new CodeSwi(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getLiteral()));
+                 codeBlock = new CodeSwi(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
                 break;
             case "xori":
-                 codeBlock = new CodeXori(Integer.parseInt(node.getRegister1()),Integer.parseInt(node.getRegister2()),Integer.parseInt(node.getLiteral()));
+                 codeBlock = new CodeXori(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
                 break;
             case "END":
                  codeBlock = new CodeEnd();
@@ -113,6 +113,11 @@ public class GenerateCode {
                 break;
         }
         return codeBlock;
+    }
+
+    private int registerToInt(String register) {
+        if(register.charAt(0) == 'r') return Integer.parseInt(register.substring(1));
+        else return Integer.parseInt(register);
     }
 
     private CfgNode nextNode(CfgNode node, PrintWriter printWriter) {
@@ -139,6 +144,7 @@ public class GenerateCode {
         System.err.println("ERROR - Couldn't traverse cfg while generating code");
         return cfGraph.getEdgeTarget(outgoingEdges.get(0));
     }
+
 
 
 }
