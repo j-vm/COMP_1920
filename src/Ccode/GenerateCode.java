@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GenerateCode {
@@ -18,23 +19,39 @@ public class GenerateCode {
     static CfgNode rootNode;
     static String outputFileName;
     private int decision; //temporary way to manage loops
+    private boolean mode;
+    private boolean newNode = false;
 
-    public GenerateCode(Graph<CfgNode, PathEdge> cfGraph, CfgNode rootNode, String outputFileName) {
+
+    public GenerateCode(Graph<CfgNode, PathEdge> cfGraph, CfgNode rootNode, String outputFileName, boolean mode) {
         GenerateCode.cfGraph = cfGraph;
         GenerateCode.rootNode = rootNode;
         GenerateCode.outputFileName = outputFileName;
         this.decision = 0;
+        this.mode = mode;
     }
 
     public void exportCode() throws IOException {
+
+        HashMap<CfgNode, Boolean> nodes= new HashMap<CfgNode, Boolean>();
 
         FileWriter fileWriter = new FileWriter(outputFileName);
         PrintWriter printWriter = new PrintWriter(fileWriter);
 
         var node = rootNode;
         while (true){
-            var codeBlock = generateCodeBlock(node);
-            printWriter.print(codeBlock.output() + "\n");
+            if(mode){
+                var codeBlock = generateCodeBlock(node);
+                printWriter.print(codeBlock.output() + "\n");
+            }
+            else{
+                if(!nodes.containsKey(node)){
+                    var codeBlock = generateCodeBlock(node);
+                    printWriter.print(codeBlock.output() + "\n");
+                    nodes.put(node, true);
+                    newNode = true;
+                }
+            }
             if (node.getInstruction() == "END") break;
             else node = nextNode(node, printWriter);
         }
@@ -123,7 +140,13 @@ public class GenerateCode {
     private CfgNode nextNode(CfgNode node, PrintWriter printWriter) {
         //TODO: return correct unique, connected, and priority node
         List<PathEdge> outgoingEdges = new ArrayList<PathEdge>(cfGraph.outgoingEdgesOf(node));
-        if(cfGraph.incomingEdgesOf(node).size()>1) printWriter.println("// ------- wile(CONDITION) -------");
+        if(cfGraph.incomingEdgesOf(node).size()>1) {
+            if(mode) printWriter.println("// ------- wile(CONDITION) -------");
+            else if(newNode){
+                printWriter.println("// ------- wile(CONDITION) -------");
+                newNode = false;
+            }
+        }
         if(outgoingEdges.size() == 1)
             return cfGraph.getEdgeTarget(outgoingEdges.get(0));
         else{
