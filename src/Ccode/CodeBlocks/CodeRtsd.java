@@ -9,6 +9,6 @@ public class CodeRtsd extends CodeBlock {
 
     @Override
     public String output(){
-        return "PC" + " = " + regToC(reg1) + " + ( imm );";
+        return "PC" + " = " + regToC(reg1) + " + ( imm ); //Not compelte";
     }
 }

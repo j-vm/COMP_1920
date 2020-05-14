@@ -9,6 +9,6 @@ public class CodeCmp extends CodeBlock {
 
     @Override
     public String output(){
-        return regToC(reg1) + " = ( " + regToC(reg3) + " - " + regToC(reg2) + " ) );";
+        return regToC(reg1) + " = ( " + regToC(reg3) + " - " + regToC(reg2) + " ) ); //Not compelte";
     }
 }

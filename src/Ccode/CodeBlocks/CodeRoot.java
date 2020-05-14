@@ -13,7 +13,7 @@ public class CodeRoot extends CodeBlock {
             "memset(memory,0,1024);\n" +
             "int[8] flags;\n" +
             "int PC = 0;\n" +
-            "int imm[32] = 0;\n" +
+            "int imm = 0;\n" +
             "int main(){\n";
     }
 }
