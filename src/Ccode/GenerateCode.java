@@ -122,6 +122,15 @@ public class GenerateCode {
             case "xori":
                  codeBlock = new CodeXori(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
                 break;
+            case "imm":
+                codeBlock = new CodeImm(registerToInt(node.getLiteral()));
+                break;
+            case "rtsd":
+                codeBlock = new CodeRtsd(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
+                break;
+            case "cmp":
+                codeBlock = new CodeCmp(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getRegister3()));
+                break;
             case "END":
                  codeBlock = new CodeEnd();
                 break;

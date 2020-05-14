@@ -2,13 +2,15 @@ package Ccode.CodeBlocks;
 
 import Ccode.CodeBlock;
 
-public class CodeBrai extends CodeBlock {
-    public CodeBrai(int literal) {
+public class CodeImm extends CodeBlock {
+
+
+    public CodeImm(int literal) {
         super(0, 0, 0, literal);
     }
 
     @Override
     public String output(){
-        return "PC = PC + ( " + literal + " );";
+        return "imm" + " = " + " ( " + literal + " );";
     }
 }
