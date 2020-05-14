@@ -11,6 +11,6 @@ public class CodeImm extends CodeBlock {
 
     @Override
     public String output(){
-        return "imm" + " = " + " ( " + literal + " ); //Not compelte";
+        return "imm" + " = " + " ( " + literal + " ); //Not completed";
     }
 }
