@@ -1,10 +1,10 @@
+import Ccode.GenerateCode;
 import javacc.MicroblazeParser;
 import javacc.Node;
 import javacc.SimpleNode;
 import nodes.CfgNode;
 import nodes.InstructionNode;
 import nodes.PathEdge;
-import Ccode.*;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -22,13 +22,15 @@ public class Main {
 	static Graph<CfgNode, PathEdge> cfGraph = new DefaultDirectedGraph<>(PathEdge.class);
 	static Graph<InstructionNode, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
+	static private int FUNCTION_ISOLATION = 6;
+
 	public static void main(String[] args) throws IOException {
 		//[TO TEST]
 		CfgNode rootnode =  loadGraph("./input/fir-O2.txt");
 		GenerateCode code = new GenerateCode(cfGraph,rootnode,"output.c", true);
-		//GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output2.c", false);
+		GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output2.c", false);
 		code.exportCode();
-		//code2.exportCode();
+		code2.exportCode();
 		// [PROPER USE]
 		//checkArgs(args);
 		//loadGraph(args[0]);
@@ -183,7 +185,6 @@ public class Main {
 
 	private static CfgNode traceToCFG(SimpleNode root) {
 		int numChildren = root.jjtGetNumChildren();
-
 		HashMap<String, CfgNode> nodes = new HashMap<String, CfgNode>();
 		CfgNode cfgRoot = new CfgNode(-1, "start", "START");
 		cfGraph.addVertex(cfgRoot);
@@ -192,7 +193,7 @@ public class Main {
 
 		int decisionPath = 0;
 
-		for (int i = 0; i < numChildren; i++) {
+		for (int i = parseFunction(root); i < numChildren; i++) {
 			String address;
 			Node javaccNode = root.jjtGetChild(i);
 			if (javaccNode instanceof SimpleNode) {
@@ -264,5 +265,19 @@ public class Main {
 		if(node.getLiteral() != null) vertex.setLiteral(node.getLiteral());
 	}
 
+
+	private static int parseFunction(SimpleNode root){
+		int iterator = 0;
+		int count = 0;
+		while(count < FUNCTION_ISOLATION && iterator < root.jjtGetNumChildren()){
+			Node javaccNode = root.jjtGetChild(iterator);
+			if (javaccNode instanceof SimpleNode) {
+				SimpleNode javaccSimpleNode = ((SimpleNode) javaccNode);
+				if(javaccSimpleNode.getInstruction().equals("brlid")) {count++;}
+			}
+			iterator++;
+		}
+		return iterator;
+	}
 }
 

@@ -70,6 +70,7 @@ void fir_original(int x[], int c[], int M1, int N1, int *y) {
 int main() {
 	//int result;
 	int y[M];
+
 	fir_original(x, c, M, N, y);
 
 

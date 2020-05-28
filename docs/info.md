@@ -345,8 +345,18 @@ IB -> C2, R, LIT
     
 
 
+asm("#LOOP BEGIN:"::);
+
+  for (i = 0; i < N; i++) {
+
+     A[i] = B[i] + C;
+
+  }
+
+  asm("#LOOP END:"::);
 
 
-    
+objdump -> mb-objdump
 
 
+Calling Convention The caller function passes parameters to the callee function using either the registers (R5 through R10) or on its own stack frame. The callee uses the caller’s stack area to store the parameters passed to the callee. Refer to Figure 3-2. The parameters for Func 2 are stored either in the registers R5 through R10 or on the stack frame allocated for Func 1.

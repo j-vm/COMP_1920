@@ -34,7 +34,7 @@ public class GenerateCode {
     public void exportCode() throws IOException {
 
         HashMap<CfgNode, Boolean> nodes= new HashMap<CfgNode, Boolean>();
-
+        boolean firstNode = true;
         FileWriter fileWriter = new FileWriter(outputFileName);
         PrintWriter printWriter = new PrintWriter(fileWriter);
 
@@ -47,7 +47,8 @@ public class GenerateCode {
             else{
                 if(!nodes.containsKey(node)){
                     var codeBlock = generateCodeBlock(node);
-                    printWriter.print(codeBlock.output() + "\n");
+                    if(firstNode){printWriter.print(codeBlock.output() + "\n"); firstNode = false;}
+                    else printWriter.print("\t" + codeBlock.output() + "\n");;
                     nodes.put(node, true);
                     newNode = true;
                 }
