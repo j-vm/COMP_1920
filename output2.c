@@ -18,8 +18,8 @@ int generated(int registers[32], int *memory, ){
 6:
 	memory[1 + 0] = registers[15];
 7:
-	goto [HERE]+-264};
-	registers[15] = [HERE];
+	goto [HERE]+ (-66)};
+	registers[15] = [HERE] * 4;
 8:
 	registers[9] = registers[1] + ( 0 );
 9:
@@ -89,7 +89,7 @@ int generated(int registers[32], int *memory, ){
 41:
 	registers[18] = ( registers[18] - registers[22] ); //Not completed
 42:
-	if ( registers[18] >= 0 ) { goto [HERE]+92};
+	if ( registers[18] >= 0 ) { goto [HERE]+ (23)};
 43:
 	memory[19 + 8] = registers[3];
 44:
@@ -97,7 +97,7 @@ int generated(int registers[32], int *memory, ){
 45:
 	registers[12] = registers[0] + ( 0 );
 46:
-	if ( registers[9] <= 0 ) { goto [HERE]+52};
+	if ( registers[9] <= 0 ) { goto [HERE]+ (13)};
 // ------- wile(CONDITION) -------
 47:
 	registers[10] = registers[0] + registers[0];
@@ -115,7 +115,7 @@ int generated(int registers[32], int *memory, ){
 53:
 	registers[18] = registers[22] - registers[12] + 1;
 54:
-	if ( registers[18] != 0 ) { goto [HERE]+-68};
+	if ( registers[18] != 0 ) { goto [HERE]+ (-17)};
 55:
 	registers[6] = registers[6] + ( 0 );
 // ------- wile(CONDITION) -------
@@ -135,7 +135,7 @@ int generated(int registers[32], int *memory, ){
 62:
 	registers[18] = registers[9] - registers[7] + 1;
 63:
-	if ( registers[18] != 0 ) { goto [HERE]+-28};
+	if ( registers[18] != 0 ) { goto [HERE]+ (-7)};
 64:
 	registers[10] = registers[10] + registers[4];
 // ------- wile(CONDITION) -------
@@ -158,8 +158,8 @@ int generated(int registers[32], int *memory, ){
 73:
 	registers[19] = registers[3] + ( 0 );
 74:
-	goto [HERE]+832};
-	registers[15] = [HERE];
+	goto [HERE]+ (208)};
+	registers[15] = [HERE] * 4;
 75:
 	registers[0] = registers[0] || registers[0];
 76:

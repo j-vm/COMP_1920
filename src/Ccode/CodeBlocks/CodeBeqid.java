@@ -10,6 +10,6 @@ public class CodeBeqid extends CodeBlock {
     @Override
     public String output(){
         int jmp = literal/4;
-        return "if ( " + regToC(reg1) + " == 0 ) { goto [HERE]+" + jmp +"};";
+        return "if ( " + regToC(reg1) + " == 0 ) { goto [HERE]+ (" + jmp +")};";
     }
 }

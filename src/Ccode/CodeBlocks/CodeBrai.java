@@ -10,6 +10,6 @@ public class CodeBrai extends CodeBlock {
     @Override
     public String output(){
         int jmp = literal/4;
-        return "goto [HERE]+" + jmp +"};";
+        return "goto [HERE]+ (" + jmp +")};";
     }
 }
