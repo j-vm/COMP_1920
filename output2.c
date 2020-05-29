@@ -3,166 +3,166 @@ int generated(int registers[32], int *memory, ){
    int PC = 0;
    int imm = 0;
 
-0:
+0x0000014c:
 	registers[5] = registers[0] + ( 0 );
-1:
+0x00000264:
 	registers[5] = registers[0] + ( 0 );
-2:
+0x00000268:
 	registers[6] = registers[0] + ( 0 );
-3:
+0x0000026c:
 	registers[1] = registers[1] + ( 0 );
-4:
+0x00000270:
 	registers[7] = registers[0] + ( 0 );
-5:
+0x00000274:
 	registers[8] = registers[0] + ( 0 );
-6:
+0x00000278:
 	memory[1 + 0] = registers[15];
-7:
+0x0000027c:
 	goto [HERE]+-264};
-	registers[15] = [HERE];
-8:
+	registers[15] = [HERE] * 4;
+0x00000280:
 	registers[9] = registers[1] + ( 0 );
-9:
+0x00000174:
 	registers[1] = registers[1] + ( 0 );
-10:
+0x00000178:
 	memory[1 + 4] = registers[19];
-11:
+0x0000017c:
 	memory[1 + 8] = registers[22];
-12:
+0x00000180:
 	registers[4] = memory[5 + 0];
-13:
+0x00000184:
 	registers[3] = memory[6 + 0];
-14:
+0x00000188:
 	registers[19] = registers[9] + registers[0];
-15:
+0x0000018c:
 	registers[11] = registers[6] + registers[0];
-16:
+0x00000190:
 	registers[3] = registers[3] * registers[4];
-17:
+0x00000194:
 	registers[10] = registers[5] + registers[0];
-18:
+0x00000198:
 	registers[22] = registers[7] + registers[0];
-19:
+0x0000019c:
 	memory[19 + 0] = registers[3];
-20:
+0x000001a0:
 	registers[4] = memory[6 + 0];
-21:
+0x000001a4:
 	registers[3] = memory[11 + 4];
-22:
+0x000001a8:
 	registers[6] = memory[5 + 4];
-23:
+0x000001ac:
 	registers[5] = memory[5 + 0];
-24:
+0x000001b0:
 	registers[9] = registers[8] + registers[0];
-25:
+0x000001b4:
 	registers[4] = registers[4] * registers[6];
-26:
+0x000001b8:
 	registers[3] = registers[3] * registers[5];
-27:
+0x000001bc:
 	registers[4] = registers[4] + registers[3];
-28:
+0x000001c0:
 	memory[19 + 4] = registers[4];
-29:
+0x000001c4:
 	registers[3] = memory[11 + 0];
-30:
+0x000001c8:
 	registers[8] = memory[10 + 8];
-31:
+0x000001cc:
 	registers[5] = memory[11 + 4];
-32:
+0x000001d0:
 	registers[7] = memory[10 + 4];
-33:
+0x000001d4:
 	registers[4] = memory[11 + 8];
-34:
+0x000001d8:
 	registers[6] = memory[10 + 0];
-35:
+0x000001dc:
 	registers[3] = registers[3] * registers[8];
-36:
+0x000001e0:
 	registers[5] = registers[5] * registers[7];
-37:
+0x000001e4:
 	registers[4] = registers[4] * registers[6];
-38:
+0x000001e8:
 	registers[3] = registers[3] + registers[5];
-39:
+0x000001ec:
 	registers[3] = registers[3] + registers[4];
-40:
+0x000001f0:
 	registers[18] = registers[0] + ( 0 );
-41:
+0x000001f4:
 	registers[18] = ( registers[18] - registers[22] ); //Not completed
-42:
-	if ( registers[18] >= 0 ) { goto [HERE]+92};
-43:
+0x000001f8:
+	if ( registers[18] >= 0 ) { goto [HERE]+23};
+0x000001fc:
 	memory[19 + 8] = registers[3];
-44:
+0x00000200:
 	registers[6] = registers[10] + ( 0 );
-45:
+0x00000204:
 	registers[12] = registers[0] + ( 0 );
-46:
-	if ( registers[9] <= 0 ) { goto [HERE]+52};
+0x00000208:
+	if ( registers[9] <= 0 ) { goto [HERE]+13};
 // ------- wile(CONDITION) -------
-47:
+0x0000020c:
 	registers[10] = registers[0] + registers[0];
-48:
+0x00000210:
 	registers[8] = registers[6] + registers[0];
-49:
+0x00000214:
 	registers[7] = registers[10] + registers[0];
-50:
+0x0000023c:
 	registers[3] = ( registers[12] << ( 1026 ) );//Not completed
 // ------- wile(CONDITION) -------
-51:
+0x00000240:
 	registers[12] = registers[12] + ( 0 );
-52:
+0x00000244:
 	memory[19 + 3] = registers[10];
-53:
+0x00000248:
 	registers[18] = registers[22] - registers[12] + 1;
-54:
-	if ( registers[18] != 0 ) { goto [HERE]+-68};
-55:
+0x0000024c:
+	if ( registers[18] != 0 ) { goto [HERE]+-17};
+0x00000250:
 	registers[6] = registers[6] + ( 0 );
 // ------- wile(CONDITION) -------
-56:
+0x00000218:
 	registers[3] = ( registers[7] << ( 1026 ) );//Not completed
 // ------- wile(CONDITION) -------
-57:
+0x0000021c:
 	registers[5] = memory[8 + 0];
-58:
+0x00000220:
 	registers[4] = memory[11 + 3];
-59:
+0x00000224:
 	registers[7] = registers[7] + ( 0 );
-60:
+0x00000228:
 	registers[8] = registers[8] + ( 0 );
-61:
+0x0000022c:
 	registers[4] = registers[4] * registers[5];
-62:
+0x00000230:
 	registers[18] = registers[9] - registers[7] + 1;
-63:
-	if ( registers[18] != 0 ) { goto [HERE]+-28};
-64:
+0x00000234:
+	if ( registers[18] != 0 ) { goto [HERE]+-7};
+0x00000238:
 	registers[10] = registers[10] + registers[4];
 // ------- wile(CONDITION) -------
-65:
+0x00000254:
 	registers[19] = memory[1 + 4];
-66:
+0x00000258:
 	registers[22] = memory[1 + 8];
-67:
+0x0000025c:
 	PC = registers[15] + ( imm ); //Not completed
-68:
+0x00000260:
 	registers[1] = registers[1] + ( 0 );
-69:
+0x00000284:
 	registers[15] = memory[1 + 0];
-70:
+0x00000288:
 	registers[3] = registers[0] + registers[0];
-71:
+0x0000028c:
 	PC = registers[15] + ( imm ); //Not completed
-72:
+0x00000290:
 	registers[1] = registers[1] + ( 0 );
-73:
+0x00000150:
 	registers[19] = registers[3] + ( 0 );
-74:
+0x00000154:
 	goto [HERE]+832};
-	registers[15] = [HERE];
-75:
+	registers[15] = [HERE] * 4;
+0x00000158:
 	registers[0] = registers[0] || registers[0];
-76:
+0x00000494:
 	registers[1] = registers[1] + ( 0 );
-77:
+end:
 	}
