@@ -9,6 +9,7 @@ public class CodeBrlid extends CodeBlock {
 
     @Override
     public String output(){
-        return "goto [HERE]+" +literal+"};\n\t" +  regToC(reg1) + " = [HERE] * 4;";
+        int jmp = literal/4;
+        return "goto [HERE]+ (" + jmp +")};\n\t" +  regToC(reg1) + " = [HERE] * 4;";
     }
 }
