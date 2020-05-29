@@ -360,3 +360,39 @@ objdump -> mb-objdump
 
 
 Calling Convention The caller function passes parameters to the callee function using either the registers (R5 through R10) or on its own stack frame. The callee uses the caller’s stack area to store the parameters passed to the callee. Refer to Figure 3-2. The parameters for Func 2 are stored either in the registers R5 through R10 or on the stack frame allocated for Func 1.
+
+
+
+
+
+
+
+#NOTES MEETING 29/05
+
+## Get the program written,
+
+The structured program theorem, also called the Böhm–Jacopini theorem, is a result in programming language theory. It states that a class of control flow graphs (historically called flowcharts in this context) can compute any computable function if it combines subprograms in only three specific ways (control structures). These are
+
+1. Executing one subprogram, and then another subprogram (sequence)
+2. Executing one of two subprograms according to the value of a boolean expression (selection)
+3. Repeatedly executing a subprogram as long as a boolean expression is true (iteration)
+
+The structured chart subject to these constraints may however use additional variables in the form of bits (stored in an extra integer variable in the original proof) in order to keep track of information that the original program represents by the program location. The construction was based on Böhm's programming language P′′.
+
+The theorem forms the basis of structured programming, a programming paradigm which eschews goto commands and exclusively uses subroutines, sequences, selection and iteration.
+
+
+##then we take a look at:
+
+In the 1980s IBM researcher Harlan Mills oversaw the development of the COBOL Structuring Facility, which applied a structuring algorithm to COBOL code. Mills's transformation involved the following steps for each procedure.
+
+Identify the basic blocks in the procedure.
+Assign a unique label to each block's entry path, and label each block's exit paths with the labels of the entry paths they connect to. Use 0 for return from the procedure and 1 for the procedure's entry path.
+Break the procedure into its basic blocks.
+For each block that is the destination of only one exit path, reconnect that block to that exit path.
+Declare a new variable in the procedure (called L for reference).
+On each remaining unconnected exit path, add a statement that sets L to the label value on that path.
+Combine the resulting programs into a selection statement that executes the program with the entry path label indicated by L
+Construct a loop that executes this selection statement as long as L is not 0.
+Construct a sequence that initializes L to 1 and executes the loop.
+Note that this construction can be improved by converting some cases of the selection statement into subprocedures.

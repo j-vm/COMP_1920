@@ -38,6 +38,7 @@ public class GenerateCode {
         FileWriter fileWriter = new FileWriter(outputFileName);
         PrintWriter printWriter = new PrintWriter(fileWriter);
 
+        int labeler = 0;
         var node = rootNode;
         while (true){
             if(mode){
@@ -48,7 +49,10 @@ public class GenerateCode {
                 if(!nodes.containsKey(node)){
                     var codeBlock = generateCodeBlock(node);
                     if(firstNode){printWriter.print(codeBlock.output() + "\n"); firstNode = false;}
-                    else printWriter.print("\t" + codeBlock.output() + "\n");;
+                    else {
+                        printWriter.print(labeler+":\n\t" + codeBlock.output() + "\n");
+                        labeler++;
+                    }
                     nodes.put(node, true);
                     newNode = true;
                 }

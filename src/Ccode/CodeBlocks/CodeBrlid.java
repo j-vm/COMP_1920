@@ -9,6 +9,6 @@ public class CodeBrlid extends CodeBlock {
 
     @Override
     public String output(){
-        return "PC = PC + ( " + literal + " );" +  regToC(reg1) + " = PC;";
+        return "goto [HERE]+" +literal+"};\n\t" +  regToC(reg1) + " = [HERE] * 4;";
     }
 }

@@ -9,6 +9,7 @@ public class CodeBneid extends CodeBlock {
 
     @Override
     public String output(){
-        return "if ( " + regToC(reg1) + " != 0 ) { PC = PC + ( " + literal + " ); }";
+        int jmp = literal/4;
+        return "if ( " + regToC(reg1) + " != 0 ) { goto [HERE]+" + jmp +"};" ;
     }
 }

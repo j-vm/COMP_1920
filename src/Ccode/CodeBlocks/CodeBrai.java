@@ -9,6 +9,7 @@ public class CodeBrai extends CodeBlock {
 
     @Override
     public String output(){
-        return "PC = PC + ( " + literal + " );";
+        int jmp = literal/4;
+        return "goto [HERE]+" + jmp +"};";
     }
 }
