@@ -16,22 +16,22 @@ int generated(int registers[32], int *memory, ){
 0x00000274:
 	registers[8] = registers[0] + ( 0 );
 0x00000278:
-	memory[1 + 0] = registers[15];
+	memory[registers[1] + registers[0]] = registers[15];
 0x0000027c:
-	goto [HERE]+-264};
+	goto [HERE]+ (-66)};
 	registers[15] = [HERE] * 4;
 0x00000280:
 	registers[9] = registers[1] + ( 0 );
 0x00000174:
 	registers[1] = registers[1] + ( 0 );
 0x00000178:
-	memory[1 + 4] = registers[19];
+	memory[registers[1] + registers[4]] = registers[19];
 0x0000017c:
-	memory[1 + 8] = registers[22];
+	memory[registers[1] + registers[8]] = registers[22];
 0x00000180:
-	registers[4] = memory[5 + 0];
+	registers[4] = memory[registers[5] + registers[0]];
 0x00000184:
-	registers[3] = memory[6 + 0];
+	registers[3] = memory[registers[6] + registers[0]];
 0x00000188:
 	registers[19] = registers[9] + registers[0];
 0x0000018c:
@@ -43,15 +43,15 @@ int generated(int registers[32], int *memory, ){
 0x00000198:
 	registers[22] = registers[7] + registers[0];
 0x0000019c:
-	memory[19 + 0] = registers[3];
+	memory[registers[19] + registers[0]] = registers[3];
 0x000001a0:
-	registers[4] = memory[6 + 0];
+	registers[4] = memory[registers[6] + registers[0]];
 0x000001a4:
-	registers[3] = memory[11 + 4];
+	registers[3] = memory[registers[11] + registers[4]];
 0x000001a8:
-	registers[6] = memory[5 + 4];
+	registers[6] = memory[registers[5] + registers[4]];
 0x000001ac:
-	registers[5] = memory[5 + 0];
+	registers[5] = memory[registers[5] + registers[0]];
 0x000001b0:
 	registers[9] = registers[8] + registers[0];
 0x000001b4:
@@ -61,19 +61,19 @@ int generated(int registers[32], int *memory, ){
 0x000001bc:
 	registers[4] = registers[4] + registers[3];
 0x000001c0:
-	memory[19 + 4] = registers[4];
+	memory[registers[19] + registers[4]] = registers[4];
 0x000001c4:
-	registers[3] = memory[11 + 0];
+	registers[3] = memory[registers[11] + registers[0]];
 0x000001c8:
-	registers[8] = memory[10 + 8];
+	registers[8] = memory[registers[10] + registers[8]];
 0x000001cc:
-	registers[5] = memory[11 + 4];
+	registers[5] = memory[registers[11] + registers[4]];
 0x000001d0:
-	registers[7] = memory[10 + 4];
+	registers[7] = memory[registers[10] + registers[4]];
 0x000001d4:
-	registers[4] = memory[11 + 8];
+	registers[4] = memory[registers[11] + registers[8]];
 0x000001d8:
-	registers[6] = memory[10 + 0];
+	registers[6] = memory[registers[10] + registers[0]];
 0x000001dc:
 	registers[3] = registers[3] * registers[8];
 0x000001e0:
@@ -89,15 +89,15 @@ int generated(int registers[32], int *memory, ){
 0x000001f4:
 	registers[18] = ( registers[18] - registers[22] ); //Not completed
 0x000001f8:
-	if ( registers[18] >= 0 ) { goto [HERE]+23};
+	if ( registers[18] >= 0 ) { goto [HERE]+ (23)};
 0x000001fc:
-	memory[19 + 8] = registers[3];
+	memory[registers[19] + registers[8]] = registers[3];
 0x00000200:
 	registers[6] = registers[10] + ( 0 );
 0x00000204:
 	registers[12] = registers[0] + ( 0 );
 0x00000208:
-	if ( registers[9] <= 0 ) { goto [HERE]+13};
+	if ( registers[9] <= 0 ) { goto [HERE]+ (13)};
 // ------- wile(CONDITION) -------
 0x0000020c:
 	registers[10] = registers[0] + registers[0];
@@ -111,11 +111,11 @@ int generated(int registers[32], int *memory, ){
 0x00000240:
 	registers[12] = registers[12] + ( 0 );
 0x00000244:
-	memory[19 + 3] = registers[10];
+	memory[registers[19] + registers[3]] = registers[10];
 0x00000248:
 	registers[18] = registers[22] - registers[12] + 1;
 0x0000024c:
-	if ( registers[18] != 0 ) { goto [HERE]+-17};
+	if ( registers[18] != 0 ) { goto [HERE]+ (-17)};
 0x00000250:
 	registers[6] = registers[6] + ( 0 );
 // ------- wile(CONDITION) -------
@@ -123,9 +123,9 @@ int generated(int registers[32], int *memory, ){
 	registers[3] = ( registers[7] << ( 1026 ) );//Not completed
 // ------- wile(CONDITION) -------
 0x0000021c:
-	registers[5] = memory[8 + 0];
+	registers[5] = memory[registers[8] + registers[0]];
 0x00000220:
-	registers[4] = memory[11 + 3];
+	registers[4] = memory[registers[11] + registers[3]];
 0x00000224:
 	registers[7] = registers[7] + ( 0 );
 0x00000228:
@@ -135,20 +135,20 @@ int generated(int registers[32], int *memory, ){
 0x00000230:
 	registers[18] = registers[9] - registers[7] + 1;
 0x00000234:
-	if ( registers[18] != 0 ) { goto [HERE]+-7};
+	if ( registers[18] != 0 ) { goto [HERE]+ (-7)};
 0x00000238:
 	registers[10] = registers[10] + registers[4];
 // ------- wile(CONDITION) -------
 0x00000254:
-	registers[19] = memory[1 + 4];
+	registers[19] = memory[registers[1] + registers[4]];
 0x00000258:
-	registers[22] = memory[1 + 8];
+	registers[22] = memory[registers[1] + registers[8]];
 0x0000025c:
 	PC = registers[15] + ( imm ); //Not completed
 0x00000260:
 	registers[1] = registers[1] + ( 0 );
 0x00000284:
-	registers[15] = memory[1 + 0];
+	registers[15] = memory[registers[1] + registers[0]];
 0x00000288:
 	registers[3] = registers[0] + registers[0];
 0x0000028c:
@@ -158,7 +158,7 @@ int generated(int registers[32], int *memory, ){
 0x00000150:
 	registers[19] = registers[3] + ( 0 );
 0x00000154:
-	goto [HERE]+832};
+	goto [HERE]+ (208)};
 	registers[15] = [HERE] * 4;
 0x00000158:
 	registers[0] = registers[0] || registers[0];
