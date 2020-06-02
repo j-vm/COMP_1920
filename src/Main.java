@@ -242,21 +242,7 @@ public class Main {
 
 
 
-	private static int parseAddress(String address){
-		String[] tokens = address.split("x");
-		String hex = tokens[1];
 
-		String digits = "0123456789ABCDEF";
-		hex = hex.toUpperCase();
-		int val = 0;
-		for (int i = 0; i < hex.length(); i++)
-		{
-			char c = hex.charAt(i);
-			int d = digits.indexOf(c);
-			val = 16*val + d;
-		}
-		return val;
-	}
 
 	private static void setRegisters(SimpleNode node, CfgNode vertex){
 		if(node.getRegister1() != null) vertex.setRegister1(node.getRegister1());
