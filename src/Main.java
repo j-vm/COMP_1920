@@ -31,6 +31,8 @@ public class Main {
 		GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output2.c", false);
 		code.exportCode();
 		code2.exportCode();
+		code2.filterLabels();
+
 		// [PROPER USE]
 		//checkArgs(args);
 		//loadGraph(args[0]);

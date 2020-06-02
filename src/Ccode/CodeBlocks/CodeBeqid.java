@@ -12,6 +12,6 @@ public class CodeBeqid extends CodeBlock {
     @Override
     public String output(){
         int jmp = label + literal;
-        return "if ( " + regToC(reg1) + " == 0 ) { goto L" + jmp +";}";
+        return "if ( " + regToC(reg1) + " == 0 ) {\n\t\tgoto L" + jmp +";\n\t}";
     }
 }

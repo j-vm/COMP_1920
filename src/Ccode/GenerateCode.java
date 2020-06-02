@@ -6,12 +6,11 @@ import nodes.PathEdge;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class GenerateCode {
 
@@ -21,6 +20,8 @@ public class GenerateCode {
     private int decision; //temporary way to manage loops
     private boolean mode;
     private boolean newNode = false;
+    private List<Integer> labels = new ArrayList<Integer>();
+    private List<Integer> jmps = new ArrayList<Integer>();
 
 
     public GenerateCode(Graph<CfgNode, PathEdge> cfGraph, CfgNode rootNode, String outputFileName, boolean mode) {
@@ -64,9 +65,72 @@ public class GenerateCode {
 
         //printWriter.print("Some String");
         //printWriter.printf("Product name is %s and its price is %d $", "iPhone", 1000);
+
         printWriter.close();
 
     }
+
+    public void filterLabels() throws IOException {
+        File inputFile = new File("output2.c");
+        File outputFile = new File("output2Labeless.c");
+        BufferedReader reader;
+        BufferedWriter writer;
+        try{
+            reader = new BufferedReader(new FileReader(inputFile));
+            String line = reader.readLine();
+            while(line != null){
+                if(line.length() > 2 && line.length() < 7){
+                    String clean = line.replaceAll("\\D+","");
+                    labels.add(Integer.parseInt(clean));
+                }
+
+                if(line.length() > 7 && line.length() < 20){
+                    String clean = line.replaceAll("\\D+","");
+                    jmps.add(Integer.parseInt(clean));
+                }
+
+
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        List<Integer> common = new ArrayList<Integer>(labels);
+        common.retainAll(jmps);
+
+
+
+        try{
+            reader = new BufferedReader( new FileReader(inputFile));
+            writer = new BufferedWriter(new FileWriter(outputFile));
+            String line = reader.readLine();
+            while(line != null){
+                if(line.length()>3 && line.length() < 7){
+                    String clean = line.replaceAll("\\D+","");
+                    int i = Integer.parseInt(clean);
+                    for(Integer num : common){
+                        if(num == i){
+                            writer.write(line + System.getProperty("line.separator"));
+                        }
+                    }
+                }
+                else {
+                    writer.write(line + System.getProperty("line.separator"));
+                }
+                line = reader.readLine();
+            }
+            writer.close();
+            reader.close();
+            outputFile.renameTo(inputFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     private static int parseAddress(String address){
         String[] tokens = address.split("x");

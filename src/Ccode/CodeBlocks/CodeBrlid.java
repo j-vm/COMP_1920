@@ -12,6 +12,7 @@ public class CodeBrlid extends CodeBlock {
     @Override
     public String output(){
         int jmp = label + literal;
+
         return "goto L" + jmp +";\n\t" +  regToC(reg1) + " = " + label + ";";
     }
 }

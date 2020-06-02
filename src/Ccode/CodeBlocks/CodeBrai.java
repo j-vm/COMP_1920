@@ -12,6 +12,7 @@ public class CodeBrai extends CodeBlock {
     @Override
     public String output(){
         int jmp = label + literal;
+
         return "goto L" + jmp +";";
     }
 }
