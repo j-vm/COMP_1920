@@ -3,166 +3,165 @@ int generated(int registers[32], int *memory, ){
    int PC = 0;
    int imm = 0;
 
-0x0000014c:
+L332:
 	registers[5] = registers[0] + ( 0 );
-0x00000264:
+L612:
 	registers[5] = registers[0] + ( 0 );
-0x00000268:
+L616:
 	registers[6] = registers[0] + ( 0 );
-0x0000026c:
+L620:
 	registers[1] = registers[1] + ( 0 );
-0x00000270:
+L624:
 	registers[7] = registers[0] + ( 0 );
-0x00000274:
+L628:
 	registers[8] = registers[0] + ( 0 );
-0x00000278:
+L632:
 	memory[1 + 0] = registers[15];
-0x0000027c:
-	goto [HERE]+-264};
-	registers[15] = [HERE] * 4;
-0x00000280:
+L636:
+	goto L372;
+	registers[15] = 636;
+L640:
 	registers[9] = registers[1] + ( 0 );
-0x00000174:
+L372:
 	registers[1] = registers[1] + ( 0 );
-0x00000178:
-	memory[1 + 4] = registers[19];
-0x0000017c:
+L376:
+	memory[1+ 4] = registers[19];
+L380:
 	memory[1 + 8] = registers[22];
-0x00000180:
+L384:
 	registers[4] = memory[5 + 0];
-0x00000184:
+L388:
 	registers[3] = memory[6 + 0];
-0x00000188:
+L392:
 	registers[19] = registers[9] + registers[0];
-0x0000018c:
+L396:
 	registers[11] = registers[6] + registers[0];
-0x00000190:
+L400:
 	registers[3] = registers[3] * registers[4];
-0x00000194:
+L404:
 	registers[10] = registers[5] + registers[0];
-0x00000198:
+L408:
 	registers[22] = registers[7] + registers[0];
-0x0000019c:
+L412:
 	memory[19 + 0] = registers[3];
-0x000001a0:
+L416:
 	registers[4] = memory[6 + 0];
-0x000001a4:
+L420:
 	registers[3] = memory[11 + 4];
-0x000001a8:
+L424:
 	registers[6] = memory[5 + 4];
-0x000001ac:
+L428:
 	registers[5] = memory[5 + 0];
-0x000001b0:
+L432:
 	registers[9] = registers[8] + registers[0];
-0x000001b4:
+L436:
 	registers[4] = registers[4] * registers[6];
-0x000001b8:
+L440:
 	registers[3] = registers[3] * registers[5];
-0x000001bc:
+L444:
 	registers[4] = registers[4] + registers[3];
-0x000001c0:
+L448:
 	memory[19 + 4] = registers[4];
-0x000001c4:
+L452:
 	registers[3] = memory[11 + 0];
-0x000001c8:
+L456:
 	registers[8] = memory[10 + 8];
-0x000001cc:
+L460:
 	registers[5] = memory[11 + 4];
-0x000001d0:
+L464:
 	registers[7] = memory[10 + 4];
-0x000001d4:
+L468:
 	registers[4] = memory[11 + 8];
-0x000001d8:
+L472:
 	registers[6] = memory[10 + 0];
-0x000001dc:
+L476:
 	registers[3] = registers[3] * registers[8];
-0x000001e0:
+L480:
 	registers[5] = registers[5] * registers[7];
-0x000001e4:
+L484:
 	registers[4] = registers[4] * registers[6];
-0x000001e8:
+L488:
 	registers[3] = registers[3] + registers[5];
-0x000001ec:
+L492:
 	registers[3] = registers[3] + registers[4];
-0x000001f0:
+L496:
 	registers[18] = registers[0] + ( 0 );
-0x000001f4:
+L500:
 	registers[18] = ( registers[18] - registers[22] ); //Not completed
-0x000001f8:
-	if ( registers[18] >= 0 ) { goto [HERE]+23};
-0x000001fc:
+L504:
+	if ( registers[18] >= 0 ) { goto L596;}
+L508:
 	memory[19 + 8] = registers[3];
-0x00000200:
+L512:
 	registers[6] = registers[10] + ( 0 );
-0x00000204:
+L516:
 	registers[12] = registers[0] + ( 0 );
-0x00000208:
-	if ( registers[9] <= 0 ) { goto [HERE]+13};
+L520:
+	if ( registers[9] <= 0 ) { goto L572;}
 // ------- wile(CONDITION) -------
-0x0000020c:
+L524:
 	registers[10] = registers[0] + registers[0];
-0x00000210:
+L528:
 	registers[8] = registers[6] + registers[0];
-0x00000214:
+L532:
 	registers[7] = registers[10] + registers[0];
-0x0000023c:
+L572:
 	registers[3] = ( registers[12] << ( 1026 ) );//Not completed
 // ------- wile(CONDITION) -------
-0x00000240:
+L576:
 	registers[12] = registers[12] + ( 0 );
-0x00000244:
+L580:
 	memory[19 + 3] = registers[10];
-0x00000248:
+L584:
 	registers[18] = registers[22] - registers[12] + 1;
-0x0000024c:
-	if ( registers[18] != 0 ) { goto [HERE]+-17};
-0x00000250:
+L588:
+	if ( registers[18] != 0 ) { goto L520;}
+L592:
 	registers[6] = registers[6] + ( 0 );
 // ------- wile(CONDITION) -------
-0x00000218:
+L536:
 	registers[3] = ( registers[7] << ( 1026 ) );//Not completed
 // ------- wile(CONDITION) -------
-0x0000021c:
+L540:
 	registers[5] = memory[8 + 0];
-0x00000220:
+L544:
 	registers[4] = memory[11 + 3];
-0x00000224:
+L548:
 	registers[7] = registers[7] + ( 0 );
-0x00000228:
+L552:
 	registers[8] = registers[8] + ( 0 );
-0x0000022c:
+L556:
 	registers[4] = registers[4] * registers[5];
-0x00000230:
+L560:
 	registers[18] = registers[9] - registers[7] + 1;
-0x00000234:
-	if ( registers[18] != 0 ) { goto [HERE]+-7};
-0x00000238:
+L564:
+	if ( registers[18] != 0 ) { goto L536;}
+L568:
 	registers[10] = registers[10] + registers[4];
 // ------- wile(CONDITION) -------
-0x00000254:
+L596:
 	registers[19] = memory[1 + 4];
-0x00000258:
+L600:
 	registers[22] = memory[1 + 8];
-0x0000025c:
+L604:
 	PC = registers[15] + ( imm ); //Not completed
-0x00000260:
+L608:
 	registers[1] = registers[1] + ( 0 );
-0x00000284:
+L644:
 	registers[15] = memory[1 + 0];
-0x00000288:
+L648:
 	registers[3] = registers[0] + registers[0];
-0x0000028c:
+L652:
 	PC = registers[15] + ( imm ); //Not completed
-0x00000290:
+L656:
 	registers[1] = registers[1] + ( 0 );
-0x00000150:
+L336:
 	registers[19] = registers[3] + ( 0 );
-0x00000154:
-	goto [HERE]+832};
-	registers[15] = [HERE] * 4;
-0x00000158:
+L340:
+	goto L1172;
+	registers[15] = 340;
+L344:
 	registers[0] = registers[0] || registers[0];
-0x00000494:
+L1172:
 	registers[1] = registers[1] + ( 0 );
-end:
-	}
+}

@@ -48,9 +48,10 @@ public class GenerateCode {
             else{
                 if(!nodes.containsKey(node)){
                     var codeBlock = generateCodeBlock(node);
-                    if(firstNode){printWriter.print(codeBlock.output() + "\n"); firstNode = false;}
+                    if(firstNode || node.getInstruction() == "END"){printWriter.print(codeBlock.output() + "\n"); firstNode = false;}
                     else {
-                        labeler = node.getAddress();
+
+                        labeler = "L" + Integer.toString(parseAddress(node.getAddress()));
                         printWriter.print(labeler+":\n\t" + codeBlock.output() + "\n");
                     }
                     nodes.put(node, true);
@@ -65,6 +66,22 @@ public class GenerateCode {
         //printWriter.printf("Product name is %s and its price is %d $", "iPhone", 1000);
         printWriter.close();
 
+    }
+
+    private static int parseAddress(String address){
+        String[] tokens = address.split("x");
+        String hex = tokens[1];
+
+        String digits = "0123456789ABCDEF";
+        hex = hex.toUpperCase();
+        int val = 0;
+        for (int i = 0; i < hex.length(); i++)
+        {
+            char c = hex.charAt(i);
+            int d = digits.indexOf(c);
+            val = 16*val + d;
+        }
+        return val;
     }
 
     private CodeBlock generateCodeBlock(CfgNode node) {
@@ -83,22 +100,22 @@ public class GenerateCode {
                  codeBlock = new CodeAddk(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getRegister3()));
                 break;
             case "beqid":
-                 codeBlock = new CodeBeqid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
+                 codeBlock = new CodeBeqid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()),parseAddress(node.getAddress()));
                 break;
             case "bgeid":
-                 codeBlock = new CodeBgeid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
+                 codeBlock = new CodeBgeid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()),parseAddress(node.getAddress()));
                 break;
             case "bleid":
-                 codeBlock = new CodeBleid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
+                 codeBlock = new CodeBleid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()),parseAddress(node.getAddress()));
                 break;
             case "bneid":
-                 codeBlock = new CodeBneid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
+                 codeBlock = new CodeBneid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()),parseAddress(node.getAddress()));
                 break;
             case "brai":
-                 codeBlock = new CodeBrai(registerToInt(node.getLiteral()));
+                 codeBlock = new CodeBrai(registerToInt(node.getLiteral()),parseAddress(node.getAddress()));
                 break;
             case "brlid":
-                 codeBlock = new CodeBrlid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()));
+                 codeBlock = new CodeBrlid(registerToInt(node.getRegister1()),registerToInt(node.getLiteral()),parseAddress(node.getAddress()));
                 break;
             case "bslli":
                  codeBlock = new CodeBslli(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
