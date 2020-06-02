@@ -37,7 +37,8 @@ public class GenerateCode {
         boolean firstNode = true;
         FileWriter fileWriter = new FileWriter(outputFileName);
         PrintWriter printWriter = new PrintWriter(fileWriter);
-
+        CodeBlock delayed = null;
+        String delayedAddress = null;
         String labeler;
         var node = rootNode;
         while (true){
@@ -50,9 +51,22 @@ public class GenerateCode {
                     var codeBlock = generateCodeBlock(node);
                     if(firstNode || node.getInstruction() == "END"){printWriter.print(codeBlock.output() + "\n"); firstNode = false;}
                     else {
-
-                        labeler = "L" + Integer.toString(parseAddress(node.getAddress()));
-                        printWriter.print(labeler+":\n\t" + codeBlock.output() + "\n");
+                        if(codeBlock instanceof CodeBeqid ||
+                                codeBlock instanceof CodeBgeid ||
+                                codeBlock instanceof CodeBleid ||
+                                codeBlock instanceof CodeBneid ||
+                                codeBlock instanceof CodeBrlid){
+                            delayed = codeBlock;
+                            delayedAddress = Integer.toString(parseAddress(node.getAddress()));
+                        }else {
+                            labeler = "L" + Integer.toString(parseAddress(node.getAddress()));
+                            printWriter.print(labeler + ":\n\t" + codeBlock.output() + "\n");
+                            if(delayed != null){
+                                labeler = "L" + delayedAddress;
+                                printWriter.print(labeler + ":\n\t" + delayed.output() + "\n");
+                                delayed = null;
+                            }
+                        }
                     }
                     nodes.put(node, true);
                     newNode = true;

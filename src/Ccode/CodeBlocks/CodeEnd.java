@@ -10,6 +10,6 @@ public class CodeEnd extends CodeBlock {
     @Override
     public String output(){
         // The end node was reached and the main function is closed
-        return "}";
+        return "\treturn registers[3];\n}";
     }
 }

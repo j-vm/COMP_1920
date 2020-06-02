@@ -17,11 +17,11 @@ L628:
 	registers[8] = registers[0] + ( 0 );
 L632:
 	memory[registers[1] + registers[0]] = registers[15];
+L640:
+	registers[9] = registers[1] + ( 0 );
 L636:
 	goto L372;
 	registers[15] = 636;
-L640:
-	registers[9] = registers[1] + ( 0 );
 L372:
 	registers[1] = registers[1] + ( 0 );
 L376:
@@ -88,19 +88,19 @@ L496:
 	registers[18] = registers[0] + ( 0 );
 L500:
 	registers[18] = ( registers[18] - registers[22] ); //Not completed
-L504:
-	if ( registers[18] >= 0 ) { goto L596;}
 L508:
 	memory[registers[19] + registers[8]] = registers[3];
+L504:
+	if ( registers[18] >= 0 ) { goto L596;}
 L512:
 	registers[6] = registers[10] + ( 0 );
 L516:
 	registers[12] = registers[0] + ( 0 );
-L520:
-	if ( registers[9] <= 0 ) { goto L572;}
 // ------- wile(CONDITION) -------
 L524:
 	registers[10] = registers[0] + registers[0];
+L520:
+	if ( registers[9] <= 0 ) { goto L572;}
 L528:
 	registers[8] = registers[6] + registers[0];
 L532:
@@ -114,10 +114,10 @@ L580:
 	memory[registers[19] + registers[3]] = registers[10];
 L584:
 	registers[18] = registers[22] - registers[12] + 1;
-L588:
-	if ( registers[18] != 0 ) { goto L520;}
 L592:
 	registers[6] = registers[6] + ( 0 );
+L588:
+	if ( registers[18] != 0 ) { goto L520;}
 // ------- wile(CONDITION) -------
 L536:
 	registers[3] = ( registers[7] << ( 1026 ) );//Not completed
@@ -134,10 +134,10 @@ L556:
 	registers[4] = registers[4] * registers[5];
 L560:
 	registers[18] = registers[9] - registers[7] + 1;
-L564:
-	if ( registers[18] != 0 ) { goto L536;}
 L568:
 	registers[10] = registers[10] + registers[4];
+L564:
+	if ( registers[18] != 0 ) { goto L536;}
 // ------- wile(CONDITION) -------
 L596:
 	registers[19] = memory[registers[1] + registers[4]];
@@ -157,11 +157,12 @@ L656:
 	registers[1] = registers[1] + ( 0 );
 L336:
 	registers[19] = registers[3] + ( 0 );
+L344:
+	registers[0] = registers[0] || registers[0];
 L340:
 	goto L1172;
 	registers[15] = 340;
-L344:
-	registers[0] = registers[0] || registers[0];
 L1172:
 	registers[1] = registers[1] + ( 0 );
-}
+return registers[3];
+	}
