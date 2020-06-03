@@ -10,8 +10,8 @@ public class CodeRoot extends CodeBlock {
     @Override
     public String output(){
     return "int generated(int registers[32], int *memory, ){\n" +
-            "   int flags[8];\n" +
-            "   int PC = 0;\n" +
-            "   int imm = 0;\n";
+            "   int flags[8]; " +
+            "   int PC = 0; " +
+            "   int imm = 0; ";
     }
 }

@@ -1,6 +1,9 @@
 package Ccode;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CodeBlock {
     public int reg1;
     public int reg2;
@@ -25,7 +28,6 @@ public class CodeBlock {
     public String output(){
         return "//[ERROR]: Couldn't understand instruction";
     }
-
 
 }
 /*
