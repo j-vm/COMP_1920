@@ -4,8 +4,8 @@ import Ccode.CodeBlock;
 
 public class CodeAddik extends CodeBlock {
 
-    public CodeAddik(int reg1, int reg2, int reg3) {
-        super(reg1, reg2, reg3, 0);
+    public CodeAddik(int reg1, int reg2, int literal) {
+        super(reg1, reg2, 0, literal);
     }
 
     @Override

@@ -1,5 +1,5 @@
-int generated(int registers[32], int *memory, ){
-   int flags[8];    int PC = 0;    int imm = 0; 
+int generated(int *first_arg, int *second_arg, int *memory, ){
+   int flags[8];   int PC = 0;   int imm = 0;   int registers[32]   registers[5] = &first_arg   registers[6] = &second_arg;
 L332:
 	registers[5] = registers[0] + ( 0 );
 L612:

@@ -10,6 +10,10 @@ public class CodeEnd extends CodeBlock {
     @Override
     public String output(){
         // The end node was reached and the main function is closed
-        return "\treturn registers[3];\n}";
+        String log = "";
+        for (int i = 0; i < 20; i++) {
+            log += "\tprintf(\"Register "+ i + "= %i\", registers[" + i + "]);\n";
+        }
+        return log +"\treturn registers[3];\n}";
     }
 }

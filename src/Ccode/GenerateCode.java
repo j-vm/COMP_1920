@@ -16,19 +16,22 @@ public class GenerateCode {
     static Graph<CfgNode, PathEdge> cfGraph = new DefaultDirectedGraph<>(PathEdge.class);
     static CfgNode rootNode;
     static String outputFileName;
-    private int decision; //temporary way to manage loops
+    private int decision;
     private boolean mode;
     private boolean newNode = false;
     private List<Integer> labels = new ArrayList<Integer>();
     private List<Integer> jmps = new ArrayList<Integer>();
+    private int numOfInputs;
 
 
-    public GenerateCode(Graph<CfgNode, PathEdge> cfGraph, CfgNode rootNode, String outputFileName, boolean mode) {
+
+    public GenerateCode(Graph<CfgNode, PathEdge> cfGraph, CfgNode rootNode, String outputFileName, boolean mode, int numOfInputs) {
         GenerateCode.cfGraph = cfGraph;
         GenerateCode.rootNode = rootNode;
         GenerateCode.outputFileName = outputFileName;
         this.decision = 0;
         this.mode = mode;
+        this.numOfInputs = numOfInputs;
     }
 
     public void exportCode() throws IOException {
@@ -65,6 +68,7 @@ public class GenerateCode {
                                 labeler = "L" + delayedAddress;
                                 printWriter.print(labeler + ":\n\t" + delayed.output() + "\n");
                                 delayed = null;
+                                if(codeBlock instanceof CodeRtsd){break;}
                             }
                         }
                     }
@@ -83,9 +87,9 @@ public class GenerateCode {
 
     }
 
-    public void filterLabels() throws IOException {
-        File inputFile = new File("output2.c");
-        File outputFile = new File("output2Labeless.c");
+    public void filterLabels(String newOutputFileName) throws IOException {
+        File inputFile = new File(outputFileName);
+        File outputFile = new File(newOutputFileName);
         BufferedReader reader;
         BufferedWriter writer;
         try{
@@ -165,7 +169,7 @@ public class GenerateCode {
         CodeBlock codeBlock;
         switch (node.getInstruction()){
             case "START":
-                 codeBlock = new CodeRoot();
+                 codeBlock = new CodeRoot(this.numOfInputs);
                 break;
             case "addi":
                   codeBlock = new CodeAddi(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
@@ -246,7 +250,6 @@ public class GenerateCode {
     }
 
     private CfgNode nextNode(CfgNode node, PrintWriter printWriter) {
-        //TODO: return correct unique, connected, and priority node
         List<PathEdge> outgoingEdges = new ArrayList<PathEdge>(cfGraph.outgoingEdgesOf(node));
         if(cfGraph.incomingEdgesOf(node).size()>1) {
             if(mode) printWriter.println("// ------- wile(CONDITION) -------");
