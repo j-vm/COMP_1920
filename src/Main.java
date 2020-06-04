@@ -32,7 +32,7 @@ public class Main {
 		//code.exportCode();
 		code2.exportCode();
 		code2.filterLabels("output/v2output2.c");
-
+		code2.gotoElimination("output/new.c");
 		// [PROPER USE]
 		//checkArgs(args);
 		//loadGraph(args[0]);

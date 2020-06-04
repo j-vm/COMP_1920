@@ -10,12 +10,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GenerateCode {
 
     static Graph<CfgNode, PathEdge> cfGraph = new DefaultDirectedGraph<>(PathEdge.class);
     static CfgNode rootNode;
     static String outputFileName;
+    static String outputFileName2;
+    static String outputFileName3;
     private int decision;
     private boolean mode;
     private boolean newNode = false;
@@ -90,6 +94,7 @@ public class GenerateCode {
     public void filterLabels(String newOutputFileName) throws IOException {
         File inputFile = new File(outputFileName);
         File outputFile = new File(newOutputFileName);
+        outputFileName2 = newOutputFileName;
         BufferedReader reader;
         BufferedWriter writer;
         try{
@@ -163,6 +168,44 @@ public class GenerateCode {
             val = 16*val + d;
         }
         return val;
+    }
+
+
+
+    public void gotoElimination(String newOutputFileName) throws IOException {
+        File inputFile = new File(outputFileName2);
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        String line = "", oldText = "";
+        while((line = reader.readLine()) != null)
+        {
+            oldText += line + "\r\n";
+        }
+        reader.close();
+        // replace a word in a file
+        String newText = removeUnconditionalGotos(oldText);
+        newText = structureCode(newText);
+        FileWriter writer = new FileWriter(newOutputFileName);
+        writer.write(newText);writer.close();
+    }
+
+    public String removeUnconditionalGotos(String oldText) throws IOException {
+        return oldText.replaceAll("goto (L[0-9]+);\\r\\n\\1:", "//removed unconditional goto");
+    }
+
+    public String structureCode(String oldText) throws IOException {
+        List<MatchedGotoLabelPair> pairInfo = new ArrayList<>();
+        String gotoRegex = "\\tgoto (L[0-9]+);\\r\\n\\t}";
+        Pattern pattern = Pattern.compile(gotoRegex);
+        Matcher matcher = pattern.matcher(oldText);
+
+        while(matcher.find()){
+            Pattern labelPattern = Pattern.compile(gotoRegex);
+            Matcher labelMatcher = pattern.matcher(oldText);
+
+            //pairInfo.add(new MatchedGotoLabelPair(matcher.start(), matcher.end(), matcher.group(1), matcher.group(2));
+
+        }
+        return oldText;
     }
 
     private CodeBlock generateCodeBlock(CfgNode node) {

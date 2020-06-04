@@ -396,3 +396,54 @@ Combine the resulting programs into a selection statement that executes the prog
 Construct a loop that executes this selection statement as long as L is not 0.
 Construct a sequence that initializes L to 1 and executes the loop.
 Note that this construction can be improved by converting some cases of the selection statement into subprocedures.
+
+
+
+#Goto Elimination Algorithm
+The following section of the document details out the algorithms that can be applied for all the cases outlined above, to eliminate gotos and labels from code.
+https://dzone.com/articles/goto-elimination-algorithm?fbclid=IwAR0ERFa-F1FvovdFSIWxTtKHQBMIDrz9qP2r5NfgsJINvb5A3sszv3ZSMtE
+
+only use cases 1.1 and 1.2
+##Base Algorithm
+Take the original program as input
+
+Collect all goto and label statements as pairs
+
+For Each goto-label pair,
+
+Convert goto to single statement conditional goto, if it is not already
+
+Classify the goto-label pair to a single case (from among the cases outlined above)
+
+Execute specific case's algorithm of which the current goto-label pair corresponds to
+
+Output the restructured program
+
+###Key Points
+For the all case specific algorithms that are detailed below, following are some of the key points to consider:
+
+Every goto statement should be conditional (i.e. conditional with the single goto statement in it)
+Eg:
+
+if (cond) {
+  goto L1
+}
+Every case (code structure) should be reduced to the primitive case/state outlined above
+For any goto-label pair, only the goto statement must be adjusted/moved to reduce the structure to primitive case/state
+Every new introduced boolean variable in the algorithms, that is used without initialization, is assumed to be initialized to false
+Note: In all the algorithms outline below, when referring to goto statement, it refers to the single statement conditional goto i.e.:
+
+if (cond) {
+  goto L1
+}
+## Case 1.1 Algorithm
+Goto and label occur at the same indent level in the same container/block and goto occurs before the label.
+
+Conditionally execute all the statements between the goto statement and the label statement, based on the inverse condition that is applied on the goto statement and remove the goto statement and the label
+##Case 1.2 Algorithm
+Goto and label occur at the same indent level in the same container/block and label occurs before the goto.
+
+Execute all the statements between the label statement and the goto statement in a do-while loop, including the label statement, based on the condition that is applied on the goto statement and remove the label and the goto statement.
+If a LEAVE/BREAK or ITER/CONTINUE falls under the do-while introduced in step#1, introduce a new variable and set it to true just before the LEAVE/BREAK or ITER/CONTINUE statement. Also create a new conditional block just after the do-while block introduced in step#1, based on this new variable that tracks the LEAVE/BREAK or ITER/CONTINUE statement, and re-set this new variable to false and execute the LEAVE/BREAK or ITER/CONTINUE statement
+
+http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=1B9F0F1D747EC90DA9ADAD03DEA392AF?doi=10.1.1.42.1485&rep=rep1&type=pdf

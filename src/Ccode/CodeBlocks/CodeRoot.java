@@ -47,7 +47,7 @@ public class CodeRoot extends CodeBlock {
                         "\tregisters[6] = second_arg;\n" +
                         "\tregisters[7] = third_arg;\n" +
                         "\tregisters[8] = fourth_arg;\n" +
-                        "\tregisters[9] = fourth_arg;\n";
+                        "\tregisters[9] = fifth_arg;\n";
                 break;
             default:
                 System.err.println("To generate code provide the function input number\n" +

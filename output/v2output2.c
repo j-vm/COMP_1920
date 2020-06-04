@@ -10,7 +10,7 @@ int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, 
 	registers[6] = second_arg;
 	registers[7] = third_arg;
 	registers[8] = fourth_arg;
-	registers[9] = fourth_arg;
+	registers[9] = fifth_arg;
 
 	registers[5] = registers[0] + ( 0 );
 	registers[5] = registers[0] + ( 1252 );
