@@ -194,18 +194,52 @@ public class GenerateCode {
 
     public String structureCode(String oldText) throws IOException {
         List<MatchedGotoLabelPair> pairInfo = new ArrayList<>();
-        String gotoRegex = "\\tgoto (L[0-9]+);\\r\\n\\t}";
+        String gotoRegex = "if \\((.+)\\) \\{\\s+goto (L[0-9]+);\\s+}\\s+";
         Pattern pattern = Pattern.compile(gotoRegex);
         Matcher matcher = pattern.matcher(oldText);
 
         while(matcher.find()){
-            Pattern labelPattern = Pattern.compile(gotoRegex);
-            Matcher labelMatcher = pattern.matcher(oldText);
+            String label = matcher.group(2)+":";
+            Pattern labelPattern = Pattern.compile(label);
+            Matcher labelMatcher = labelPattern.matcher(oldText);
 
-            //pairInfo.add(new MatchedGotoLabelPair(matcher.start(), matcher.end(), matcher.group(1), matcher.group(2));
+            labelMatcher.find();
+            pairInfo.add(new MatchedGotoLabelPair(matcher.start(), matcher.end(),
+                            labelMatcher.start(), labelMatcher.end(),
+                            matcher.group(1), matcher.group(2)));
+
+        }
+
+        calcInternalgoto(pairInfo, oldText);
+        for (MatchedGotoLabelPair pair:pairInfo
+             ) {
+            System.out.println(pair.getMatchesInside());
 
         }
         return oldText;
+    }
+
+    private void calcInternalgoto(List <MatchedGotoLabelPair> pairs, String text){
+        for (MatchedGotoLabelPair pair:pairs) {
+            String internalCode;
+            if(pair.isGotoBeforeLabel())
+                internalCode = text.substring(pair.getEndGotoIndex(), pair.getStartLabelIndex());
+            else
+                internalCode = text.substring(pair.getEndLabelIndex(), pair.getStartGotoIndex());
+
+            String gotoRegex = "goto L[0-9]+";
+            Pattern pattern = Pattern.compile(gotoRegex);
+            Matcher matcher = pattern.matcher(internalCode);
+            int nGotos = (int)matcher.results().count();
+
+            String labelRegex = "L[0-9]+:";
+            Pattern labelPattern = Pattern.compile(labelRegex);
+            Matcher labelMatcher = labelPattern.matcher(internalCode);
+            int nLabels = (int)labelMatcher.results().count();
+
+            pair.setMatchesInside(nGotos + nLabels);
+        } {
+        }
     }
 
     private CodeBlock generateCodeBlock(CfgNode node) {

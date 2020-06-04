@@ -36,7 +36,7 @@ public class Main {
 		// [PROPER USE]
 		//checkArgs(args);
 		//loadGraph(args[0]);
-		visualizeGraph();
+		//visualizeGraph();
 	}
 
 	/**

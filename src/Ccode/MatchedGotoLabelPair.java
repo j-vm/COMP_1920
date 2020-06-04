@@ -8,7 +8,7 @@ public class MatchedGotoLabelPair {
     private String conditional;
     private String label;
     private boolean gotoBeforeLabel;
-    private boolean hasMatchesInside;
+    private int matchesInside;
 
     public MatchedGotoLabelPair(int startGotoIndex, int endGotoIndex, int startLabelIndex, int endLabelIndex, String conditional, String label) {
         this.startGotoIndex = startGotoIndex;
@@ -61,11 +61,12 @@ public class MatchedGotoLabelPair {
         this.gotoBeforeLabel = gotoBeforeLabel;
     }
 
-    public boolean isHasMatchesInside() {
-        return hasMatchesInside;
+
+    public int getMatchesInside() {
+        return matchesInside;
     }
 
-    public void setHasMatchesInside(boolean hasMatchesInside) {
-        this.hasMatchesInside = hasMatchesInside;
+    public void setMatchesInside(int matchesInside) {
+        this.matchesInside = matchesInside;
     }
 }
