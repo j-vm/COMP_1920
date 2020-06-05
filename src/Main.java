@@ -33,6 +33,8 @@ public class Main {
 		code2.exportCode();
 		code2.filterLabels("output/autcor/v2.c");
 		code2.gotoElimination("output/autcor/v3.c");
+		//loadGraphFromTrace("./input/fir-O2.txt");
+		//visualizeGraph();
 		// [PROPER USE]
 		//checkArgs(args);
 		//loadGraph(args[0]);
@@ -50,6 +52,8 @@ public class Main {
 			System.exit(0);
 		}
 	}
+
+
 
 	/**
 	 * Opens file, parses its content with jjtree and javacc, and builds a graph
@@ -266,6 +270,80 @@ public class Main {
 			iterator++;
 		}
 		return iterator;
+	}
+
+
+	////////////////////////////////////////////////////Funcoes Antigas////////////////////////////////
+
+	private static void loadGraphFromTrace(String fileName) {
+		File f = new File(fileName);
+		if (f.isFile() && f.canRead()) {
+			try {
+				FileInputStream fis = new FileInputStream(f);
+				try {
+					MicroblazeParser trace = new MicroblazeParser(fis);
+					try {
+						SimpleNode root = trace.Expression(); // returns reference to root node
+
+
+
+						traceToGraph(root);
+
+					} catch (Exception e) {
+						System.err.print(e);
+					}
+				} finally {
+					fis.close();
+				}
+			} catch (IOException ex) {
+				System.err.println(ex);
+				System.exit(-1);
+			}
+		}
+	}
+
+	private static void traceToGraph(SimpleNode root) {
+		int numChildren = root.jjtGetNumChildren();
+		HashMap<String, InstructionNode> lastToAlter = new HashMap<String, InstructionNode>();
+		for (int i = 0; i < numChildren; i++) {
+			String address;
+			String instruction;
+
+			Node javaccNode = root.jjtGetChild(i);
+			if (javaccNode instanceof SimpleNode) {
+				SimpleNode javaccSimpleNode = ((SimpleNode) javaccNode);
+
+				address = javaccSimpleNode.getAddress();
+				instruction = javaccSimpleNode.getInstruction();
+
+				InstructionNode vertex = new InstructionNode(address, instruction);
+				graph.addVertex(vertex);
+
+				//adding destination operand to HashMap
+				if(javaccSimpleNode.getRegister1()!=null){
+					lastToAlter.put(javaccSimpleNode.getRegister1(), vertex);
+				}
+
+				//Ingoing Edge (source operand a)
+				if(javaccSimpleNode.getRegister2()!=null){
+					if(lastToAlter.containsKey(javaccSimpleNode.getRegister2())){
+						graph.addEdge(
+								lastToAlter.get(javaccSimpleNode.getRegister2()),
+								vertex);
+					}
+				}
+
+				//Ingoing Edge (source operand b)
+				if(javaccSimpleNode.getRegister3()!=null){
+					if(lastToAlter.containsKey(javaccSimpleNode.getRegister3())){
+						graph.addEdge(
+								lastToAlter.get(javaccSimpleNode.getRegister3()),
+								vertex);
+					}
+				}
+			}
+
+		}
 	}
 }
 

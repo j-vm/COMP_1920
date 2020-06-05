@@ -3,11 +3,9 @@
 
 ### Index
 1. Parsing
-       
-   - 1.1. Address (Desambiguation)
-   - 1.2. Set of Instructions
-   - 1.3. Registers
-   - 1.4. Values
+    
+   - 1.1. Set of Instructions
+   - 1.2. Registers
 
 2. Graph Processing
        
@@ -16,19 +14,22 @@
    - 2.3. Memory disambiguation       
    - 2.4. Extraction of Address Generation Units
    - 2.5. Extraction of repeating patterns
-       
-3. Executable Dataflow Graph
+   
+3. Implementation 
+    
+    - 3.1. Building and Extraction of Data Flow Graph (Extraction of Repeating Patterns)
+    - 3.2. Building of Code Blocks
+    - 3.3. Generation of C code
+    - 3.4. Extraction of Loads and Stores
+    - 3.5. Simulation ?
 
 
 From https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_2/ug984-vivado-microblaze-ref.pdf 
 
 # **1. PARSING**
 
-## **1.1 Addresses**
 
-
-
-## **1.2 Set of instructions**
+## **1.1 Set of instructions**
 
 All MicroBlaze instructions are 32 bits and are defined as either Type A or Type B.
 
@@ -241,7 +242,7 @@ Type A3 example: SW Rd,Ra,Rb.
 ```
 Type B3 example: LHUI Rd,Ra,Imm 
 
-# Other 
+#### Other 
 ```
 BSEFI
 BSIFI
@@ -255,7 +256,7 @@ MFS
 MFSE
 ```
 
-## **1.3 Registers**
+## **1.2 Registers**
 
 MicroBlaze has at its disposal 2 types of registers. It has 32-bit general purpose registers and up to 18 32-bit special purpose registers.
 
@@ -289,8 +290,6 @@ MicroBlaze has at its disposal 2 types of registers. It has 32-bit general purpo
  * Processor Version Register (PVR) - Is controlled by the C_PVR configuration option on MicroBlaze;
 
 
-
-## **1.4 Values**
  
 
 
@@ -361,6 +360,21 @@ objdump -> mb-objdump
 
 Calling Convention The caller function passes parameters to the callee function using either the registers (R5 through R10) or on its own stack frame. The callee uses the caller’s stack area to store the parameters passed to the callee. Refer to Figure 3-2. The parameters for Func 2 are stored either in the registers R5 through R10 or on the stack frame allocated for Func 1.
 
+# **3. Implementation**
+
+## **3.1 Initial Graph**
+
+## **3.1 Building and Extraction of Data Flow Graph**
+
+## **3.2. Building of Code Blocks**
+
+## **3.3. Generation of C code**
+
+## **3.4. Extraction of Loads and Stores**
+
+## **3.5. Simulation ?**
+
+# **4. Memory Analysis**
 
 
 
@@ -447,3 +461,19 @@ Execute all the statements between the label statement and the goto statement in
 If a LEAVE/BREAK or ITER/CONTINUE falls under the do-while introduced in step#1, introduce a new variable and set it to true just before the LEAVE/BREAK or ITER/CONTINUE statement. Also create a new conditional block just after the do-while block introduced in step#1, based on this new variable that tracks the LEAVE/BREAK or ITER/CONTINUE statement, and re-set this new variable to false and execute the LEAVE/BREAK or ITER/CONTINUE statement
 
 http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=1B9F0F1D747EC90DA9ADAD03DEA392AF?doi=10.1.1.42.1485&rep=rep1&type=pdf
+
+
+Ir buscar:
+    Primeiro Grafo;
+
+Receber:
+    filename
+    output folder
+    mode: 1- Grafo Inicial
+           2- + CFG
+           3- + A true
+           4- + A false
+           5- Correct Labels
+           6-Structured
+           7- Logging of memory
+

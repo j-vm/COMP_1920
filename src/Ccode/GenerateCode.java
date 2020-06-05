@@ -339,6 +339,18 @@ public class GenerateCode {
             case "cmp":
                 codeBlock = new CodeCmp(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getRegister3()));
                 break;
+            case "bsrai":
+                codeBlock = new CodeBsrai(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
+                break;
+            case "lhui":
+                codeBlock = new CodeLhui(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getLiteral()));
+                break;
+            case "sext16":
+                codeBlock = new CodeSext16(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()));
+                break;
+            case "sh":
+                codeBlock = new CodeSh(registerToInt(node.getRegister1()),registerToInt(node.getRegister2()),registerToInt(node.getRegister3()));
+                break;
             case "END":
                  codeBlock = new CodeEnd();
                 break;

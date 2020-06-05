@@ -44,12 +44,12 @@ L408:
 	registers[10] = registers[6] + registers[0];
 	registers[9] = registers[4] + registers[0];
 L432:
-	//[ERROR]: Couldn't understand instruction
+	registers[4] = ( memory[registers[11] + registers[0]] );//Not complete
 // ------- wile(CONDITION) -------
-	//[ERROR]: Couldn't understand instruction
+	registers[3] = ( memory[registers[10] + registers[0]] );//Not complete
 	registers[9] = registers[9] + ( 1 );
-	//[ERROR]: Couldn't understand instruction
-	//[ERROR]: Couldn't understand instruction
+	registers[4] = registers[4];//Not Complete
+	registers[3] = registers[3];//Not Complete
 	registers[4] = registers[4] * registers[3];
 	registers[11] = registers[11] + ( 2 );
 	registers[10] = registers[10] + ( 2 );
@@ -59,12 +59,12 @@ L432:
 		goto L432;
 	}
 // ------- wile(CONDITION) -------
-	//[ERROR]: Couldn't understand instruction
-	//[ERROR]: Couldn't understand instruction
+	registers[3] = ( registers[12] >> ( 527 ) );//Not completed
+	registers[4] = registers[3];//Not Complete
 L484:
 	registers[3] = registers[5] + registers[5];
 	registers[5] = registers[5] + ( 1 );
-	//[ERROR]: Couldn't understand instruction
+	memory[registers[22] + registers[3]] = registers[4];//Not Complete
 	registers[18] = registers[8] - registers[5] + 1;
 	registers[6] = registers[6] + ( -2 );
 	if ( registers[18] != 0 ) {

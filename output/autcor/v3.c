@@ -47,12 +47,12 @@ if(!( registers[7] <= 0 )){
 
 do {
 
-	//[ERROR]: Couldn't understand instruction
+	registers[4] = ( memory[registers[11] + registers[0]] );//Not complete
 // ------- wile(CONDITION) -------
-	//[ERROR]: Couldn't understand instruction
+	registers[3] = ( memory[registers[10] + registers[0]] );//Not complete
 	registers[9] = registers[9] + ( 1 );
-	//[ERROR]: Couldn't understand instruction
-	//[ERROR]: Couldn't understand instruction
+	registers[4] = registers[4];//Not Complete
+	registers[3] = registers[3];//Not Complete
 	registers[4] = registers[4] * registers[3];
 	registers[11] = registers[11] + ( 2 );
 	registers[10] = registers[10] + ( 2 );
@@ -62,14 +62,14 @@ do {
 } while(  registers[18] != 0 );
 
 // ------- wile(CONDITION) -------
-	//[ERROR]: Couldn't understand instruction
-	//[ERROR]: Couldn't understand instruction
+	registers[3] = ( registers[12] >> ( 527 ) );//Not completed
+	registers[4] = registers[3];//Not Complete
 
 }
 
 	registers[3] = registers[5] + registers[5];
 	registers[5] = registers[5] + ( 1 );
-	//[ERROR]: Couldn't understand instruction
+	memory[registers[22] + registers[3]] = registers[4];//Not Complete
 	registers[18] = registers[8] - registers[5] + 1;
 	registers[6] = registers[6] + ( -2 );
 	
