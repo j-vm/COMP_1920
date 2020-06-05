@@ -194,7 +194,7 @@ public class GenerateCode {
 
     public String structureCode(String oldText) throws IOException {
         List<MatchedGotoLabelPair> pairInfo = new ArrayList<>();
-        String gotoRegex = "if \\((.+)\\) \\{\\s+goto (L[0-9]+);\\s+}\\s+";
+        String gotoRegex = "if \\((.+)\\) \\{\\s+goto (L[0-9]+);\\s+}";
         Pattern pattern = Pattern.compile(gotoRegex);
         Matcher matcher = pattern.matcher(oldText);
 
@@ -206,26 +206,76 @@ public class GenerateCode {
             labelMatcher.find();
             pairInfo.add(new MatchedGotoLabelPair(matcher.start(), matcher.end(),
                             labelMatcher.start(), labelMatcher.end(),
-                            matcher.group(1), matcher.group(2)));
+                            matcher.group(1), matcher.group(2), matcher.group(), labelMatcher.group()));
 
         }
-
-        calcInternalgoto(pairInfo, oldText);
-        for (MatchedGotoLabelPair pair:pairInfo
-             ) {
+        calcInternalGoto(pairInfo, oldText);
+        int gotoPriority = 0;
+        while (pairInfo.size() != 0){
+            boolean changed = false;
+            for (MatchedGotoLabelPair pair:pairInfo) {
+                if(pair.getMatchesInside() == gotoPriority){
+                    oldText = structureBlock(pair, oldText);
+                    pairInfo.remove(pair);
+                    calcInternalGoto(pairInfo, oldText);
+                    changed = true;
+                    break;
+                }
+            }
+            if(changed){
+                gotoPriority=0;
+            }
+            else{
+                gotoPriority++;
+            }
+        }
+        for (MatchedGotoLabelPair pair:pairInfo) {
             System.out.println(pair.getMatchesInside());
-
         }
         return oldText;
     }
 
-    private void calcInternalgoto(List <MatchedGotoLabelPair> pairs, String text){
+    private String structureBlock(MatchedGotoLabelPair pair, String oldText) {
+        String newText;
+        switch (pair.getMatchesInside()){
+            case 0:
+                if(pair.isGotoBeforeLabel()){
+                    newText = oldText.replace(
+                            pair.getGotoSubstring(),
+                            "\nif(!(" + pair.getConditional() + ")){\n");
+                    newText = newText.replace(
+                            pair.getLabelSubstring(),
+                            "\n}\n");
+                }
+                else{
+                    newText = oldText.replace(
+                            pair.getLabelSubstring(),
+                            "\ndo {\n");
+                    newText = newText.replace(
+                            pair.getGotoSubstring(),
+                            "\n} while( " + pair.getConditional() + ");\n");
+                }
+                break;
+            default:
+                System.out.println(pair.getMatchesInside());
+                System.err.println("Maximum goto complexity reached. Not handling interlocking goto statements");
+                newText = oldText;
+
+        }
+        return newText;
+    }
+
+    private void calcInternalGoto(List <MatchedGotoLabelPair> pairs, String text){
         for (MatchedGotoLabelPair pair:pairs) {
             String internalCode;
             if(pair.isGotoBeforeLabel())
-                internalCode = text.substring(pair.getEndGotoIndex(), pair.getStartLabelIndex());
+                internalCode = text.substring(
+                        text.indexOf(pair.getGotoSubstring())+pair.getGotoSubstring().length(),
+                        text.indexOf(pair.getLabelSubstring()));
             else
-                internalCode = text.substring(pair.getEndLabelIndex(), pair.getStartGotoIndex());
+                internalCode = text.substring(
+                        text.indexOf(pair.getLabelSubstring())+pair.getLabelSubstring().length(),
+                        text.indexOf(pair.getGotoSubstring()));
 
             String gotoRegex = "goto L[0-9]+";
             Pattern pattern = Pattern.compile(gotoRegex);
@@ -238,7 +288,6 @@ public class GenerateCode {
             int nLabels = (int)labelMatcher.results().count();
 
             pair.setMatchesInside(nGotos + nLabels);
-        } {
         }
     }
 

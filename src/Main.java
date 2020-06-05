@@ -26,13 +26,13 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		//[TO TEST]
-		CfgNode rootnode =  loadGraph("./input/fir-O2.txt");
+		CfgNode rootnode =  loadGraph("./input/autcor-O2.txt");
 		//GenerateCode code = new GenerateCode(cfGraph,rootnode,"output/output.c", true);
-		GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/output2.c", false, 5);
+		GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/autcor/v1.c", false, 4);
 		//code.exportCode();
 		code2.exportCode();
-		code2.filterLabels("output/v2output2.c");
-		code2.gotoElimination("output/new.c");
+		code2.filterLabels("output/autcor/v2.c");
+		code2.gotoElimination("output/autcor/v3.c");
 		// [PROPER USE]
 		//checkArgs(args);
 		//loadGraph(args[0]);
