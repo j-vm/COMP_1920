@@ -463,8 +463,6 @@ If a LEAVE/BREAK or ITER/CONTINUE falls under the do-while introduced in step#1,
 http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=1B9F0F1D747EC90DA9ADAD03DEA392AF?doi=10.1.1.42.1485&rep=rep1&type=pdf
 
 
-Ir buscar:
-    Primeiro Grafo;
 
 Receber:
     filename

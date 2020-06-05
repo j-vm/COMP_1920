@@ -16,6 +16,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
 
@@ -25,14 +26,61 @@ public class Main {
 	static private int FUNCTION_ISOLATION = 6;
 
 	public static void main(String[] args) throws IOException {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Write the name of the file you want to analyze: ");
+		String filename = scanner.next();
+		System.out.println("Say the mode to analyze the file:\n 1- Graph from Trace;\n 2- Previous and CFG \n 3- Previous and Simple C code generation" +
+				"\n 4- Previous and C code with labels \n 5- Previous and C code with final Labels \n 6- Final C code \n 7- Logging of memory" );
+		String mode = scanner.next();
+
+		CfgNode rootnode =  loadGraph("./input/" + filename+"-O2.txt");
+
+
+
+		switch (mode){
+			case "1":
+				System.out.println("Feature not yet implemented!");
+				break;
+			case "2":
+				System.out.println("Feature not yet implemented!");
+				break;
+			case "3":
+				GenerateCode code = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v1.c", true, 4);
+				code.exportCode();
+				break;
+			case "4":
+				GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 4);
+				code2.exportCode();
+				break;
+			case "5":
+				GenerateCode code3 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 4);
+				code3.exportCode();
+				code3.filterLabels("output/"+ filename+ "/v3.c");
+				break;
+			case "6":
+				GenerateCode code4 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 4);
+				code4.exportCode();
+				code4.filterLabels("output/"+ filename+"/v3.c");
+				code4.gotoElimination("output/"+ filename+"/v4.c");
+				break;
+			case "7":
+				System.out.println("Feature not yet implemented!");
+				break;
+			default:
+				System.out.println("Wrong choice, please select 1,2,3,4,5,6 or 7!");
+				break;
+		}
+
+
+
 		//[TO TEST]
-		CfgNode rootnode =  loadGraph("./input/autcor-O2.txt");
+		//CfgNode rootnode =  loadGraph("./input/autcor-O2.txt");
 		//GenerateCode code = new GenerateCode(cfGraph,rootnode,"output/output.c", true);
-		GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/autcor/v1.c", false, 4);
+		//GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/autcor/v1.c", false, 4);
 		//code.exportCode();
-		code2.exportCode();
-		code2.filterLabels("output/autcor/v2.c");
-		code2.gotoElimination("output/autcor/v3.c");
+		//code2.exportCode();
+		//code2.filterLabels("output/autcor/v2.c");
+		//code2.gotoElimination("output/autcor/v3.c");
 		//loadGraphFromTrace("./input/fir-O2.txt");
 		//visualizeGraph();
 		// [PROPER USE]
@@ -244,9 +292,6 @@ public class Main {
 		return cfgRoot;
 
 	}
-
-
-
 
 
 

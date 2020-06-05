@@ -1,6 +1,7 @@
 #include "generated.h"
+#include "uthash.h"
 
-int generated(int *first_arg, int *second_arg, int *memory){
+int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, int *memory){
 	int flags[8];
 	int PC = 0;
 	int imm = 0;
@@ -8,6 +9,8 @@ int generated(int *first_arg, int *second_arg, int *memory){
 	registers[0] = 0;
 	registers[5] = first_arg;
 	registers[6] = second_arg;
+	registers[7] = third_arg;
+	registers[8] = fourth_arg;
 
 	registers[5] = registers[0] + ( 0 );
 	registers[5] = registers[0] + ( 1036 );
@@ -16,12 +19,11 @@ int generated(int *first_arg, int *second_arg, int *memory){
 	memory[registers[1] + registers[0]] = registers[15];
 	registers[0] = registers[0] || registers[0];
 	registers[15] = 432;
-	//removed unconditional goto
+	goto L372;
+L372:
 	registers[8] = registers[0] + registers[0];
 	registers[7] = registers[8] + registers[0];
-
-do {
-
+L380:
 	registers[3] = memory[registers[5] + registers[7]];
 // ------- wile(CONDITION) -------
 	registers[4] = memory[registers[6] + registers[7]];
@@ -29,9 +31,9 @@ do {
 	registers[3] = registers[3] * registers[4];
 	registers[18] = registers[7] ^ ( 8192 );
 	registers[8] = registers[8] + registers[3];
-	
-} while(  registers[18] != 0 );
-
+	if ( registers[18] != 0 ) {
+		goto L380;
+	}
 // ------- wile(CONDITION) -------
 	PC = registers[15] + ( imm ); //Not completed
 	registers[3] = registers[8] + registers[0];
@@ -42,7 +44,8 @@ do {
 	registers[19] = registers[3] + ( 0 );
 	registers[0] = registers[0] || registers[0];
 	registers[15] = 340;
-	//removed unconditional goto
+	goto L968;
+L968:
 	registers[1] = registers[1] + ( -8 );
 	printf("Register 0= %i", registers[0]);
 	printf("Register 1= %i", registers[1]);

@@ -20,33 +20,30 @@ int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, 
 	memory[registers[1] + registers[0]] = registers[15];
 	registers[8] = registers[0] + ( 16 );
 	registers[15] = 544;
-	//removed unconditional goto
+	goto L372;
+L372:
 	registers[1] = registers[1] + ( -12 );
 	memory[registers[1] + registers[8]] = registers[22];
 	memory[registers[1] + registers[4]] = registers[19];
 	registers[22] = registers[5] + registers[0];
-	
-if(!( registers[8] <= 0 )){
-
+	if ( registers[8] <= 0 ) {
+		goto L508;
+	}
 	registers[3] = registers[8] + registers[8];
 	registers[6] = registers[6] + registers[3];
 	registers[19] = registers[6] + registers[0];
 	registers[5] = registers[0] + registers[0];
 // ------- wile(CONDITION) -------
 	registers[4] = registers[0] + registers[0];
-
-do {
-
-	
-if(!( registers[7] <= 0 )){
-
+L408:
+	if ( registers[7] <= 0 ) {
+		goto L484;
+	}
 	registers[12] = registers[4] + registers[0];
 	registers[11] = registers[19] + registers[0];
 	registers[10] = registers[6] + registers[0];
 	registers[9] = registers[4] + registers[0];
-
-do {
-
+L432:
 	registers[4] = ( memory[registers[11] + registers[0]] );//Not complete
 // ------- wile(CONDITION) -------
 	registers[3] = ( memory[registers[10] + registers[0]] );//Not complete
@@ -58,27 +55,23 @@ do {
 	registers[10] = registers[10] + ( 2 );
 	registers[18] = registers[7] - registers[9] + 1;
 	registers[12] = registers[12] + registers[4];
-	
-} while(  registers[18] != 0 );
-
+	if ( registers[18] != 0 ) {
+		goto L432;
+	}
 // ------- wile(CONDITION) -------
 	registers[3] = ( registers[12] >> ( 527 ) );//Not completed
 	registers[4] = registers[3];//Not Complete
-
-}
-
+L484:
 	registers[3] = registers[5] + registers[5];
 	registers[5] = registers[5] + ( 1 );
 	memory[registers[22] + registers[3]] = registers[4];//Not Complete
 	registers[18] = registers[8] - registers[5] + 1;
 	registers[6] = registers[6] + ( -2 );
-	
-} while(  registers[18] != 0 );
-
+	if ( registers[18] != 0 ) {
+		goto L408;
+	}
 // ------- wile(CONDITION) -------
-
-}
-
+L508:
 	registers[19] = memory[registers[1] + registers[4]];
 	registers[22] = memory[registers[1] + registers[8]];
 	PC = registers[15] + ( imm ); //Not completed
@@ -90,7 +83,8 @@ do {
 	registers[19] = registers[3] + ( 0 );
 	registers[0] = registers[0] || registers[0];
 	registers[15] = 340;
-	//removed unconditional goto
+	goto L1080;
+L1080:
 	registers[1] = registers[1] + ( -8 );
 	printf("Register 0= %i", registers[0]);
 	printf("Register 1= %i", registers[1]);
