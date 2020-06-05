@@ -1,4 +1,5 @@
 #include "generated.h"
+#include "uthash.h"
 
 int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, int *memory){
 	int flags[8];

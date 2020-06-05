@@ -54,7 +54,7 @@ public class CodeRoot extends CodeBlock {
                         "Supported range: [0-5]");
                 System.exit(-1);
         }
-        return "#include \"generated.h\"\n\n"+
+        return "#include \"generated.h\"\n#include \"uthash.h\"\n\n"+
             header +"{\n" +
             "\tint flags[8];\n" +
             "\tint PC = 0;\n" +

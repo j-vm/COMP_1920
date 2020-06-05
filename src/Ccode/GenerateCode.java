@@ -23,8 +23,8 @@ public class GenerateCode {
     private int decision;
     private boolean mode;
     private boolean newNode = false;
-    private List<Integer> labels = new ArrayList<Integer>();
-    private List<Integer> jmps = new ArrayList<Integer>();
+    private List<Integer> labels = new ArrayList<>();
+    private List<Integer> jmps = new ArrayList<>();
     private int numOfInputs;
 
 
@@ -40,7 +40,7 @@ public class GenerateCode {
 
     public void exportCode() throws IOException {
 
-        HashMap<CfgNode, Boolean> nodes= new HashMap<CfgNode, Boolean>();
+        HashMap<CfgNode, Boolean> nodes= new HashMap<>();
         boolean firstNode = true;
         FileWriter fileWriter = new FileWriter(outputFileName);
         PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -56,7 +56,7 @@ public class GenerateCode {
             else{
                 if(!nodes.containsKey(node)){
                     var codeBlock = generateCodeBlock(node);
-                    if(firstNode || node.getInstruction() == "END"){printWriter.print(codeBlock.output() + "\n"); firstNode = false;}
+                    if(firstNode || node.getInstruction().equals("END")){printWriter.print(codeBlock.output() + "\n"); firstNode = false;}
                     else {
                         if(codeBlock instanceof CodeBeqid ||
                                 codeBlock instanceof CodeBgeid ||
@@ -66,7 +66,7 @@ public class GenerateCode {
                             delayed = codeBlock;
                             delayedAddress = Integer.toString(parseAddress(node.getAddress()));
                         }else {
-                            labeler = "L" + Integer.toString(parseAddress(node.getAddress()));
+                            labeler = "L" + parseAddress(node.getAddress());
                             printWriter.print(labeler + ":\n\t" + codeBlock.output() + "\n");
                             if(delayed != null){
                                 labeler = "L" + delayedAddress;
@@ -80,7 +80,7 @@ public class GenerateCode {
                     newNode = true;
                 }
             }
-            if (node.getInstruction() == "END") break;
+            if (node.getInstruction().equals("END")) break;
             else node = nextNode(node, printWriter);
         }
 
@@ -92,62 +92,42 @@ public class GenerateCode {
     }
 
     public void filterLabels(String newOutputFileName) throws IOException {
-        File inputFile = new File(outputFileName);
-        File outputFile = new File(newOutputFileName);
+        System.out.println(outputFileName);
+        BufferedReader reader = new BufferedReader(new FileReader(outputFileName));
         outputFileName2 = newOutputFileName;
-        BufferedReader reader;
-        BufferedWriter writer;
         try{
-            reader = new BufferedReader(new FileReader(inputFile));
-            String line = reader.readLine();
-            while(line != null){
-                if(line.length() > 2 && line.length() < 7){
-                    String clean = line.replaceAll("\\D+","");
-                    labels.add(Integer.parseInt(clean));
-                }
-
-                if(line.length() > 7 && line.length() < 20){
-                    String clean = line.replaceAll("\\D+","");
-                    jmps.add(Integer.parseInt(clean));
-                }
-
-
-                line = reader.readLine();
+            String line = "", code = "";
+            while((line = reader.readLine()) != null)
+            {
+                code += line + "\r\n";
             }
             reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-
-        List<Integer> common = new ArrayList<Integer>(labels);
-        common.retainAll(jmps);
-
-
-
-        try{
-            reader = new BufferedReader( new FileReader(inputFile));
-            writer = new BufferedWriter(new FileWriter(outputFile));
-            String line = reader.readLine();
-            while(line != null){
-                if(line.length()>3 && line.length() < 7){
-                    String clean = line.replaceAll("\\D+","");
-                    int i = Integer.parseInt(clean);
-                    for(Integer num : common){
-                        if(num == i){
-                            writer.write(line + System.getProperty("line.separator"));
-                        }
-                    }
-                }
-                else {
-                    writer.write(line + System.getProperty("line.separator"));
-                }
-                line = reader.readLine();
+            String gotoRegex = "goto L([0-9]+)";
+            Pattern pattern = Pattern.compile(gotoRegex);
+            Matcher matcher = pattern.matcher(code);
+            while(matcher.find()){
+                jmps.add(Integer.parseInt(matcher.group(1)));
             }
-            writer.close();
-            reader.close();
-            outputFile.renameTo(inputFile);
+            String labelRegex = "L([0-9]+):\\s";
+            Pattern labelPattern = Pattern.compile(labelRegex);
+            Matcher labelMatcher = labelPattern.matcher(code);
+
+            while(labelMatcher.find()){
+                labels.add(Integer.parseInt(labelMatcher.group(1)));
+            }
+
+            labels.removeAll(jmps);
+
+            for (int label: labels) {
+                code = code.replaceAll("L"+ label +":\\s\\s", "");
+            }
+
+            FileWriter writer = new FileWriter(newOutputFileName);
+            writer.write(code);writer.close();
+
         } catch (IOException e) {
+            reader.close();
             e.printStackTrace();
         }
     }
@@ -181,7 +161,6 @@ public class GenerateCode {
             oldText += line + "\r\n";
         }
         reader.close();
-        // replace a word in a file
         String newText = removeUnconditionalGotos(oldText);
         newText = structureCode(newText);
         FileWriter writer = new FileWriter(newOutputFileName);
