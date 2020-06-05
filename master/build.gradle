@@ -1,0 +1,79 @@
+
+// Import JavaCC
+plugins {
+  id "ca.coglinc.javacc" version "2.4.0"
+}
+
+
+// Java project
+apply plugin: 'java'
+
+
+// Repositories providers
+repositories {
+    mavenCentral()
+    //maven { url 'https://mvnrepository.com/artifact/org.jgrapht/jgrapht' }
+}
+
+dependencies {
+    testImplementation "junit:junit:4.11"
+    // https://mvnrepository.com/artifact/org.jgrapht/jgrapht
+    compile 'org.jgrapht:jgrapht-core:1.4.0'
+    compile 'org.jgrapht:jgrapht-io:1.4.0'
+    //compile group: 'guru.nidi', name: 'graphviz-java', version: '0.15.1'
+}
+
+
+// Execute JJTree
+compileJjtree {
+    inputDirectory = file('javacc')
+    outputDirectory = file('javacc/jjtree')
+	include '**/*.java'
+}
+
+
+// Execute JavaCC
+compileJavacc {
+    inputDirectory = file('javacc/jjtree')
+    outputDirectory = file('javacc/javacc')
+	arguments = [grammar_encoding: 'UTF-8', static: 'false']	
+}
+
+
+// Project sources
+sourceSets {
+   main {
+      java {
+         srcDir 'src'
+      }
+   }
+	
+   test {
+      java {
+         srcDir 'test'
+      }
+   }
+    
+}
+
+
+// Create JAR with main class
+jar {
+   manifest {
+      attributes 'Main-Class': 'Main'
+   }
+}
+
+
+// Copy JAR to root folder
+task copyJar() {
+
+    doFirst {
+		copy {
+			println 'Copying JAR file to ./'
+			from jar
+			into "./"
+		}	
+    }
+}
+build.dependsOn copyJar
