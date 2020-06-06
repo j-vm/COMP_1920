@@ -2,29 +2,41 @@ package nodes;
 
 import org.jgrapht.graph.DefaultEdge;
 
-class RegisterEdge
+public class RegisterEdge
         extends
         DefaultEdge
 {
 
-    private enum InputReg{
+    public String getRegName() {
+        return regName;
+    }
+
+    public void setRegName(String regName) {
+        this.regName = regName;
+    }
+
+    public void setReg(InputReg reg) {
+        this.reg = reg;
+    }
+
+    public boolean isCfEdge() {
+        return cfEdge;
+    }
+
+    public void setCfEdge(boolean cfEdge) {
+        this.cfEdge = cfEdge;
+    }
+
+    public enum InputReg{
         A,
         B
     };
 
     private InputReg reg;
-    /**
-     * Constructs a register edge
-     *
-     * @param reg the label of the new edge.
-     *
-     */
-    public RegisterEdge(String reg)
-    {
-        if(reg.equals("A")) this.reg = InputReg.A;
-        else if(reg.equals("B")) this.reg = InputReg.B;
-        else System.err.println("Unrecognized register for edge: " + reg);
-    }
+    private String regName;
+    private boolean cfEdge = false;
+
+    public RegisterEdge(){}
 
     /**
      * Gets the label associated with this edge.
@@ -38,10 +50,9 @@ class RegisterEdge
         else return null;
     }
 
-    @Override
     public String toString()
     {
-        return "(" + getSource() + " : " + getTarget() + " : " + getReg() + ")";
+        return this.getRegName();
     }
 
 }

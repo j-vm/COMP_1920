@@ -10,7 +10,7 @@
 /* DSP performance:
    (N/2) *M + 16 + M/4
    For N=160 and M=10;
-   816 cycles or 4.08 µsec
+   816 cycles or 4.08 ï¿½sec
 */
 
 //#include "XPP.h"
@@ -46,8 +46,8 @@ short sd[N] = { // --- Input array of autocorrelation
 
 // Inputs sd
 // Outputs ac
-void autcor(short* ac, short* sd, int n, int m) {
-  int i,k,sum;
+    void autcor(short* ac, short* sd, int n, int m) {
+      int i,k,sum;
 
 	for (i = 0; i < m; i++){
 	
