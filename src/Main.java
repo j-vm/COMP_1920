@@ -60,7 +60,7 @@ public class Main {
 			case "6":
 				GenerateCode code4 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 4);
 				code4.exportCode();
-				code4.filterLabels("output/"+ filename+"/v3.c");
+				code4.filterLabels("output/"+ filename+"/v4.c");
 				code4.gotoElimination("output/"+ filename+"/v4.c");
 				break;
 			case "7":
