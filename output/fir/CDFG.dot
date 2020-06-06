@@ -259,12 +259,14 @@ digraph G {
   A0x00000494 -> A0x00000494 [ label="r1" ];
   ALITERAL0x00000494 -> A0x00000494 [ label="lit" ];
   A0x00000290 -> A0x00000150 [ color="red" penwidth="5" ];
+  A0x00000250 -> A0x00000208 [ color="red" penwidth="5" ];
   A0x00000250 -> A0x00000254 [ color="red" penwidth="5" ];
   A0x00000174 -> A0x00000178 [ color="red" penwidth="5" ];
   A0x000001cc -> A0x000001d0 [ color="red" penwidth="5" ];
   A0x00000210 -> A0x00000214 [ color="red" penwidth="5" ];
   A0x00000254 -> A0x00000258 [ color="red" penwidth="5" ];
   A0x00000178 -> A0x0000017c [ color="red" penwidth="5" ];
+  A0x00000214 -> A0x0000023c [ color="red" penwidth="5" ];
   A0x00000214 -> A0x00000218 [ color="red" penwidth="5" ];
   A0x00000258 -> A0x0000025c [ color="red" penwidth="5" ];
   A0x00000218 -> A0x0000021c [ color="red" penwidth="5" ];
@@ -306,6 +308,7 @@ digraph G {
   A0x000001ac -> A0x000001b0 [ color="red" penwidth="5" ];
   A0x00000234 -> A0x00000238 [ color="red" penwidth="5" ];
   A0x00000158 -> A0x00000494 [ color="red" penwidth="5" ];
+  A0x00000238 -> A0x00000218 [ color="red" penwidth="5" ];
   A0x00000238 -> A0x0000023c [ color="red" penwidth="5" ];
   A0x0000018c -> A0x00000190 [ color="red" penwidth="5" ];
   A0x000001c0 -> A0x000001c4 [ color="red" penwidth="5" ];

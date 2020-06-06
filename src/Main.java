@@ -22,7 +22,7 @@ public class Main {
 
 	static Graph<CfgNode, PathEdge> cfGraph = new DefaultDirectedGraph<>(PathEdge.class);
 	static Graph<InstructionNode, RegisterEdge> graph = new DirectedPseudograph<>(RegisterEdge.class);
-	static Map <String, String> controlFlowEdges = new HashMap<>();
+	static Map<String, List<String>> controlFlowEdges = new HashMap<String, List<String>>();
 
 	static private int FUNCTION_ISOLATION = 6;
 
@@ -191,12 +191,18 @@ public class Main {
 			return map;});
 		exporter.setEdgeAttributeProvider((e)->{
 			Map<String, Attribute> map=new LinkedHashMap<>();
-			if(e.isCfEdge()){
-				map.put("color", DefaultAttribute.createAttribute("red"));
-				map.put("penwidth", DefaultAttribute.createAttribute("5"));
-			}else{
-				map.put("label", DefaultAttribute.createAttribute(e.toString()));
+			switch (e.isCfEdge()){
+				case 0:
+					map.put("label", DefaultAttribute.createAttribute(e.toString()));
+					break;
+				case 1:
+					map.put("color", DefaultAttribute.createAttribute("red"));
+					map.put("penwidth", DefaultAttribute.createAttribute("5"));
+					break;
+				default:
+					break;
 			}
+
 			return map;});
 		Writer writer=new StringWriter();
 		exporter.exportGraph(graph,writer);
@@ -230,7 +236,17 @@ public class Main {
 			if (javaccNode instanceof SimpleNode) {
 				SimpleNode javaccSimpleNode = ((SimpleNode) javaccNode);
 				address = javaccSimpleNode.getAddress();
-
+				if(lastAddress != null)
+					if(!controlFlowEdges.containsKey(lastAddress)){
+						List<String> destAddresses = new ArrayList<>();
+						destAddresses.add(address);
+						controlFlowEdges.put(lastAddress, destAddresses);
+					}else{
+						List<String> destAddresses = controlFlowEdges.get(lastAddress);
+						if (!destAddresses.contains(address)){
+							destAddresses.add(address);
+						}
+					}
 				if (!nodes.containsKey(address)) {
 					CfgNode vertex = new CfgNode(i, address, javaccSimpleNode.getInstruction());
 
@@ -240,7 +256,7 @@ public class Main {
 					nodes.put(address, vertex);
 					if (lastAddress != null) {
 						cfGraph.addEdge(nodes.get(lastAddress), vertex);
-						controlFlowEdges.put(lastAddress, address);
+
 						if (cfGraph.outgoingEdgesOf(nodes.get(lastAddress)).size() > 1) {
 							cfGraph.getEdge(nodes.get(lastAddress), vertex).addPath(decisionPath);
 							decisionPath++;
@@ -252,7 +268,6 @@ public class Main {
 					if (!cfGraph.containsEdge(nodes.get(lastAddress), nodes.get(address))) {
 						cfGraph.addEdge(nodes.get(lastAddress), nodes.get(address)).addPath(decisionPath);
 						decisionPath++;
-						controlFlowEdges.put(lastAddress, address);
 					} else {
 						if (!cfGraph.getEdge(nodes.get(lastAddress), nodes.get(address)).isPathEmpty()) {
 							cfGraph.getEdge(nodes.get(lastAddress), nodes.get(address)).addPath(decisionPath);
@@ -371,7 +386,10 @@ public class Main {
 		Iterator it = controlFlowEdges.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry)it.next();
-			graph.addEdge(nodes.get(pair.getKey()),nodes.get(pair.getValue())).setCfEdge(true);
+			List<String> addressList = (List<String>) pair.getValue();
+			for(String address : addressList){
+				graph.addEdge(nodes.get(pair.getKey()),nodes.get(address)).setCfEdge(1);
+			}
 			it.remove(); // avoids a ConcurrentModificationException
 		}
 	}

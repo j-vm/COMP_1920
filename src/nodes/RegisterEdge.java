@@ -19,11 +19,11 @@ public class RegisterEdge
         this.reg = reg;
     }
 
-    public boolean isCfEdge() {
+    public int isCfEdge() {
         return cfEdge;
     }
 
-    public void setCfEdge(boolean cfEdge) {
+    public void setCfEdge(int cfEdge) {
         this.cfEdge = cfEdge;
     }
 
@@ -34,7 +34,7 @@ public class RegisterEdge
 
     private InputReg reg;
     private String regName;
-    private boolean cfEdge = false;
+    private int cfEdge = 0;
 
     public RegisterEdge(){}
 
