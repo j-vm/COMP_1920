@@ -396,6 +396,4 @@ public class GenerateCode {
         return cfGraph.getEdgeTarget(outgoingEdges.get(0));
     }
 
-
-
 }

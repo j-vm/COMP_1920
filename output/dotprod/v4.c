@@ -1,7 +1,40 @@
 #include "generated.h"
 #include "uthash.h"
 
-int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, int *memory){
+struct memAddress {
+    int address;                    /* key */
+    int value;
+    UT_hash_handle hh;         /* makes this structure hashable */
+};
+
+struct memAddress *memory = NULL;
+
+int load(int address) {
+    struct memAddress *s;
+
+    HASH_FIND_INT( memory, &address, s );
+    return s;
+}
+
+void store(int address, int value) {
+    struct memory *s;
+
+    HASH_FIND_INT(memory, &address, s);
+    if (s==NULL) {
+            s = (struct memory *)malloc(sizeof *s);
+            s->address = address;
+            s->value = value;
+            HASH_ADD_INT( memory, address, s );
+    }else{
+            struct memory *newS;
+            newS->address = address;
+            newS->value = value;
+            HASH_REPLACE_INT( memory, address, newS, s);
+    }
+    return;
+}
+
+int generated(int *first_arg, int *second_arg){
 	int flags[8];
 	int PC = 0;
 	int imm = 0;
@@ -9,14 +42,12 @@ int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, 
 	registers[0] = 0;
 	registers[5] = first_arg;
 	registers[6] = second_arg;
-	registers[7] = third_arg;
-	registers[8] = fourth_arg;
 
 	registers[5] = registers[0] + ( 0 );
 	registers[5] = registers[0] + ( 1036 );
 	registers[6] = registers[0] + ( 9228 );
 	registers[1] = registers[1] + ( -28 );
-	memory[registers[1] + registers[0]] = registers[15];
+	store( registers[1] + registers[0], registers[15]);
 	registers[0] = registers[0] || registers[0];
 	registers[15] = 432;
 	//removed unconditional goto
@@ -25,9 +56,9 @@ int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, 
 
 do {
 
-	registers[3] = memory[registers[5] + registers[7]];
+	registers[3] = load( registers[5] + registers[7] );
 // ------- wile(CONDITION) -------
-	registers[4] = memory[registers[6] + registers[7]];
+	registers[4] = load( registers[6] + registers[7] );
 	registers[7] = registers[7] + ( 4 );
 	registers[3] = registers[3] * registers[4];
 	registers[18] = registers[7] ^ ( 8192 );
@@ -38,7 +69,7 @@ do {
 // ------- wile(CONDITION) -------
 	PC = registers[15] + ( imm ); //Not completed
 	registers[3] = registers[8] + registers[0];
-	registers[15] = memory[registers[1] + registers[0]];
+	registers[15] = load( registers[1] + registers[0] );
 	registers[3] = registers[0] + registers[0];
 	PC = registers[15] + ( imm ); //Not completed
 	registers[1] = registers[1] + ( 28 );
