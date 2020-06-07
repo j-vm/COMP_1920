@@ -63,9 +63,11 @@ public class Main {
 
 			case "1":
 				visualizeCfg("output/" + filename +"/CFG.dot");
+				System.out.println("Success! File at output/" + filename + "/CFG.dot");
 				break;
 			case "2":
 				visualizeGraph("output/" + filename +"/CDFG.dot");
+				System.out.println("Success! File at output/" + filename + "/CDFG.dot");
 				break;
 			case "3":
 				System.out.println("Provide the number of inputs of the isolated function you want to analyze:");
@@ -73,6 +75,8 @@ public class Main {
 
 				GenerateCode code = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v1.c", true, Integer.parseInt(numInputs));
 				code.exportCode();
+
+				System.out.println("Success! File at output/" + filename + "/v1.c");
 				break;
 			case "4":
 				System.out.println("Provide the number of inputs of the isolated function you want to analyze:");
@@ -80,6 +84,7 @@ public class Main {
 
 				GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, Integer.parseInt(numInputs));
 				code2.exportCode();
+				System.out.println("Success! File at output/" + filename + "/v2.c");
 				break;
 			case "5":
 				System.out.println("Provide the number of inputs of the isolated function you want to analyze:");
@@ -88,6 +93,7 @@ public class Main {
 				GenerateCode code3 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, Integer.parseInt(numInputs));
 				code3.exportCode();
 				code3.filterLabels("output/"+ filename+ "/v3.c");
+				System.out.println("Success! File at output/" + filename + "/v3.c");
 				break;
 			case "6":
 				System.out.println("Provide the number of inputs of the isolated function you want to analyze:");
@@ -97,6 +103,7 @@ public class Main {
 				code4.exportCode();
 				code4.filterLabels("output/"+ filename+"/v4.c");
 				code4.gotoElimination("output/"+ filename+"/v4.c");
+				System.out.println("Success! File at output/" + filename + "/v4.c");
 				break;
 			case "7":
 				System.out.println("Feature not yet implemented!");
@@ -151,7 +158,6 @@ public class Main {
 			FileWriter myWriter = new FileWriter(outputFileName);
 			myWriter.write(writer.toString());
 			myWriter.close();
-			System.out.println("Successfully wrote to the file.");
 		} catch (IOException e) {
 			System.out.println("An error occurred.");
 			e.printStackTrace();
@@ -195,7 +201,6 @@ public class Main {
 			FileWriter myWriter = new FileWriter(outputFileName);
 			myWriter.write(writer.toString());
 			myWriter.close();
-			System.out.println("Successfully wrote to the file.");
 		} catch (IOException e) {
 			System.out.println("An error occurred.");
 			e.printStackTrace();
