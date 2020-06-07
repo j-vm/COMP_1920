@@ -72,10 +72,10 @@ public class CodeRoot extends CodeBlock {
 
 /*
 LOAD
-int load(int user_id) {
-    struct my_struct *s;
+void load(int address) {
+    struct memAddress *s;
 
-    HASH_FIND_INT( users, &user_id, s );
+    HASH_FIND_INT( memory, &address, s );
     return s;
 }
 STORE
