@@ -11,6 +11,6 @@ public class CodeImm extends CodeBlock {
 
     @Override
     public String output(){
-        return "imm" + " = " + " ( " + literal + " ); //Not completed";
+        return "//following literal in B type instruction's MSB is " + literal + "\\n";
     }
 }

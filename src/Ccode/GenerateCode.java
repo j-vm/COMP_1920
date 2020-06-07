@@ -46,6 +46,7 @@ public class GenerateCode {
         CodeBlock delayed = null;
         String delayedAddress = null;
         String labeler;
+        CodeBlock imm = null;
         var node = rootNode;
         while (true){
             if(mode){
@@ -57,23 +58,33 @@ public class GenerateCode {
                     var codeBlock = generateCodeBlock(node);
                     if(firstNode || node.getInstruction().equals("END")){printWriter.print(codeBlock.output() + "\n"); firstNode = false;}
                     else {
-                        if(codeBlock instanceof CodeBeqid ||
+                        if (codeBlock instanceof CodeImm){
+                            imm = codeBlock;
+                        }
+                        else if(codeBlock instanceof CodeBeqid ||
                                 codeBlock instanceof CodeBgeid ||
                                 codeBlock instanceof CodeBleid ||
                                 codeBlock instanceof CodeBneid ||
                                 codeBlock instanceof CodeBrlid){
                             delayed = codeBlock;
                             delayedAddress = Integer.toString(parseAddress(node.getAddress()));
-                        }else {
-                            labeler = "L" + parseAddress(node.getAddress());
-                            printWriter.print(labeler + ":\n\t" + codeBlock.output() + "\n");
-                            if(delayed != null){
-                                labeler = "L" + delayedAddress;
-                                printWriter.print(labeler + ":\n\t" + delayed.output() + "\n");
-                                delayed = null;
-                                if(codeBlock instanceof CodeRtsd){break;}
+                            }else {
+                                labeler = "L" + parseAddress(node.getAddress());
+
+                                if(imm != null){
+                                    codeBlock.literal = (imm.literal << 8) + codeBlock.literal;
+                                    imm = null;
+                                }
+
+                                printWriter.print(labeler + ":\n\t" + codeBlock.output() + "\n");
+
+                                if(delayed != null){
+                                    labeler = "L" + delayedAddress;
+                                    printWriter.print(labeler + ":\n\t" + delayed.output() + "\n");
+                                    delayed = null;
+                                    if(codeBlock instanceof CodeRtsd){break;}
+                                }
                             }
-                        }
                     }
                     nodes.put(node, true);
                     newNode = true;
