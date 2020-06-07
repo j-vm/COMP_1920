@@ -9,6 +9,6 @@ public class CodeSw extends CodeBlock {
 
     @Override
     public String output(){
-        return memToC(reg2,reg3) + " = " + regToC(reg1) + ";";
+        return "store( " + memToC(reg2,reg3) + ", " + regToC(reg1) + ");";
     }
 }

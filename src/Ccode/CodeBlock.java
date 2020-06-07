@@ -22,7 +22,7 @@ public class CodeBlock {
     }
 
     public String memToC(int reg1, int reg2){
-        return "memory[" + regToC(reg1) + " + " + regToC(reg2) + "]";
+        return regToC(reg1) + " + " + regToC(reg2);
     }
 
     public String output(){
