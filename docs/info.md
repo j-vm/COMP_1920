@@ -414,6 +414,8 @@ Then since we had information about the loops, provided by the Control-flow grap
 
 ## **3.5. Extraction of Loads and Stores**
 
+
+
 ## **3.6. Simulation ?**
 
 # **4. Memory Analysis**

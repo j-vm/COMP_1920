@@ -26,46 +26,9 @@ public class MatchedGotoLabelPair {
         else gotoBeforeLabel = false;
     }
 
-    public int getStartGotoIndex() {
-        return startGotoIndex;
-    }
-
-    public void setStartGotoIndex(int startGotoIndex) {
-        this.startGotoIndex = startGotoIndex;
-    }
-
-    public int getEndGotoIndex() {
-        return endGotoIndex;
-    }
-
-    public void setEndGotoIndex(int endGotoIndex) {
-        this.endGotoIndex = endGotoIndex;
-    }
-
-    public int getStartLabelIndex() {
-        return startLabelIndex;
-    }
-
-    public void setStartLabelIndex(int startLabelIndex) {
-        this.startLabelIndex = startLabelIndex;
-    }
-
-    public int getEndLabelIndex() {
-        return endLabelIndex;
-    }
-
-    public void setEndLabelIndex(int endLabelIndex) {
-        this.endLabelIndex = endLabelIndex;
-    }
-
     public boolean isGotoBeforeLabel() {
         return gotoBeforeLabel;
     }
-
-    public void setGotoBeforeLabel(boolean gotoBeforeLabel) {
-        this.gotoBeforeLabel = gotoBeforeLabel;
-    }
-
 
     public int getMatchesInside() {
         return matchesInside;
@@ -79,31 +42,11 @@ public class MatchedGotoLabelPair {
         return conditional;
     }
 
-    public void setConditional(String conditional) {
-        this.conditional = conditional;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
     public String getGotoSubstring() {
         return gotoSubstring;
-    }
-
-    public void setGotoSubstring(String gotoSubstring) {
-        this.gotoSubstring = gotoSubstring;
     }
 
     public String getLabelSubstring() {
         return labelSubstring;
     }
-
-    public void setLabelSubstring(String labelSubstring) {
-        this.labelSubstring = labelSubstring;
     }
-}

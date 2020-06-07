@@ -24,7 +24,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		//[TO TEST]
-		CfgNode rootnode =  loadGraph("./input/fir-O2.txt");
+		CfgNode rootnode =  loadGraph("./input/fir.txt");
 		GenerateCode code = new GenerateCode(cfGraph,rootnode,"output.c");
 		code.exportCode();
 		// [PROPER USE]

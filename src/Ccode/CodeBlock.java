@@ -1,9 +1,5 @@
 package Ccode;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class CodeBlock {
     public int reg1;
     public int reg2;
@@ -30,8 +26,3 @@ public class CodeBlock {
     }
 
 }
-/*
-#define lw(r1,r2,r3) (r1 = memory[r2+r3])
-#define swi(r1,r2,literal) (memory[r2 + literal] = r1)
-#define lwi(r1,r2,literal) (r1 = memory[re + literal])
-*/

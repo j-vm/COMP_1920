@@ -19,7 +19,6 @@ public class GenerateCode {
     static CfgNode rootNode;
     static String outputFileName;
     static String outputFileName2;
-    static String outputFileName3;
     private int decision;
     private boolean mode;
     private boolean newNode = false;
@@ -83,9 +82,6 @@ public class GenerateCode {
             if (node.getInstruction().equals("END")) break;
             else node = nextNode(node, printWriter);
         }
-
-        //printWriter.print("Some String");
-        //printWriter.printf("Product name is %s and its price is %d $", "iPhone", 1000);
 
         printWriter.close();
 
