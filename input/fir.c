@@ -74,8 +74,15 @@ int main() {
 	int y[M];
 
 	//fir_original(x, c, M, N, y);
+  for (int i = 0; i < M; i++){
+    store((int)x + 2*i, x[i]);
+  }
 
-  generated(x, c, M, N, y);
+  for (int i = 0; i < N; i++){
+    store((int)c + 2*i, c[i]);
+  }
+  
+  generated((int)x, (int)c, M, N, (int)y);
 
 
 	//return result;

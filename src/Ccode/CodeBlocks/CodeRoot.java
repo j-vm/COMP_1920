@@ -20,32 +20,32 @@ public class CodeRoot extends CodeBlock {
 
         switch (this.numOfInputs){
             case 0:
-                header = "int generated(int *memory)";
+                header = "int generated(int memory)";
                 break;
             case 1:
-                header = "int generated(int *first_arg)";
+                header = "int generated(int first_arg)";
                 inputAssignment = "\tregisters[5] = first_arg;\n";
                 break;
             case 2:
-                header = "int generated(int *first_arg, int *second_arg)";
+                header = "int generated(int first_arg, int second_arg)";
                 inputAssignment = "\tregisters[5] = first_arg;\n" +
                                     "\tregisters[6] = second_arg;\n";
                 break;
             case 3:
-                header = "int generated(int *first_arg, int *second_arg, int *third_arg)";
+                header = "int generated(int first_arg, int second_arg, int third_arg)";
                 inputAssignment = "\tregisters[5] = first_arg;\n" +
                         "\tregisters[6] = second_arg;\n" +
                         "\tregisters[7] = third_arg;\n";
                 break;
             case 4:
-                header = "int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg)";
+                header = "int generated(int first_arg, int second_arg, int third_arg, int fourth_arg)";
                 inputAssignment = "\tregisters[5] = first_arg;\n" +
                         "\tregisters[6] = second_arg;\n" +
                         "\tregisters[7] = third_arg;\n" +
                         "\tregisters[8] = fourth_arg;\n";
                 break;
             case 5:
-                header = "int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, int *fifth_arg)";
+                header = "int generated(int first_arg, int second_arg, int third_arg, int fourth_arg, int fifth_arg)";
                 inputAssignment = "\tregisters[5] = first_arg;\n" +
                         "\tregisters[6] = second_arg;\n" +
                         "\tregisters[7] = third_arg;\n" +
@@ -74,20 +74,27 @@ public class CodeRoot extends CodeBlock {
                 "int load(int address) {\n" +
                 "    struct memAddress *s;\n" +
                 "\n" +
-                "    HASH_FIND_INT( memory, &address, s );\n" +
-                "    return s;\n" +
+                "    HASH_FIND_INT(memory, &address, s);\n" +
+                "    if (s==NULL){\n" +
+                "        fprintf( stderr, \"Attempted access to unused memory address at: %d\\n\", address);\n" +
+                "        return 0;\n" +
+                "    }\n" +
+                "    printf(\"Loaded value : %d from address: %d\\n\", s->value, address);\n"+
+                "    return s->value;" +
                 "}\n\n"+
                 "void store(int address, int value) {\n" +
                 "    struct memAddress *s;\n" +
                 "\n" +
+                "    printf(\"Stored value : %d at address: %d\\n\", value, address);\n" +
                 "    HASH_FIND_INT(memory, &address, s);\n" +
                 "    if (s==NULL) {\n" +
-                "            s = (struct memory *)malloc(sizeof *s);\n" +
+                "            s = (struct memAddress *)malloc(sizeof *s);\n" +
                 "            s->address = address;\n" +
                 "            s->value = value;\n" +
                 "            HASH_ADD_INT( memory, address, s );\n" +
                 "    }else{\n" +
                 "            struct memAddress *newS;\n" +
+                "            newS = (struct memAddress *)malloc(sizeof *newS);\n" +
                 "            newS->address = address;\n" +
                 "            newS->value = value;\n" +
                 "            HASH_REPLACE_INT( memory, address, newS, s);\n" +

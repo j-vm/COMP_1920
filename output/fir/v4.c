@@ -1,5 +1,6 @@
 #include "generated.h"
 #include "uthash.h"
+#include <stdio.h> 
 
 struct memAddress {
     int address;                    /* key */
@@ -12,21 +13,27 @@ struct memAddress *memory = NULL;
 int load(int address) {
     struct memAddress *s;
 
-    HASH_FIND_INT( memory, &address, s );
-    return s;
-}
+    HASH_FIND_INT(memory, &address, s);
+    if (s==NULL){
+        fprintf( stderr, "Attempted access to unused memory address at: %d\n", address);
+        return 0;
+    }
+    printf("Loaded value : %d from address: %d\n", s->value, address);
+    return s->value;}
 
 void store(int address, int value) {
     struct memAddress *s;
 
+    printf("Stored value : %d at address: %d\n", value, address);
     HASH_FIND_INT(memory, &address, s);
     if (s==NULL) {
-            s = (struct memory *)malloc(sizeof *s);
+            s = (struct memAddress *)malloc(sizeof *s);
             s->address = address;
             s->value = value;
             HASH_ADD_INT( memory, address, s );
     }else{
             struct memAddress *newS;
+            newS = (struct memAddress *)malloc(sizeof *newS);
             newS->address = address;
             newS->value = value;
             HASH_REPLACE_INT( memory, address, newS, s);
@@ -34,7 +41,7 @@ void store(int address, int value) {
     return;
 }
 
-int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, int *fifth_arg){
+int generated(int first_arg, int second_arg, int third_arg, int fourth_arg, int fifth_arg){
 	int flags[8];
 	int PC = 0;
 	int imm = 0;
@@ -108,7 +115,7 @@ if(!( registers[9] <= 0 )){
 
 }
 
-	registers[3] = ( registers[12] << ( 1026 & 0x1f ) & 0;
+	registers[3] = ( registers[12] << ( 1026 & 0x1f ) & 0 );
 // ------- wile(CONDITION) -------
 	registers[12] = registers[12] + ( 1 );
 	store( registers[19] + registers[3], registers[10]);
@@ -121,7 +128,7 @@ if(!( registers[9] <= 0 )){
 
 do {
 
-	registers[3] = ( registers[7] << ( 1026 & 0x1f ) & 0;
+	registers[3] = ( registers[7] << ( 1026 & 0x1f ) & 0 );
 // ------- wile(CONDITION) -------
 	registers[5] = load( registers[8] + registers[0] );
 	registers[4] = load( registers[11] + registers[3] );
@@ -150,25 +157,25 @@ do {
 	registers[15] = 340;
 	//removed unconditional goto
 	registers[1] = registers[1] + ( -8 );
-	printf("Register 0= %i", registers[0]);
-	printf("Register 1= %i", registers[1]);
-	printf("Register 2= %i", registers[2]);
-	printf("Register 3= %i", registers[3]);
-	printf("Register 4= %i", registers[4]);
-	printf("Register 5= %i", registers[5]);
-	printf("Register 6= %i", registers[6]);
-	printf("Register 7= %i", registers[7]);
-	printf("Register 8= %i", registers[8]);
-	printf("Register 9= %i", registers[9]);
-	printf("Register 10= %i", registers[10]);
-	printf("Register 11= %i", registers[11]);
-	printf("Register 12= %i", registers[12]);
-	printf("Register 13= %i", registers[13]);
-	printf("Register 14= %i", registers[14]);
-	printf("Register 15= %i", registers[15]);
-	printf("Register 16= %i", registers[16]);
-	printf("Register 17= %i", registers[17]);
-	printf("Register 18= %i", registers[18]);
-	printf("Register 19= %i", registers[19]);
+	printf("Register 0= %i\n", registers[0]);
+	printf("Register 1= %i\n", registers[1]);
+	printf("Register 2= %i\n", registers[2]);
+	printf("Register 3= %i\n", registers[3]);
+	printf("Register 4= %i\n", registers[4]);
+	printf("Register 5= %i\n", registers[5]);
+	printf("Register 6= %i\n", registers[6]);
+	printf("Register 7= %i\n", registers[7]);
+	printf("Register 8= %i\n", registers[8]);
+	printf("Register 9= %i\n", registers[9]);
+	printf("Register 10= %i\n", registers[10]);
+	printf("Register 11= %i\n", registers[11]);
+	printf("Register 12= %i\n", registers[12]);
+	printf("Register 13= %i\n", registers[13]);
+	printf("Register 14= %i\n", registers[14]);
+	printf("Register 15= %i\n", registers[15]);
+	printf("Register 16= %i\n", registers[16]);
+	printf("Register 17= %i\n", registers[17]);
+	printf("Register 18= %i\n", registers[18]);
+	printf("Register 19= %i\n", registers[19]);
 	return registers[3];
 }
