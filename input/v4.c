@@ -17,7 +17,7 @@ int load(int address) {
 }
 
 void store(int address, int value) {
-    struct memory *s;
+    struct memAddress *s;
 
     HASH_FIND_INT(memory, &address, s);
     if (s==NULL) {
@@ -26,7 +26,7 @@ void store(int address, int value) {
             s->value = value;
             HASH_ADD_INT( memory, address, s );
     }else{
-            struct memory *newS;
+            struct memAddress *newS;
             newS->address = address;
             newS->value = value;
             HASH_REPLACE_INT( memory, address, newS, s);
@@ -108,7 +108,7 @@ if(!( registers[9] <= 0 )){
 
 }
 
-	registers[3] = ( registers[12] << ( 1026 & 0x1f ) & 0 );
+	registers[3] = ( registers[12] << ( 1026 & 0x1f ) & 0);
 // ------- wile(CONDITION) -------
 	registers[12] = registers[12] + ( 1 );
 	store( registers[19] + registers[3], registers[10]);
@@ -121,7 +121,7 @@ if(!( registers[9] <= 0 )){
 
 do {
 
-	registers[3] = ( registers[7] << ( 1026 & 0x1f ) & 0 );
+	registers[3] = ( registers[7] << ( 1026 & 0x1f ) & 0);
 // ------- wile(CONDITION) -------
 	registers[5] = load( registers[8] + registers[0] );
 	registers[4] = load( registers[11] + registers[3] );

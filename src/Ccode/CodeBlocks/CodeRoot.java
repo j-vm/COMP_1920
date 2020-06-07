@@ -2,6 +2,9 @@ package Ccode.CodeBlocks;
 
 import Ccode.CodeBlock;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class CodeRoot extends CodeBlock {
     private int numOfInputs;
     public CodeRoot(int numOfInputs) {
@@ -54,7 +57,14 @@ public class CodeRoot extends CodeBlock {
                         "Supported range: [0-5]");
                 System.exit(-1);
         }
-        return "#include \"generated.h\"\n#include \"uthash.h\"\n\n"+
+
+        try {
+            createHeaderFile(header);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "#include \"generated.h\"\n#include \"uthash.h\"\n#include <stdio.h> \n\n"+
                 "struct memAddress {\n" +
                 "    int address;                    /* key */\n" +
                 "    int value;\n" +
@@ -68,7 +78,7 @@ public class CodeRoot extends CodeBlock {
                 "    return s;\n" +
                 "}\n\n"+
                 "void store(int address, int value) {\n" +
-                "    struct memory *s;\n" +
+                "    struct memAddress *s;\n" +
                 "\n" +
                 "    HASH_FIND_INT(memory, &address, s);\n" +
                 "    if (s==NULL) {\n" +
@@ -77,7 +87,7 @@ public class CodeRoot extends CodeBlock {
                 "            s->value = value;\n" +
                 "            HASH_ADD_INT( memory, address, s );\n" +
                 "    }else{\n" +
-                "            struct memory *newS;\n" +
+                "            struct memAddress *newS;\n" +
                 "            newS->address = address;\n" +
                 "            newS->value = value;\n" +
                 "            HASH_REPLACE_INT( memory, address, newS, s);\n" +
@@ -91,6 +101,25 @@ public class CodeRoot extends CodeBlock {
                 "\tint registers[32];\n" +
                 "\tregisters[0] = 0;\n"+ inputAssignment;
     }
+
+
+    private void createHeaderFile(String header) throws IOException {
+        String text = "#ifndef GENERATED_H_   /* Include guard */\n" +
+                "#define GENERATED_H_\n" +
+                "\n" +
+                "int load(int address);  /* load memory from address */\n" +
+                "\n" +
+                "void store(int address, int value);  /* store value at address */\n" +
+                "\n" +
+                header + ";\n" +
+                "\n" +
+                "#endif // GENERATED_H_";
+        FileOutputStream out = new FileOutputStream("output/generated.h");
+
+        out.write(text.getBytes());
+        out.close();
+
+    }
 }
 
 /*
@@ -103,7 +132,7 @@ int load(int address) {
 }
 STORE
 void store(int address, int value) {
-    struct memory *s;
+    struct memAddress *s;
 
     HASH_FIND_INT(memory, &address, s);
     if (s==NULL) {
@@ -112,7 +141,7 @@ void store(int address, int value) {
             s->value = value;
             HASH_ADD_INT( memory, address, s );
     }else{
-            struct memory *newS;
+            struct memAddress *newS;
             newS->address = address;
             newS->value = value;
             HASH_REPLACE_INT( memory, address, newS, s);
