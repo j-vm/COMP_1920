@@ -59,8 +59,31 @@ public class CodeRoot extends CodeBlock {
                 "    int address;                    /* key */\n" +
                 "    int value;\n" +
                 "    UT_hash_handle hh;         /* makes this structure hashable */\n" +
-                "};" +
-                "struct memAddress *memory = NULL;\n"+
+                "};\n\n" +
+                "struct memAddress *memory = NULL;\n\n"+
+                "int load(int address) {\n" +
+                "    struct memAddress *s;\n" +
+                "\n" +
+                "    HASH_FIND_INT( memory, &address, s );\n" +
+                "    return s;\n" +
+                "}\n\n"+
+                "void store(int address, int value) {\n" +
+                "    struct memory *s;\n" +
+                "\n" +
+                "    HASH_FIND_INT(memory, &address, s);\n" +
+                "    if (s==NULL) {\n" +
+                "            s = (struct memory *)malloc(sizeof *s);\n" +
+                "            s->address = address;\n" +
+                "            s->value = value;\n" +
+                "            HASH_ADD_INT( memory, address, s );\n" +
+                "    }else{\n" +
+                "            struct memory *newS;\n" +
+                "            newS->address = address;\n" +
+                "            newS->value = value;\n" +
+                "            HASH_REPLACE_INT( memory, address, newS, s);\n" +
+                "    }\n" +
+                "    return;\n" +
+                "}"+
                 header +"{\n" +
                 "\tint flags[8];\n" +
                 "\tint PC = 0;\n" +
@@ -72,22 +95,28 @@ public class CodeRoot extends CodeBlock {
 
 /*
 LOAD
-void load(int address) {
+int load(int address) {
     struct memAddress *s;
 
     HASH_FIND_INT( memory, &address, s );
     return s;
 }
 STORE
-int store(int user_id, char *name) {
-    struct my_struct *s;
+void store(int address, int value) {
+    struct memory *s;
 
-    HASH_FIND_INT(users, &user_id, s);
+    HASH_FIND_INT(memory, &address, s);
     if (s==NULL) {
-            s = (struct my_struct *)malloc(sizeof *s);
-            s->id = user_id;
-            HASH_ADD_INT( users, id, s );
+            s = (struct memory *)malloc(sizeof *s);
+            s->address = address;
+            s->value = value;
+            HASH_ADD_INT( memory, address, s );
+    }else{
+            struct memory *newS;
+            newS->address = address;
+            newS->value = value;
+            HASH_REPLACE_INT( memory, address, newS, s);
     }
-    return ;
+    return;
 }
 */
