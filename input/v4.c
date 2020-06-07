@@ -41,13 +41,15 @@ void store(int address, int value) {
     return;
 }
 
-int generated(int first_arg, int second_arg, int third_arg, int fourth_arg, int fifth_arg){
+void storeInSimulatedMemory(int *array, int size){
+    for (int i = 0; i < size; i++){
+        store((int)array + 2*i, array[i]);
+    }
+}int generated(int first_arg, int second_arg, int third_arg, int fourth_arg, int fifth_arg){
 	int flags[8];
 	int PC = 0;
 	int imm = 0;
 	int registers[32];
-
-	printf("Function Start");
 
 	registers[5] = registers[0] + ( 0 );
 	registers[5] = registers[0] + ( 1252 );
@@ -59,12 +61,13 @@ int generated(int first_arg, int second_arg, int third_arg, int fourth_arg, int 
 	registers[9] = registers[1] + ( 28 );
 	registers[15] = 636;
 
-		registers[0] = 0;
+	registers[0] = 0;
 	registers[5] = first_arg;
 	registers[6] = second_arg;
 	registers[7] = third_arg;
 	registers[8] = fourth_arg;
 	registers[9] = fifth_arg;
+
 	//removed unconditional goto
 	registers[1] = registers[1] + ( -12 );
 	store( registers[1] + registers[4], registers[19]);
@@ -82,15 +85,12 @@ int generated(int first_arg, int second_arg, int third_arg, int fourth_arg, int 
 	registers[6] = load( registers[5] + registers[4] );
 	registers[5] = load( registers[5] + registers[0] );
 	registers[9] = registers[8] + registers[0];
-	printf("\n\nregister[4] = %i register[6] = %i\n\n", registers[4], registers[6] );
 	registers[4] = registers[4] * registers[6];
 	registers[3] = registers[3] * registers[5];
-	printf("\n\nregister[4] = %i register[3] = %i\n\n", registers[4], registers[3] );
 	registers[4] = registers[4] + registers[3];
 	store( registers[19] + registers[4], registers[4]);
 	registers[3] = load( registers[11] + registers[0] );
 	registers[8] = load( registers[10] + registers[8] );
-	printf("\n\nregister[11] = %i register[4] = %i\n\n", registers[11], registers[4] );
 	registers[5] = load( registers[11] + registers[4] );
 	registers[7] = load( registers[10] + registers[4] );
 	registers[4] = load( registers[11] + registers[8] );

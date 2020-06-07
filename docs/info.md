@@ -290,8 +290,6 @@ MicroBlaze has at its disposal 2 types of registers. It has 32-bit general purpo
  * Processor Version Register (PVR) - Is controlled by the C_PVR configuration option on MicroBlaze;
 
 
- 
-
 
 # **2. Graph Processing** 
 

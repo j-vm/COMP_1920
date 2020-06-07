@@ -101,6 +101,11 @@ public class CodeRoot extends CodeBlock {
                 "    }\n" +
                 "    return;\n" +
                 "}\n\n"+
+                "void storeInSimulatedMemory(int *array, int size){\n" +
+                "    for (int i = 0; i < size; i++){\n" +
+                "        store((int)array + 2*i, array[i]);\n" +
+                "    }\n" +
+                "}" +
                 header +"{\n" +
                 "\tint flags[8];\n" +
                 "\tint PC = 0;\n" +
@@ -118,11 +123,12 @@ public class CodeRoot extends CodeBlock {
                 "\n" +
                 "void store(int address, int value);  /* store value at address */\n" +
                 "\n" +
+                "void storeInSimulatedMemory(int *array, int size);\n" +
+                "\n" +
                 header + ";\n" +
                 "\n" +
                 "#endif // GENERATED_H_";
         FileOutputStream out = new FileOutputStream("output/generated.h");
-
         out.write(text.getBytes());
         out.close();
 
@@ -155,4 +161,10 @@ void store(int address, int value) {
     }
     return;
 }
+void storeInSimulatedMemory(void *array, int size){
+    for (int i = 0; i < size; i++){
+        store((int)array + 2*i, array[i]);
+    }
+}
+
 */
