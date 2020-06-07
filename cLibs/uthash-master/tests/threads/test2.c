@@ -27,7 +27,7 @@ pthread_rwlock_t lock;
 
 void *thread_routine( void *arg ) {
   int keepgoing=0;
-  /* TODO write me */
+
   return NULL;
 }
 

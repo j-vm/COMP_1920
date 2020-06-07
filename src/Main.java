@@ -38,12 +38,10 @@ public class Main {
 		}
 
 
-		System.out.println("Provide the isolation degree you want (0 for the default value)");
+		System.out.println("Provide the isolation degree you want (-1 for the default value)");
 		String isolation = scanner.next();
-		if(!isolation.equals("0"))
+		if(!isolation.equals("-1"))
 			FUNCTION_ISOLATION = Integer.parseInt(isolation);
-
-		System.out.println(FUNCTION_ISOLATION);
 
 		System.out.println("Say the mode to analyze the file:\n 1- Control Flow Graph(CFG) dot;\n 2- Control and Data Flow Graph(CDFG) dot \n 3- Simple C code generation" +
 				"\n 4- Previous and C code with labels \n 5- Previous and C code with final Labels \n 6- Final C code \n 7- Logging of memory" );
@@ -58,7 +56,7 @@ public class Main {
 		File file = new File("output/"+filename);
 		file.mkdir();
 
-		CfgNode rootnode =  loadGraph("./input/" + filename + "-O2.txt");
+		CfgNode rootnode =  loadGraph("./input/" + filename + ".txt");
 		String numInputs;
 
 		switch (mode){
@@ -107,60 +105,8 @@ public class Main {
 				System.out.println("Wrong choice, please select 1,2,3,4,5,6 or 7!");
 				break;
 		}
-
-
-
-		//[TO TEST]
-		//CfgNode rootnode =  loadGraph("./input/autcor-O2.txt");
-		//GenerateCode code = new GenerateCode(cfGraph,rootnode,"output/output.c", true);
-		//GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/autcor/v1.c", false, 4);
-		//code.exportCode();
-		//code2.exportCode();
-		//code2.filterLabels("output/autcor/v2.c");
-		//code2.gotoElimination("output/autcor/v3.c");
-		//loadGraphFromTrace("./input/fir-O2.txt");
-		//visualizeGraph();
-		// [PROPER USE]
-		//checkArgs(args);
-		//loadGraph(args[0]);
-		//visualizeGraph();
 	}
 
-	/**
-	 * Checks program parameters and provides "Usage" prompt if wrong number
-	 * 
-	 * @param args parameters to be checked
-	 */
-	private static void checkArgs(String[] args) {
-		if (args.length != 1) {
-			System.out.println("Usage: Main <filename>");
-			System.exit(0);
-		}
-	}
-
-
-
-	/**
-	 * Opens file, parses its content with jjtree and javacc, and builds a graph
-	 * (Graph<InstructionNode, DefaultEdge> graph) based on the work: 
-	 * 
-	 * "Limits of Parallelism Using Dynamic Dependency Graphs" by: 
-	 * 
-	 * Jonathan Mak University of
-	 * Cambridge Computer Laboratory William Gates Building, 15 JJ Thomson Avenue
-	 * Cambridge CB3 0FD, United Kingdom Jonathan.Mak@cl.cam.ac.uk 
-	 * 
-	 * & 
-	 * 
-	 * Alan Mycroft
-	 * University of Cambridge Computer Laboratory William Gates Building, 15 JJ
-	 * Thomson Avenue Cambridge CB3 0FD, United Kingdom~ Alan.Mycroft@cl.cam.ac.uk
-	 * 
-	 * Note: Complete publication in folder "./docs"
-	 * 
-	 * @param fileName File to be parsed
-	 * 
-	 */
 	private static CfgNode loadGraph(String fileName) {
 		File f = new File(fileName);
 		CfgNode rootNode = null;
@@ -170,8 +116,8 @@ public class Main {
 				try {
 					MicroblazeParser trace = new MicroblazeParser(fis);
 					try {
-						SimpleNode root = Expression(); // returns reference to root node
-						 //root.dump(""); // prints the tree on the screen
+						SimpleNode root = Expression();
+
 
 						rootNode = traceToCFG(root);
 						traceToGraph(root);
@@ -190,13 +136,6 @@ public class Main {
 		return rootNode;
 	}
 
-	/**
-	 * Exports Graph<InstructionNode, DefaultEdge> graph as a DOT file
-	 * for vizualization 
-	 * https://stackoverflow.com/questions/16998608/jgrapht-export-to-dot-file
-	 */
-
-	
 	private static void visualizeCfg(String outputFileName) {
 		DOTExporter<CfgNode,PathEdge>exporter = new DOTExporter<>((v->"A"+v.getAddress()));
 		exporter.setVertexAttributeProvider((v)->{
@@ -208,7 +147,6 @@ public class Main {
 		Writer writer=new StringWriter();
 		exporter.exportGraph(cfGraph,writer);
 
-		System.out.println(writer.toString());
 		try {
 			FileWriter myWriter = new FileWriter(outputFileName);
 			myWriter.write(writer.toString());
@@ -253,7 +191,6 @@ public class Main {
 		Writer writer=new StringWriter();
 		exporter.exportGraph(graph,writer);
 
-		System.out.println(writer.toString());
 		try {
 			FileWriter myWriter = new FileWriter(outputFileName);
 			myWriter.write(writer.toString());
@@ -272,7 +209,6 @@ public class Main {
 		CfgNode cfgRoot = new CfgNode(-1, "start", "START");
 		cfGraph.addVertex(cfgRoot);
 		String lastAddress = null;
-		System.out.println(numChildren);
 
 		int decisionPath = 0;
 
@@ -333,8 +269,6 @@ public class Main {
 
 	}
 
-
-
 	private static void setRegisters(SimpleNode node, CfgNode vertex){
 		if(node.getRegister1() != null) vertex.setRegister1(node.getRegister1());
 		if(node.getRegister2() != null) vertex.setRegister2(node.getRegister2());
@@ -357,8 +291,6 @@ public class Main {
 		return iterator;
 	}
 
-
-
 	private static void traceToGraph(SimpleNode root) {
 		int numChildren = root.jjtGetNumChildren();
 		HashMap<String, InstructionNode> nodes = new HashMap<String, InstructionNode>();
@@ -367,7 +299,6 @@ public class Main {
 		for (int i = parseFunction(root); i < numChildren; i++) {
 			String address;
 			String instruction;
-			System.out.println(numChildren);
 			Node javaccNode = root.jjtGetChild(i);
 			if (javaccNode instanceof SimpleNode) {
 				SimpleNode javaccSimpleNode = ((SimpleNode) javaccNode);

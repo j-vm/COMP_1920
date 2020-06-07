@@ -32,7 +32,9 @@ void store(int address, int value) {
             HASH_REPLACE_INT( memory, address, newS, s);
     }
     return;
-}int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg){
+}
+
+int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, int *fifth_arg){
 	int flags[8];
 	int PC = 0;
 	int imm = 0;
@@ -42,64 +44,8 @@ void store(int address, int value) {
 	registers[6] = second_arg;
 	registers[7] = third_arg;
 	registers[8] = fourth_arg;
+	registers[9] = fifth_arg;
 
-registers[0] = registers[0] || registers[0];
-registers[1] = registers[1] + ( -20 );
-store( registers[1] + registers[0], registers[15]);
-registers[15] = 304;
-	goto L692;
-registers[0] = registers[0] || registers[0];
-PC = registers[15] + ( imm ); //Not completed
-registers[0] = registers[0] || registers[0];
-registers[15] = 312;
-	goto L1136;
-registers[0] = registers[0] || registers[0];
-registers[1] = registers[1] + ( -8 );
-store( registers[0] + registers[1], registers[15]);
-registers[15] = 1144;
-	goto L212;
-registers[0] = registers[0] || registers[0];
-imm =  ( 0 ); //Not completed
-registers[3] = registers[0] + ( 0 );
-registers[1] = registers[1] + ( -28 );
-registers[5] = registers[0] + ( 2524 );
-registers[6] = registers[0] + ( 2540 );
-if ( registers[3] == 0 ) {
-		goto L248;
-	}
-store( registers[1] + registers[0], registers[15]);
-registers[3] = load( registers[0] + registers[2528] );
-imm =  ( 0 ); //Not completed
-registers[4] = registers[0] + ( 0 );
-if ( registers[3] == 0 ) {
-		goto L288;
-	}
-registers[15] = load( registers[1] + registers[0] );
-PC = registers[15] + ( imm ); //Not completed
-registers[1] = registers[1] + ( 28 );
-registers[15] = 1152;
-	goto L1072;
-registers[0] = registers[0] || registers[0];
-registers[3] = load( registers[0] + registers[1200] );
-registers[1] = registers[1] + ( -32 );
-store( registers[1] + registers[28], registers[19]);
-registers[19] = registers[0] + ( 1200 );
-registers[18] = registers[3] ^ ( -1 );
-if ( registers[18] == 0 ) {
-		goto L1120;
-	}
-store( registers[1] + registers[0], registers[15]);
-registers[15] = load( registers[1] + registers[0] );
-registers[19] = load( registers[1] + registers[28] );
-PC = registers[15] + ( imm ); //Not completed
-registers[1] = registers[1] + ( 32 );
-registers[15] = load( registers[0] + registers[1] );
-PC = registers[15] + ( imm ); //Not completed
-registers[1] = registers[1] + ( 8 );
-registers[6] = registers[0] + ( 0 );
-registers[7] = registers[0] + ( 0 );
-registers[15] = 328;
-	goto L612;
 registers[5] = registers[0] + ( 0 );
 registers[5] = registers[0] + ( 1252 );
 registers[6] = registers[0] + ( 1236 );

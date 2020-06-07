@@ -113,7 +113,6 @@ public class GenerateCode {
     }
 
     private CfgNode nextNode(CfgNode node) {
-        //TODO: return correct unique, connected, and priority node
         List<PathEdge> outgoingEdges = new ArrayList<PathEdge>(cfGraph.outgoingEdgesOf(node));
         if(outgoingEdges.size() == 1)
             return cfGraph.getEdgeTarget(outgoingEdges.get(0));
