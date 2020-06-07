@@ -188,12 +188,21 @@ public class Main {
 		exporter.setVertexAttributeProvider((v)->{
 			Map<String, Attribute> map=new LinkedHashMap<>();
 			map.put("label", DefaultAttribute.createAttribute(v.toString()));
+			if (v.getliteralNode()) {
+				map.put("shape", DefaultAttribute.createAttribute("polygon"));
+				map.put("sides", DefaultAttribute.createAttribute("4"));
+			}
 			return map;});
 		exporter.setEdgeAttributeProvider((e)->{
 			Map<String, Attribute> map=new LinkedHashMap<>();
 			switch (e.isCfEdge()){
 				case 0:
 					map.put("label", DefaultAttribute.createAttribute(e.toString()));
+					if(e.getReg().equals("A")){
+						map.put("color", DefaultAttribute.createAttribute("blue"));
+					}else if(e.getReg().equals("B")){
+						map.put("color", DefaultAttribute.createAttribute("green"));
+					}
 					break;
 				case 1:
 					map.put("color", DefaultAttribute.createAttribute("red"));
@@ -340,15 +349,17 @@ public class Main {
 				if(javaccSimpleNode.getRegister1()!=null){
 					lastToAlter.put(javaccSimpleNode.getRegister1(), vertex);
 				}
-
+				RegisterEdge edge;
 				//Ingoing Edge (source operand a)
 				if(javaccSimpleNode.getRegister2()!=null){
 					if(lastToAlter.containsKey(javaccSimpleNode.getRegister2())){
 						if (graph.getAllEdges(lastToAlter.get(javaccSimpleNode.getRegister2()),
 								vertex).size() == 0) {
-							graph.addEdge(
+							edge = graph.addEdge(
 									lastToAlter.get(javaccSimpleNode.getRegister2()),
-									vertex).setRegName(javaccSimpleNode.getRegister2());
+									vertex);
+							edge.setRegName(javaccSimpleNode.getRegister2());
+							edge.setReg(RegisterEdge.InputReg.A);
 						}
 					}
 				}
@@ -358,9 +369,12 @@ public class Main {
 					if(lastToAlter.containsKey(javaccSimpleNode.getRegister3())){
 						if (graph.getAllEdges(lastToAlter.get(javaccSimpleNode.getRegister3()),
 								vertex).size() == 0){
-							graph.addEdge(
+							edge = graph.addEdge(
 									lastToAlter.get(javaccSimpleNode.getRegister3()),
-									vertex).setRegName(javaccSimpleNode.getRegister3());
+									vertex);
+
+							edge.setRegName(javaccSimpleNode.getRegister2());
+							edge.setReg(RegisterEdge.InputReg.B);
 						}
 					}
 				}

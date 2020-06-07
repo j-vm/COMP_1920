@@ -28,11 +28,12 @@ public class RegisterEdge
     }
 
     public enum InputReg{
+        O,
         A,
         B
     };
 
-    private InputReg reg;
+    private InputReg reg = InputReg.O;
     private String regName;
     private int cfEdge = 0;
 
@@ -47,7 +48,7 @@ public class RegisterEdge
     {
         if(this.reg == InputReg.A) return "A";
         else if(this.reg == InputReg.B) return "B";
-        else return null;
+        else return "O";
     }
 
     public String toString()
