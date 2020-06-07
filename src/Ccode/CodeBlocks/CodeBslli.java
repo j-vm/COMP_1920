@@ -9,6 +9,6 @@ public class CodeBslli extends CodeBlock {
 
     @Override
     public String output(){
-        return regToC(reg1) + " = ( " + regToC(reg2) + " << ( " + literal + " & 0x1f ) & 0;";
+        return regToC(reg1) + " = ( " + regToC(reg2) + " << ( " + literal + " & 0x1f ) & 0 );";
     }
 }

@@ -83,7 +83,7 @@ public class CodeRoot extends CodeBlock {
                 "            HASH_REPLACE_INT( memory, address, newS, s);\n" +
                 "    }\n" +
                 "    return;\n" +
-                "}"+
+                "}\n\n"+
                 header +"{\n" +
                 "\tint flags[8];\n" +
                 "\tint PC = 0;\n" +

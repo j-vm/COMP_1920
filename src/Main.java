@@ -30,7 +30,6 @@ public class Main {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Write the name of the file you want to analyze ( fir, autcor, dotprod) : ");
 		String filename = scanner.next();
-		System.out.println(filename.equals("fir"));
 
 		while (!filename.equals("fir") && !filename.equals("dotprod") && !filename.equals("autcor")){
 			System.out.println("File doesnt exist!\n Choose from fir , dotprod or autcor!\n");
@@ -38,6 +37,13 @@ public class Main {
 			filename  = scanner.next();
 		}
 
+
+		System.out.println("Provide the isolation degree you want (0 for the default value)");
+		String isolation = scanner.next();
+		if(!isolation.equals("0"))
+			FUNCTION_ISOLATION = Integer.parseInt(isolation);
+
+		System.out.println(FUNCTION_ISOLATION);
 
 		System.out.println("Say the mode to analyze the file:\n 1- Control Flow Graph(CFG) dot;\n 2- Control and Data Flow Graph(CDFG) dot \n 3- Simple C code generation" +
 				"\n 4- Previous and C code with labels \n 5- Previous and C code with final Labels \n 6- Final C code \n 7- Logging of memory" );
@@ -49,10 +55,14 @@ public class Main {
 			mode = scanner.next();
 		}
 
-		CfgNode rootnode =  loadGraph("./input/" + filename + "-O2.txt");
+		File file = new File("output/"+filename);
+		file.mkdir();
 
+		CfgNode rootnode =  loadGraph("./input/" + filename + "-O2.txt");
+		String numInputs;
 
 		switch (mode){
+
 			case "1":
 				visualizeCfg("output/" + filename +"/CFG.dot");
 				break;
@@ -60,20 +70,32 @@ public class Main {
 				visualizeGraph("output/" + filename +"/CDFG.dot");
 				break;
 			case "3":
-				GenerateCode code = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v1.c", true, 4);
+				System.out.println("Provide the number of inputs of the isolated function you want to analyze:");
+				numInputs = scanner.next();
+
+				GenerateCode code = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v1.c", true, Integer.parseInt(numInputs));
 				code.exportCode();
 				break;
 			case "4":
-				GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 4);
+				System.out.println("Provide the number of inputs of the isolated function you want to analyze:");
+				numInputs = scanner.next();
+
+				GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, Integer.parseInt(numInputs));
 				code2.exportCode();
 				break;
 			case "5":
-				GenerateCode code3 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 4);
+				System.out.println("Provide the number of inputs of the isolated function you want to analyze:");
+				numInputs = scanner.next();
+
+				GenerateCode code3 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, Integer.parseInt(numInputs));
 				code3.exportCode();
 				code3.filterLabels("output/"+ filename+ "/v3.c");
 				break;
 			case "6":
-				GenerateCode code4 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 4);
+				System.out.println("Provide the number of inputs of the isolated function you want to analyze:");
+				numInputs = scanner.next();
+
+				GenerateCode code4 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, Integer.parseInt(numInputs));
 				code4.exportCode();
 				code4.filterLabels("output/"+ filename+"/v4.c");
 				code4.gotoElimination("output/"+ filename+"/v4.c");
