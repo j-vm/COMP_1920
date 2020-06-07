@@ -387,7 +387,7 @@ At this point we figured that the best step to transition into the genaration of
 
 ## **3.3. Generation of C code**
 
-At an early stage of production we simply translated evry line of the trace to it's C counterpart. Then since we had information about the loops, provided by the Data-flow graph, we added goto's in the corresponding jumps and labels in the adresses where the jump's where going to. At the end we replaced this goto's anb labels with if's and while's, which generated the final runnable C code.
+At an early stage of production we simply translated evry line of the trace to it's C counterpart. Then since we had information about the loops, provided by the Control-flow graph, we added goto's in the corresponding jumps and labels in the adresses where the jump's where going to. At the end we replaced this goto's anb labels with if's and while's, which generated the final runnable C code.
 
 ## **3.4. Extraction of Loads and Stores**
 

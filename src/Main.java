@@ -28,13 +28,28 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Write the name of the file you want to analyze: ");
+		System.out.println("Write the name of the file you want to analyze ( fir, autcor, dotprod) : ");
 		String filename = scanner.next();
+		System.out.println(filename.equals("fir"));
+
+		while (!filename.equals("fir") && !filename.equals("dotprod") && !filename.equals("autcor")){
+			System.out.println("File doesnt exist!\n Choose from fir , dotprod or autcor!\n");
+			System.out.println("Write the name of the file you want to analyze ( fir, autcor, dotprod) : ");
+			filename  = scanner.next();
+		}
+
+
 		System.out.println("Say the mode to analyze the file:\n 1- Control Flow Graph(CFG) dot;\n 2- Control and Data Flow Graph(CDFG) dot \n 3- Simple C code generation" +
 				"\n 4- Previous and C code with labels \n 5- Previous and C code with final Labels \n 6- Final C code \n 7- Logging of memory" );
 		String mode = scanner.next();
 
-		CfgNode rootnode =  loadGraph("./input/" + filename+"-O2.txt");
+		while (!mode.equals("1") && !mode.equals("2") && !mode.equals("3") && !mode.equals("4") && !mode.equals("5") && !mode.equals("6") && !mode.equals("7")){
+			System.out.println("Wrong mode choise!\n Choose from 1 to 7!\n " +
+					"Say the mode to analyze the file:");
+			mode = scanner.next();
+		}
+
+		CfgNode rootnode =  loadGraph("./input/" + filename + "-O2.txt");
 
 
 		switch (mode){
