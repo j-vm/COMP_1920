@@ -263,6 +263,7 @@ MFSE
 
 MicroBlaze has at its disposal 2 types of registers. It has 32-bit general purpose registers and up to 18 32-bit special purpose registers.
 
+<<<<<<< HEAD
 ### **General Purpose Registers**
 The 32-bit general purpose registers are numbered R0 through R31.
 There are different uses for each register which are described below:
@@ -299,6 +300,38 @@ There are different uses for each register which are described below:
 In this project our goal was to develop and tool that allows the user to analyse the trace of a program by creating graphs or generating C code, that emulates the provided program in order to improve readability or even provide information about the stores and load and memory management of the program.
 
 This tool provides 6 types of analysis:
+=======
+ ### **General Purpose Registers**
+ The 32-bit general purpose registers are numbered R0 through R31.
+ There are differnt uses for each register wich are described bellow:
+ * R0 - Always has the value of zero. Anything written to it is discarded;
+ * R1-R13 - 32-bit general purpose registers;
+ * R14 - Used to store return addresses for interrupts;
+ * R15 - Used to store return addresses for user vectores;
+ * R16 - Used to store return addresses for breaks;
+ * R17 - General purpose register, or in some cases, used for hardware exceptions;
+ * R18-R31 - 32-bit general purpose registers.
+
+ ## **Special Purpose Registers**
+
+ * Program Counter (PC) - Is the 32-bit address of the executing instruction;
+ * Machine Status Register (MSR) - Contains control and status bits for the processor;
+ * Exception Address Register (EAR) - Stores the full load/store address that caused an exception;
+ * Branch Target Register (BTR) - Only exists if the MIcroBlaze processor is configured to use exceptions. Stores the branch target address for all delay slot branch instructions;
+ * Floating-Point Status Register (FSR) - Contains status bits for the floating-point unit;
+ * Exception Data Register (EDR) - Stores data read on a link that caused a stream exception;
+ * Stack Low Register (SLR) - Stores the stack low limit use to detect stack overflow;
+ * Stack High Register (SHR) - Stores the stack high limit use to detect stack underflow;
+ * Process Identifier Register (PID) - Used to uniquely identify a software process during MMU address translation;
+ * Zone Protection Register (ZPR) - Used to override MMU memory protection defined in TLB entries;
+ * Translation Look-Aside Buffer Low Register (TLBLO) - Used to access MMU Unified Translation Look-Aside Buffer (UTLB) entries;
+ * Translation Look-Aside Buffer High Register (TLBHI) - Used to access MMU Unified Translation Look-Aside Buffer (UTLB) entries;
+ * Translation Look-Aside Buffer Index Register (TLBX) - Used as an index to the Unified Translation Look-Aside Buffer (UTLB) when accessing the TLBLO and TLBHI registers;
+ * Translation Look-Aside Buffer Search Index Register (TLBSX) - Used to search for a virtual page number in the UTLB;
+ * Processor Version Register (PVR) - Is controlled by the C_PVR configuration option on MicroBlaze;
+
+
+>>>>>>> 32172c4249fe41fd3b6d013d880d4a293e601bb2
 
    -Conversion of the trace to a Control-flow graph that allows identification of loops;
    -Conversion of the trace to a Compound data and control flow graph;

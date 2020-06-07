@@ -74,13 +74,9 @@ int main() {
 	int y[M];
 
 	//fir_original(x, c, M, N, y);
-  for (int i = 0; i < M; i++){
-    store((int)x + 2*i, x[i]);
-  }
-
-  for (int i = 0; i < N; i++){
-    store((int)c + 2*i, c[i]);
-  }
+  storeInSimulatedMemory(y,M);
+  storeInSimulatedMemory(x,M);
+  storeInSimulatedMemory(c,N);
   
   generated((int)x, (int)c, M, N, (int)y);
 

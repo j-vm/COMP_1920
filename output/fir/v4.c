@@ -41,7 +41,11 @@ void store(int address, int value) {
     return;
 }
 
-int generated(int first_arg, int second_arg, int third_arg, int fourth_arg, int fifth_arg){
+void storeInSimulatedMemory(void *array, int size){
+    for (int i = 0; i < size; i++){
+        store((int)array + 2*i, array[i]);
+    }
+}int generated(int first_arg, int second_arg, int third_arg, int fourth_arg, int fifth_arg){
 	int flags[8];
 	int PC = 0;
 	int imm = 0;
