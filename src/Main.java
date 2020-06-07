@@ -60,20 +60,20 @@ public class Main {
 				visualizeGraph("output/" + filename +"/CDFG.dot");
 				break;
 			case "3":
-				GenerateCode code = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v1.c", true, 4);
+				GenerateCode code = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v1.c", true, 5);
 				code.exportCode();
 				break;
 			case "4":
-				GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 4);
+				GenerateCode code2 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 5);
 				code2.exportCode();
 				break;
 			case "5":
-				GenerateCode code3 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 4);
+				GenerateCode code3 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 5);
 				code3.exportCode();
 				code3.filterLabels("output/"+ filename+ "/v3.c");
 				break;
 			case "6":
-				GenerateCode code4 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 4);
+				GenerateCode code4 = new GenerateCode(cfGraph,rootnode,"output/" + filename +"/v2.c", false, 5);
 				code4.exportCode();
 				code4.filterLabels("output/"+ filename+"/v4.c");
 				code4.gotoElimination("output/"+ filename+"/v4.c");

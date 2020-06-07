@@ -1,7 +1,40 @@
 #include "generated.h"
 #include "uthash.h"
 
-int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, int *memory){
+struct memAddress {
+    int address;                    /* key */
+    int value;
+    UT_hash_handle hh;         /* makes this structure hashable */
+};
+
+struct memAddress *memory = NULL;
+
+int load(int address) {
+    struct memAddress *s;
+
+    HASH_FIND_INT( memory, &address, s );
+    return s;
+}
+
+void store(int address, int value) {
+    struct memAddress *s;
+
+    HASH_FIND_INT(memory, &address, s);
+    if (s==NULL) {
+            s = (struct memory *)malloc(sizeof *s);
+            s->address = address;
+            s->value = value;
+            HASH_ADD_INT( memory, address, s );
+    }else{
+            struct memAddress *newS;
+            newS->address = address;
+            newS->value = value;
+            HASH_REPLACE_INT( memory, address, newS, s);
+    }
+    return;
+}
+
+int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, int *fifth_arg){
 	int flags[8];
 	int PC = 0;
 	int imm = 0;
@@ -11,6 +44,7 @@ int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, 
 	registers[6] = second_arg;
 	registers[7] = third_arg;
 	registers[8] = fourth_arg;
+	registers[9] = fifth_arg;
 
 L332:
 	registers[5] = registers[0] + ( 0 );
@@ -25,7 +59,7 @@ L624:
 L628:
 	registers[8] = registers[0] + ( 4 );
 L632:
-	memory[registers[1] + registers[0]] = registers[15];
+	store( registers[1] + registers[0], registers[15]);
 L640:
 	registers[9] = registers[1] + ( 28 );
 L636:
@@ -34,13 +68,13 @@ L636:
 L372:
 	registers[1] = registers[1] + ( -12 );
 L376:
-	memory[registers[1] + registers[4]] = registers[19];
+	store( registers[1] + registers[4], registers[19]);
 L380:
-	memory[registers[1] + registers[8]] = registers[22];
+	store( registers[1] + registers[8], registers[22]);
 L384:
-	registers[4] = memory[registers[5] + registers[0]];
+	registers[4] = load( registers[5] + registers[0] );
 L388:
-	registers[3] = memory[registers[6] + registers[0]];
+	registers[3] = load( registers[6] + registers[0] );
 L392:
 	registers[19] = registers[9] + registers[0];
 L396:
@@ -52,15 +86,15 @@ L404:
 L408:
 	registers[22] = registers[7] + registers[0];
 L412:
-	memory[registers[19] + registers[0]] = registers[3];
+	store( registers[19] + registers[0], registers[3]);
 L416:
-	registers[4] = memory[registers[6] + registers[0]];
+	registers[4] = load( registers[6] + registers[0] );
 L420:
-	registers[3] = memory[registers[11] + registers[4]];
+	registers[3] = load( registers[11] + registers[4] );
 L424:
-	registers[6] = memory[registers[5] + registers[4]];
+	registers[6] = load( registers[5] + registers[4] );
 L428:
-	registers[5] = memory[registers[5] + registers[0]];
+	registers[5] = load( registers[5] + registers[0] );
 L432:
 	registers[9] = registers[8] + registers[0];
 L436:
@@ -70,19 +104,19 @@ L440:
 L444:
 	registers[4] = registers[4] + registers[3];
 L448:
-	memory[registers[19] + registers[4]] = registers[4];
+	store( registers[19] + registers[4], registers[4]);
 L452:
-	registers[3] = memory[registers[11] + registers[0]];
+	registers[3] = load( registers[11] + registers[0] );
 L456:
-	registers[8] = memory[registers[10] + registers[8]];
+	registers[8] = load( registers[10] + registers[8] );
 L460:
-	registers[5] = memory[registers[11] + registers[4]];
+	registers[5] = load( registers[11] + registers[4] );
 L464:
-	registers[7] = memory[registers[10] + registers[4]];
+	registers[7] = load( registers[10] + registers[4] );
 L468:
-	registers[4] = memory[registers[11] + registers[8]];
+	registers[4] = load( registers[11] + registers[8] );
 L472:
-	registers[6] = memory[registers[10] + registers[0]];
+	registers[6] = load( registers[10] + registers[0] );
 L476:
 	registers[3] = registers[3] * registers[8];
 L480:
@@ -98,7 +132,7 @@ L496:
 L500:
 	registers[18] = ( registers[18] - registers[22] ); //Not completed
 L508:
-	memory[registers[19] + registers[8]] = registers[3];
+	store( registers[19] + registers[8], registers[3]);
 L504:
 	if ( registers[18] >= 0 ) {
 		goto L596;
@@ -119,12 +153,12 @@ L528:
 L532:
 	registers[7] = registers[10] + registers[0];
 L572:
-	registers[3] = ( registers[12] << ( 1026& 0x1f ) & 0; //Not completed
+	registers[3] = ( registers[12] << ( 1026 & 0x1f ) & 0;
 // ------- wile(CONDITION) -------
 L576:
 	registers[12] = registers[12] + ( 1 );
 L580:
-	memory[registers[19] + registers[3]] = registers[10];
+	store( registers[19] + registers[3], registers[10]);
 L584:
 	registers[18] = registers[22] - registers[12] + 1;
 L592:
@@ -135,12 +169,12 @@ L588:
 	}
 // ------- wile(CONDITION) -------
 L536:
-	registers[3] = ( registers[7] << ( 1026& 0x1f ) & 0; //Not completed
+	registers[3] = ( registers[7] << ( 1026 & 0x1f ) & 0;
 // ------- wile(CONDITION) -------
 L540:
-	registers[5] = memory[registers[8] + registers[0]];
+	registers[5] = load( registers[8] + registers[0] );
 L544:
-	registers[4] = memory[registers[11] + registers[3]];
+	registers[4] = load( registers[11] + registers[3] );
 L548:
 	registers[7] = registers[7] + ( 1 );
 L552:
@@ -157,15 +191,15 @@ L564:
 	}
 // ------- wile(CONDITION) -------
 L596:
-	registers[19] = memory[registers[1] + registers[4]];
+	registers[19] = load( registers[1] + registers[4] );
 L600:
-	registers[22] = memory[registers[1] + registers[8]];
+	registers[22] = load( registers[1] + registers[8] );
 L604:
 	PC = registers[15] + ( imm ); //Not completed
 L608:
 	registers[1] = registers[1] + ( 12 );
 L644:
-	registers[15] = memory[registers[1] + registers[0]];
+	registers[15] = load( registers[1] + registers[0] );
 L648:
 	registers[3] = registers[0] + registers[0];
 L652:

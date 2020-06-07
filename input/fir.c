@@ -6,6 +6,8 @@
 #define c2 4
 #define c3 2
 
+#include "generated.h"
+
 int  c[N] = {c0, c1, c2, c3};
 
 int x[M] = {
@@ -71,7 +73,9 @@ int main() {
 	//int result;
 	int y[M];
 
-	fir_original(x, c, M, N, y);
+	//fir_original(x, c, M, N, y);
+
+  generated(x, c, M, N, y);
 
 
 	//return result;

@@ -1,7 +1,40 @@
 #include "generated.h"
 #include "uthash.h"
 
-int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, int *memory){
+struct memAddress {
+    int address;                    /* key */
+    int value;
+    UT_hash_handle hh;         /* makes this structure hashable */
+};
+
+struct memAddress *memory = NULL;
+
+int load(int address) {
+    struct memAddress *s;
+
+    HASH_FIND_INT( memory, &address, s );
+    return s;
+}
+
+void store(int address, int value) {
+    struct memAddress *s;
+
+    HASH_FIND_INT(memory, &address, s);
+    if (s==NULL) {
+            s = (struct memory *)malloc(sizeof *s);
+            s->address = address;
+            s->value = value;
+            HASH_ADD_INT( memory, address, s );
+    }else{
+            struct memAddress *newS;
+            newS->address = address;
+            newS->value = value;
+            HASH_REPLACE_INT( memory, address, newS, s);
+    }
+    return;
+}
+
+int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, int *fifth_arg){
 	int flags[8];
 	int PC = 0;
 	int imm = 0;
@@ -11,6 +44,7 @@ int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, 
 	registers[6] = second_arg;
 	registers[7] = third_arg;
 	registers[8] = fourth_arg;
+	registers[9] = fifth_arg;
 
 	registers[5] = registers[0] + ( 0 );
 	registers[5] = registers[0] + ( 1252 );
@@ -18,36 +52,36 @@ int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, 
 	registers[1] = registers[1] + ( -1052 );
 	registers[7] = registers[0] + ( 256 );
 	registers[8] = registers[0] + ( 4 );
-	memory[registers[1] + registers[0]] = registers[15];
+	store( registers[1] + registers[0], registers[15]);
 	registers[9] = registers[1] + ( 28 );
 	registers[15] = 636;
 	//removed unconditional goto
 	registers[1] = registers[1] + ( -12 );
-	memory[registers[1] + registers[4]] = registers[19];
-	memory[registers[1] + registers[8]] = registers[22];
-	registers[4] = memory[registers[5] + registers[0]];
-	registers[3] = memory[registers[6] + registers[0]];
+	store( registers[1] + registers[4], registers[19]);
+	store( registers[1] + registers[8], registers[22]);
+	registers[4] = load( registers[5] + registers[0] );
+	registers[3] = load( registers[6] + registers[0] );
 	registers[19] = registers[9] + registers[0];
 	registers[11] = registers[6] + registers[0];
 	registers[3] = registers[3] * registers[4];
 	registers[10] = registers[5] + registers[0];
 	registers[22] = registers[7] + registers[0];
-	memory[registers[19] + registers[0]] = registers[3];
-	registers[4] = memory[registers[6] + registers[0]];
-	registers[3] = memory[registers[11] + registers[4]];
-	registers[6] = memory[registers[5] + registers[4]];
-	registers[5] = memory[registers[5] + registers[0]];
+	store( registers[19] + registers[0], registers[3]);
+	registers[4] = load( registers[6] + registers[0] );
+	registers[3] = load( registers[11] + registers[4] );
+	registers[6] = load( registers[5] + registers[4] );
+	registers[5] = load( registers[5] + registers[0] );
 	registers[9] = registers[8] + registers[0];
 	registers[4] = registers[4] * registers[6];
 	registers[3] = registers[3] * registers[5];
 	registers[4] = registers[4] + registers[3];
-	memory[registers[19] + registers[4]] = registers[4];
-	registers[3] = memory[registers[11] + registers[0]];
-	registers[8] = memory[registers[10] + registers[8]];
-	registers[5] = memory[registers[11] + registers[4]];
-	registers[7] = memory[registers[10] + registers[4]];
-	registers[4] = memory[registers[11] + registers[8]];
-	registers[6] = memory[registers[10] + registers[0]];
+	store( registers[19] + registers[4], registers[4]);
+	registers[3] = load( registers[11] + registers[0] );
+	registers[8] = load( registers[10] + registers[8] );
+	registers[5] = load( registers[11] + registers[4] );
+	registers[7] = load( registers[10] + registers[4] );
+	registers[4] = load( registers[11] + registers[8] );
+	registers[6] = load( registers[10] + registers[0] );
 	registers[3] = registers[3] * registers[8];
 	registers[5] = registers[5] * registers[7];
 	registers[4] = registers[4] * registers[6];
@@ -55,7 +89,7 @@ int generated(int *first_arg, int *second_arg, int *third_arg, int *fourth_arg, 
 	registers[3] = registers[3] + registers[4];
 	registers[18] = registers[0] + ( 3 );
 	registers[18] = ( registers[18] - registers[22] ); //Not completed
-	memory[registers[19] + registers[8]] = registers[3];
+	store( registers[19] + registers[8], registers[3]);
 	
 if(!( registers[18] >= 0 )){
 
@@ -74,10 +108,10 @@ if(!( registers[9] <= 0 )){
 
 }
 
-	registers[3] = ( registers[12] << ( 1026& 0x1f ) & 0; //Not completed
+	registers[3] = ( registers[12] << ( 1026 & 0x1f ) & 0;
 // ------- wile(CONDITION) -------
 	registers[12] = registers[12] + ( 1 );
-	memory[registers[19] + registers[3]] = registers[10];
+	store( registers[19] + registers[3], registers[10]);
 	registers[18] = registers[22] - registers[12] + 1;
 	registers[6] = registers[6] + ( 4 );
 	
@@ -87,10 +121,10 @@ if(!( registers[9] <= 0 )){
 
 do {
 
-	registers[3] = ( registers[7] << ( 1026& 0x1f ) & 0; //Not completed
+	registers[3] = ( registers[7] << ( 1026 & 0x1f ) & 0;
 // ------- wile(CONDITION) -------
-	registers[5] = memory[registers[8] + registers[0]];
-	registers[4] = memory[registers[11] + registers[3]];
+	registers[5] = load( registers[8] + registers[0] );
+	registers[4] = load( registers[11] + registers[3] );
 	registers[7] = registers[7] + ( 1 );
 	registers[8] = registers[8] + ( -4 );
 	registers[4] = registers[4] * registers[5];
@@ -103,11 +137,11 @@ do {
 
 }
 
-	registers[19] = memory[registers[1] + registers[4]];
-	registers[22] = memory[registers[1] + registers[8]];
+	registers[19] = load( registers[1] + registers[4] );
+	registers[22] = load( registers[1] + registers[8] );
 	PC = registers[15] + ( imm ); //Not completed
 	registers[1] = registers[1] + ( 12 );
-	registers[15] = memory[registers[1] + registers[0]];
+	registers[15] = load( registers[1] + registers[0] );
 	registers[3] = registers[0] + registers[0];
 	PC = registers[15] + ( imm ); //Not completed
 	registers[1] = registers[1] + ( 1052 );
