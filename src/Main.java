@@ -44,11 +44,11 @@ public class Main {
 			FUNCTION_ISOLATION = Integer.parseInt(isolation);
 
 		System.out.println("Say the mode to analyze the file:\n 1- Control Flow Graph(CFG) dot;\n 2- Control and Data Flow Graph(CDFG) dot \n 3- Simple C code generation" +
-				"\n 4- Previous and C code with labels \n 5- Previous and C code with final Labels \n 6- Final C code \n 7- Logging of memory" );
+				"\n 4- Previous and C code with labels \n 5- Previous and C code with final Labels \n 6- Final C code" );
 		String mode = scanner.next();
 
-		while (!mode.equals("1") && !mode.equals("2") && !mode.equals("3") && !mode.equals("4") && !mode.equals("5") && !mode.equals("6") && !mode.equals("7")){
-			System.out.println("Wrong mode choise!\n Choose from 1 to 7!\n " +
+		while (!mode.equals("1") && !mode.equals("2") && !mode.equals("3") && !mode.equals("4") && !mode.equals("5") && !mode.equals("6")){
+			System.out.println("Wrong mode choise!\n Choose from 1 to 6!\n " +
 					"Say the mode to analyze the file:");
 			mode = scanner.next();
 		}
@@ -105,11 +105,8 @@ public class Main {
 				code4.gotoElimination("output/"+ filename+"/v4.c");
 				System.out.println("Success! File at output/" + filename + "/v4.c");
 				break;
-			case "7":
-				System.out.println("Feature not yet implemented!");
-				break;
 			default:
-				System.out.println("Wrong choice, please select 1,2,3,4,5,6 or 7!");
+				System.out.println("Wrong choice, please select 1,2,3,4,5 or 6!");
 				break;
 		}
 	}
