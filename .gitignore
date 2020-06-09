@@ -3,6 +3,10 @@
 /generated/
 *.jar
 .vscode
+.idea
+.settings
+build
+gradle
 
 # Ignore Gradle GUI config
 gradle-app.setting
