@@ -8,7 +8,7 @@ Build the `Main.java` file and everything will be setup.
 
 ## Run
 
-Run the `Main.java` file and in the console the program will be displayed.
+Run the `Main.java` file and the program will be displayed in the console.
 
 ## Program
 
