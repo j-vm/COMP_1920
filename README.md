@@ -21,4 +21,4 @@ At this point you will need to choose between 6 modes:
     - The first 2 generate a graphs;
     - The other 4 modes generate increasingly structured simulated C versions of the isolated function (the number of inputs of the function must be provided).
     
-The generated files are located at `output/"filename`.
+The generated files are located at `output/"filename"`
