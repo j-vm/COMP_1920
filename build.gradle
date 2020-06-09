@@ -1,12 +1,20 @@
 
 // Import JavaCC
-plugins {id "ca.coglinc.javacc" version "2.4.0"
+plugins {
+    id "ca.coglinc.javacc" version "2.4.0"
+    id 'application'
 }
 
+application {
+    mainClassName = 'Main'
+}
+
+run {
+    standardInput = System.in
+}
 
 // Java project
 apply plugin: 'java'
-
 
 // Repositories providers
 repositories {
@@ -17,8 +25,8 @@ repositories {
 dependencies {
     testImplementation "junit:junit:4.11"
     // https://mvnrepository.com/artifact/org.jgrapht/jgrapht
-    compile 'org.jgrapht:jgrapht-core:1.4.0'
-    compile 'org.jgrapht:jgrapht-io:1.4.0'
+    compile "org.jgrapht:jgrapht-core:1.4.0"
+    compile "org.jgrapht:jgrapht-io:1.4.0"
     //compile group: 'guru.nidi', name: 'graphviz-java', version: '0.15.1'
 }
 
@@ -55,28 +63,3 @@ sourceSets {
     
 }
 
-
-// Create JAR with main class
-jar {
-   manifest {
-      attributes 'Main-Class': 'Main'
-   }
-}
-
-
-// Copy JAR to root folder
-task copyJar() {
-
-    doFirst {
-		copy {
-			println 'Copying JAR file to ./'
-			from jar
-			into "./"
-		}	
-    }
-}
-build.dependsOn copyJar
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-}
