@@ -4,11 +4,11 @@ For this project, you need to [install Gradle](https://gradle.org/install/)
 
 ## Compile 
 
-Build the `Main.java` file and everything will be setup.
+To build the project run "gradle build" in the root of the project.
 
 ## Run
 
-Run the `Main.java` file and the program will be displayed in the console.
+Run the project with "gradle run" in the root of the project.
 
 ## Program
 
